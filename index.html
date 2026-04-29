@@ -547,8 +547,8 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
   <div class="ntab" onclick="go('settings')">Settings</div>
   <div class="nact no-print">
     <span class="autosave-dot" id="as-dot"></span>
-    <button class="btn" id="cloud-status" onclick="syncFromCloud()" title="เชื่อมต่อ Supabase / กดเพื่อ Sync" style="font-weight:800;color:var(--rd);border-color:var(--rd3)">☁ Offline</button>
-    <button class="btn" onclick="syncFromCloud()" id="sync-btn" title="โหลดข้อมูลจาก Supabase">☁ Sync</button>
+    <button class="btn" id="cloud-status" onclick="toggleCloudMode()" title="กดเพื่อเปิด/ปิด Cloud Sync" style="font-weight:800;color:var(--rd);border-color:var(--rd3)">☁ Offline</button>
+    <button class="btn" onclick="toggleCloudMode()" id="sync-btn" title="ON = Supabase / OFF = localStorage">Sync OFF</button>
     <div style="display:flex;align-items:center;gap:4px;background:var(--bg4);border:1px solid var(--b2);border-radius:7px;padding:3px 8px;font-size:11px;font-family:var(--mono);color:var(--ac);font-weight:600;cursor:pointer" onclick="go('settings')" id="acct-indicator" title="กด เพื่อเปลี่ยน Account">
       <span style="font-size:9px">◉</span><span id="acct-name-nav">Personal</span>
     </div>
@@ -1300,72 +1300,25 @@ var DB='smc_v6', ST='smc_v6_settings', RV='smc_v6_reviews', DRAFT='smc_v6_draft'
 var trades=[], settings={}, reviews=[];
 var activeAccountId='personal';// default account
 
-// ===================== SUPABASE ONLINE SYNC v8.0.2 =====================
+// ===================== SUPABASE ONLINE SYNC v9.0 FULL VANILLA =====================
 var SUPABASE_URL='https://ovwfgkvooyhobqrkluhw.supabase.co';
 var SUPABASE_KEY='sb_publishable_G6pxI5ZcUhR4ggy-GjP6GA_JkgByAJ3';
 var sbClient=null;
-function initSupabase(){
-  try{
-    if(window.supabase&&SUPABASE_URL&&SUPABASE_KEY){
-      sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-      setCloudStatus('checking');
-      pingCloud();
-    }else{setCloudStatus('offline','SDK not loaded');}
-  }catch(e){console.error('Supabase init failed',e);setCloudStatus('offline','init failed');}
-}
-function setCloudStatus(state,msg){
-  var el=document.getElementById('cloud-status');if(!el)return;
-  if(state==='online'){el.textContent='☁ Online';el.style.color='var(--gn)';el.style.borderColor='var(--gn3)';}
-  else if(state==='syncing'){el.textContent='☁ Syncing';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}
-  else if(state==='checking'){el.textContent='☁ Checking';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}
-  else{el.textContent='☁ Offline';el.style.color='var(--rd)';el.style.borderColor='var(--rd3)';}
-  if(msg)el.title=msg;
-}
-async function pingCloud(){
-  if(!sbClient){setCloudStatus('offline','No Supabase client');return false;}
-  try{var res=await sbClient.from('trades').select('id',{count:'exact',head:true});
-    if(res.error){console.warn('Supabase ping error',res.error);setCloudStatus('offline',res.error.message);return false;}
-    setCloudStatus('online','Supabase connected');return true;
-  }catch(e){console.warn('Supabase ping exception',e);setCloudStatus('offline',e.message);return false;}
-}
-function tradeToCloudRow(t){
-  return {
-    user_id:String(t.accountId||activeAccountId||'personal'),
-    date:String(t.date||getLocalDateKey()),
-    pair:String(t.pair||''),
-    setup:String(t.setupTag||t.gradeSetup||''),
-    result:String((t.status==='missed')?'Missed':((t.resultStatus&&t.resultStatus[0])||inferOutcomeFromNetPnl(t.netPnl||0)||'')),
-    net:Number(t.netPnl||0),
-    r:Number(t.netR||0),
-    follow:String(t.followPlan||''),
-    mistake:Array.isArray(t.mistakeTypes)?t.mistakeTypes.join(', '):String(t.mistakeTypes||''),
-    mood:Number(t.moodPre||0)
-  };
-}
-function cloudRowToTrade(r){
-  var outcome=r.result||'';
-  return {id:'cloud_'+(r.id||Date.now()),accountId:r.user_id||activeAccountId,date:(r.date||'').slice(0,10),time:'',pair:r.pair||'',setupTag:r.setup||'',resultStatus:[outcome],netPnl:Number(r.net||0),netR:Number(r.r||0),followPlan:r.follow||'',mistakeTypes:r.mistake?r.mistake.split(',').map(function(x){return x.trim();}).filter(Boolean):[],moodPre:Number(r.mood||0),status:outcome==='Missed'?'missed':'closed',dir:'',gradeSetup:'',_cloud:true,_v:8};
-}
-async function saveTradeOnline(t){
-  if(!sbClient){setCloudStatus('offline','No Supabase client');return false;}
-  setCloudStatus('syncing');
-  try{var row=tradeToCloudRow(t);var res=await sbClient.from('trades').insert([row]);
-    if(res.error){console.error('❌ Supabase save error',res.error,row);setCloudStatus('offline',res.error.message);toast('Cloud save fail: '+res.error.message);return false;}
-    setCloudStatus('online','Saved to Supabase');toast('☁ บันทึกขึ้น Cloud แล้ว');return true;
-  }catch(e){console.error('❌ Supabase save exception',e);setCloudStatus('offline',e.message);toast('Cloud save fail');return false;}
-}
-async function syncFromCloud(){
-  if(!sbClient){initSupabase();if(!sbClient)return;}
-  setCloudStatus('syncing');
-  try{var res=await sbClient.from('trades').select('*').order('created_at',{ascending:false});
-    if(res.error){console.error('❌ Supabase load error',res.error);setCloudStatus('offline',res.error.message);toast('Sync fail: '+res.error.message);return;}
-    var cloud=(res.data||[]).filter(function(r){return !r.user_id||r.user_id===activeAccountId||r.user_id==='personal'||r.user_id==='demo';}).map(cloudRowToTrade);
-    var ids={};trades.forEach(function(t){ids[t.id]=1;});var added=0;
-    cloud.forEach(function(t){if(!ids[t.id]){trades.unshift(t);ids[t.id]=1;added++;}});
-    saveData();setCloudStatus('online','Synced '+cloud.length+' rows from Supabase');toast('☁ Sync แล้ว: '+cloud.length+' rows'+(added?' / เพิ่มใหม่ '+added:''));
-    updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();
-  }catch(e){console.error('❌ Supabase sync exception',e);setCloudStatus('offline',e.message);toast('Sync fail');}
-}
+var CLOUD_MODE_KEY='mind_edge_cloud_mode_on';
+var cloudMode=localStorage.getItem(CLOUD_MODE_KEY)!=='0';
+function getLocalDateKey(){return new Date().toISOString().split('T')[0];}
+function initSupabase(){try{if(!window.supabase){console.error('Supabase CDN not loaded');setCloudStatus('offline','Supabase CDN not loaded');return false;}if(!SUPABASE_URL||!SUPABASE_KEY){console.error('Missing Supabase URL / Publishable Key');setCloudStatus('offline','Missing Supabase config');return false;}sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);updateSyncButton();if(cloudMode){setCloudStatus('checking','Checking Supabase...');pingCloud();}else{setCloudStatus('local','LocalStorage mode');}return true;}catch(e){console.error('Supabase init failed:',e);setCloudStatus('offline',e.message||'Supabase init failed');return false;}}
+function updateSyncButton(){var btn=document.getElementById('sync-btn');if(!btn)return;btn.textContent=cloudMode?'Sync ON':'Sync OFF';btn.className='btn '+(cloudMode?'bg_':'ba');btn.title=cloudMode?'ON: Save/Load ผ่าน Supabase':'OFF: ใช้ localStorage เท่านั้น';}
+function setCloudStatus(state,msg){var el=document.getElementById('cloud-status');if(!el)return;if(state==='online'){el.textContent='☁ Online';el.style.color='var(--gn)';el.style.borderColor='var(--gn3)';}else if(state==='syncing'){el.textContent='☁ Syncing';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else if(state==='checking'){el.textContent='☁ Checking';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else if(state==='local'){el.textContent='💾 Offline';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else{el.textContent='☁ Offline';el.style.color='var(--rd)';el.style.borderColor='var(--rd3)';}if(msg)el.title=msg;updateSyncButton();}
+async function pingCloud(){if(!cloudMode){setCloudStatus('local','Cloud Sync OFF — using localStorage');return false;}if(!sbClient&&!initSupabase()){return false;}try{var res=await sbClient.from('trades').select('id',{count:'exact',head:true});if(res.error){console.error('Supabase ping error:',res.error);setCloudStatus('offline',res.error.message);return false;}setCloudStatus('online','Supabase connected');return true;}catch(e){console.error('Supabase ping exception:',e);setCloudStatus('offline',e.message||'Supabase connection failed');return false;}}
+function toggleCloudMode(){cloudMode=!cloudMode;localStorage.setItem(CLOUD_MODE_KEY,cloudMode?'1':'0');updateSyncButton();if(cloudMode){toast('Cloud Sync: ON');initSupabase();loadTradesFromCloud();}else{setCloudStatus('local','Cloud Sync OFF — using localStorage');toast('Cloud Sync: OFF — ใช้ localStorage');loadAccountTrades();updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();}}
+function tradeToCloudRow(t){return {user_id:String(t.accountId||activeAccountId||'personal'),date:String(t.date||getLocalDateKey()),pair:String(t.pair||''),setup:String(t.setupTag||t.gradeSetup||t.reason||''),result:String((t.status==='missed')?'Missed':((t.resultStatus&&t.resultStatus[0])||inferOutcomeFromNetPnl(t.netPnl||0)||'')),net:Number(t.netPnl||0),r:Number(t.netR||0),follow:String(t.followPlan||''),mistake:Array.isArray(t.mistakeTypes)?t.mistakeTypes.join(', '):String(t.mistakeTypes||''),mood:Number(t.moodPre||0)};}
+function cloudRowToTrade(r){var outcome=r.result||inferOutcomeFromNetPnl(r.net||0)||'';return {id:'cloud_'+String(r.id||((r.date||'')+'_'+(r.pair||'')+'_'+Math.random())),cloudId:r.id||null,accountId:r.user_id||activeAccountId,date:(r.date||'').slice(0,10),time:'',pair:r.pair||'',session:'',setupTag:r.setup||'',reason:r.setup||'',resultStatus:[outcome],netPnl:Number(r.net||0),netR:Number(r.r||0),followPlan:r.follow||'',mistakeTypes:r.mistake?String(r.mistake).split(',').map(function(x){return x.trim();}).filter(Boolean):[],moodPre:Number(r.mood||0),status:outcome==='Missed'?'missed':'closed',dir:'',gradeSetup:'',_cloud:true,_v:9};}
+async function saveTradeToCloud(t){if(!cloudMode){console.log('Cloud Sync OFF: saved to localStorage only');setCloudStatus('local','Cloud Sync OFF — using localStorage');return false;}if(!sbClient&&!initSupabase()){alert('Save fail: Supabase client ยังไม่พร้อม ระบบบันทึกไว้ใน localStorage แล้ว');return false;}setCloudStatus('syncing','Saving to Supabase...');try{var row=tradeToCloudRow(t);var res=await sbClient.from('trades').insert([row]).select();if(res.error){console.error('Supabase save error:',res.error,'Payload:',row);setCloudStatus('offline',res.error.message);alert('Save fail: '+res.error.message+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}console.log('Saved to Supabase');setCloudStatus('online','Saved to Supabase');toast('☁ Saved to Supabase');await loadTradesFromCloud(false);return true;}catch(e){console.error('Supabase save exception:',e);setCloudStatus('offline',e.message||'Save failed');alert('Save fail: '+(e.message||e)+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}}
+async function saveTradeOnline(t){return saveTradeToCloud(t);}
+async function loadTradesFromCloud(showToast){if(showToast===undefined)showToast=true;if(!cloudMode){loadAccountTrades();setCloudStatus('local','Cloud Sync OFF — using localStorage');renderDashboard();return trades;}if(!sbClient&&!initSupabase())return trades;setCloudStatus('syncing','Loading trades from Supabase...');try{var res=await sbClient.from('trades').select('*').eq('user_id',String(activeAccountId||'personal')).order('date',{ascending:false});if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}trades=(res.data||[]).map(cloudRowToTrade);saveData();setCloudStatus('online','Loaded '+trades.length+' rows from Supabase');if(showToast)toast('☁ Loaded from Supabase: '+trades.length+' rows');updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();if(cur&&cur.id==='page-insights')renderInsights();if(cur&&cur.id==='page-review')renderReviews();return trades;}catch(e){console.error('Supabase load exception:',e);setCloudStatus('offline',e.message||'Load failed');if(showToast)toast('Sync fail');return trades;}}
+async function syncFromCloud(){return loadTradesFromCloud(true);}
+
 
 var DEFAULT_TEMPLATES=[
   {id:'smc_default',name:'SMC Standard',threshold:0.7,items:[
@@ -1435,10 +1388,7 @@ function loadAccountTrades(){
     }
   }
 }
-function saveData(){
-  var key=getAccountDBKey(activeAccountId);
-  localStorage.setItem(key,JSON.stringify(trades));
-}
+function saveData(){try{var key=getAccountDBKey(activeAccountId);localStorage.setItem(key,JSON.stringify(trades));return true;}catch(e){console.error('localStorage save failed:',e);alert('บันทึก localStorage ไม่สำเร็จ: '+(e.message||e));return false;}}
 function switchAccount(id){
   activeAccountId=id;
   settings.activeAccountId=id;
@@ -1568,7 +1518,7 @@ function migrateTradeV5(t){
   if(!t.exitDate&&t.date&&t.exitTime){t.exitDate=t.date;}
   return t;
 }
-function saveData(){localStorage.setItem(getAccountDBKey(activeAccountId),JSON.stringify(trades));}
+function saveData(){try{localStorage.setItem(getAccountDBKey(activeAccountId),JSON.stringify(trades));return true;}catch(e){console.error('localStorage save failed:',e);alert('บันทึก localStorage ไม่สำเร็จ: '+(e.message||e));return false;}}
 function saveSettings(){
   settings.maxDailyLoss=parseFloat(document.getElementById('s-maxloss').value)||150;
   settings.maxDailyProfitR=parseFloat(document.getElementById('s-maxprofit-r').value)||2;
@@ -2106,15 +2056,16 @@ function buildTrade(status){
   };
 }
 
-function doSave(status){
+async function doSave(status){
   syncClickHiddenFields();
   if(status==='closed'&&getG('gset')==='C'){if(!confirm('Grade C — บันทึกต่อหรือไม่?'))return;}
   var t=buildTrade(status);if(!t)return;
+  var wasEdit=!!editId;
   if(editId){trades=trades.map(function(x){return x.id===editId?t:x;});}else{trades.push(t);}
   var localOk=saveData();
-  if(localOk){saveTradeOnline(t);}
+  if(localOk){await saveTradeToCloud(t);}
   try{localStorage.removeItem(DRAFT);}catch(e){}
-  clearForm();updateGuardBar();checkDisciplinePopups(false);toast(editId?'อัปเดตแล้ว':'บันทึก trade');editId=null;go('list');
+  clearForm();updateGuardBar();checkDisciplinePopups(false);toast(wasEdit?'อัปเดตแล้ว':'บันทึก trade แล้ว');editId=null;go('list');
 }
 
 function clearForm(){
@@ -3548,6 +3499,7 @@ if('serviceWorker' in navigator){
 // ===================== INIT CALLS =====================
 initTheme();
 initSupabase();
+if(cloudMode){loadTradesFromCloud(false);}
 renderFormChecklist();
 renderSetupTagsDatalist();
 renderAccountDropdown();
