@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>MIND EDGE Journal v7.8 Trader Pro</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>MIND EDGE Journal v7.9.2 Trader Pro</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <meta name="theme-color" content="#0b0f14">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="manifest.json">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <style>
 :root{
   /* === Indigo Fintech Theme v6 === */
@@ -22,7 +23,7 @@
   --tl:#0891b2;--tl2:rgba(8,145,178,.08);
   --pu:#7c3aed;--pu2:rgba(124,58,237,.08);
   --pk:#db2777;--pk2:rgba(219,39,119,.08);
-  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans Thai',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;--sans:'Inter','IBM Plex Sans Thai',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 body.dark{
   --bg:#0f1120;--bg2:#161a2e;--bg3:#1a1f35;--bg4:#1e2340;--bg5:#252b4a;
@@ -533,11 +534,165 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
 @media(max-width:720px){.dash-hero{grid-template-columns:1fr;padding:18px}.focus-time{font-size:42px}.focus-stats{grid-template-columns:1fr 1fr}.focus-actions{flex-direction:column}.focus-action-btn{width:100%}}
 @media(max-width:420px){.focus-time{font-size:36px}.focus-stats{grid-template-columns:1fr}.focus-session-row{align-items:flex-start;flex-direction:column}}
 
+
+/* === v7.8.3 FONT SYSTEM + TRADER TYPOGRAPHY PATCH ===
+   Inter = UI/English, IBM Plex Sans Thai = Thai fallback, IBM Plex Mono = numbers */
+html{font-family:var(--sans);text-rendering:geometricPrecision;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+body{font-family:var(--sans);font-feature-settings:"cv02","cv03","cv04","cv11";letter-spacing:-.006em}
+button,input,select,textarea{font-family:var(--sans)}
+.logo,.mono,.dt,.pr,.pp,.pn,.po,.cv,.sv,.dvl,.tbl td,.weekly-pnl-num,.goal-main,.goal-pct,.dash-kpi-val,.focus-time,.focus-stat-val,.focus-session-pill,.focus-next,.modal-field-edit,.be-display,.scn,.chkscore,.dg-val,input[type=number]{font-family:var(--mono)!important;font-variant-numeric:tabular-nums slashed-zero}
+.focus-time{font-weight:700;letter-spacing:-.055em}
+.focus-stat-val,.dash-kpi-val,.goal-main,.sv{letter-spacing:-.035em;font-weight:800}
+.focus-stat-label,.dash-kpi-label,.goal-title,.dash-section-title,.sl,.cl,.dlb{letter-spacing:.095em;font-weight:800}
+.card,.ca,.sc-,.dash-kpi,.goal-card,.wk-card,.decision-card{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+.dash-kpi-val.su,.focus-stat-val.su,.pp,.cv.g{color:var(--gn)!important}
+.dash-kpi-val.sd,.focus-stat-val.sd,.pn,.cv.r{color:var(--rd)!important}
+#net-disp,#c-netr,#dash-total-pnl,#focus-today-pnl,#focus-today-r,#goal-week-main,#goal-month-main,#goal-year-main{font-family:var(--mono)!important;font-variant-numeric:tabular-nums slashed-zero}
+body.dark #dash-total-pnl,body.dark #focus-today-pnl,body.dark #focus-today-r{text-shadow:0 0 18px rgba(56,189,248,.18)}
+@media(max-width:420px){.focus-time{font-size:34px}.dash-kpi-val{font-size:20px}.focus-stat-val{font-size:17px}}
+
+
+
+/* === v7.8.4 FONT + MOBILE + BACKUP POLISH === */
+body{font-feature-settings:"tnum" 1,"liga" 1;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.logo,.focus-time,.focus-stat-val,.dash-kpi-val,.goal-main,.goal-pct,.sv,.cv,.pp,.pn,.po,.dt,.pr,.dvl,.weekly-pnl-num{font-family:var(--mono)!important;font-variant-numeric:tabular-nums}
+.ct,.dash-section-title,.goal-title,.focus-eyebrow,.dash-kpi-label,.focus-stat-label,.sl,.fld label{letter-spacing:.075em}
+.dash-kpi-val,.focus-stat-val,.goal-main,.sv{letter-spacing:-.025em}
+.focus-time{letter-spacing:-.055em}
+.backup-reminder{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--am3);background:var(--am2);color:var(--am);font-size:12px;font-weight:700;line-height:1.5}
+.backup-reminder.on{display:block}
+.backup-reminder button{margin-left:8px;padding:4px 10px;border-radius:8px;border:1px solid var(--am3);background:var(--bg2);color:var(--am);font-size:11px;font-weight:800;cursor:pointer}
+body.dark .backup-reminder{border-color:rgba(255,209,102,.28);background:rgba(255,209,102,.10);color:#ffd166}
+@media(max-width:620px){
+  body{font-size:13px;line-height:1.55}
+  .fld label,.dash-kpi-label,.focus-stat-label,.goal-title,.sl-,.dlb{font-size:10px;letter-spacing:.07em}
+  .ct{font-size:12px;line-height:1.45}
+  .btn{font-size:11px;padding:6px 10px}
+  .focus-time{font-size:40px;line-height:.95}
+  .focus-date{font-size:12px}
+  .dash-kpi{padding:12px 10px}
+  .dash-kpi-val{font-size:20px}
+  .goal-main{font-size:17px}
+  .focus-stat-val{font-size:18px}
+  .fld input,.fld select,.fld textarea{font-size:14px;padding:9px 11px}
+  .mb,.gb,.mtbtn{font-size:12px;min-height:34px}
+}
+@media(max-width:420px){
+  .focus-time{font-size:34px}
+  .dash-kpi-val{font-size:19px}
+  .goal-main{font-size:16px}
+  .nav{gap:2px}
+  .ntab{font-size:11px;padding:10px 8px}
+}
+
+
+/* === v7.8.5 MISSED ENTRY LOG === */
+.missed-card{border:1px dashed var(--am3);background:linear-gradient(180deg,rgba(255,209,102,.055),rgba(255,209,102,0)),var(--bg2)}
+.missed-card .ct{margin-bottom:8px}
+.missed-hint{font-size:11px;color:var(--t3);line-height:1.55;margin-bottom:10px}
+.missed-r-input{font-family:var(--mono)!important;font-weight:700}
+.btn-missed{background:var(--am2);border-color:var(--am3);color:var(--am);font-weight:800}
+.btn-missed:hover{background:var(--am3);border-color:var(--am);color:#7c2d12}
+body.dark .missed-card{background:linear-gradient(180deg,rgba(255,209,102,.075),rgba(255,209,102,0)),var(--bg2);border-color:rgba(255,209,102,.25)}
+body.dark .btn-missed:hover{color:var(--am)}
+.tr_.missed-row::before{background:var(--am)!important}
+.missed-badge{background:var(--am2);color:var(--am);border:1px solid var(--am3)}
+body.dark .missed-badge{background:rgba(255,209,102,.10);color:var(--am);border-color:rgba(255,209,102,.22)}
+
+
+/* === v7.8.7 Dark Contrast + Discipline Lock + Report Filters === */
+:root{--report-filter-bg:rgba(255,255,255,.78)}
+body{transition:background .25s ease,color .25s ease}
+body.dark{--bg:#03070d;--bg2:#0a111a;--bg3:#101925;--bg4:#172232;--bg5:#203047;--b:rgba(226,238,255,.10);--b2:rgba(125,211,252,.26);--b3:rgba(203,213,225,.48);--t:#f8fbff;--t2:#d9e6f2;--t3:#9cb0c5;--ac:#38bdf8;--ac2:#93e4ff;--ac3:rgba(56,189,248,.20)}
+body.dark .fld label,body.dark .sl-,body.dark .dash-kpi-label,body.dark .goal-title,body.dark .cl,body.dark .dlb,body.dark .dash-section-title{color:#a9bdd3!important}
+body.dark .ct,body.dark .chktxt,body.dark .dvl,body.dark .tbl td,body.dark .fld input,body.dark .fld select,body.dark .fld textarea{color:#f4f8fc!important}
+body.dark .ssb,body.dark .goal-sub,body.dark .dash-kpi-sub,body.dark .focus-stat-sub,body.dark .ssp{color:#a9b9cb!important}
+body.dark .fld input,body.dark .fld select,body.dark .fld textarea,body.dark .modal-field-edit,body.dark .modal-field-select{background:#101b29!important;border-color:rgba(147,228,255,.18)!important;color:#f8fbff!important}
+body.dark .fld input::placeholder,body.dark .fld textarea::placeholder{color:#6f8296!important}
+body.dark .btn{color:#d9e6f2;border-color:rgba(147,228,255,.18);background:rgba(255,255,255,.025)}
+body.dark .btn:hover{color:#fff;border-color:rgba(147,228,255,.34);background:rgba(56,189,248,.10)}
+body.dark .card,body.dark .ca,body.dark .sc-,body.dark .dash-kpi,body.dark .goal-card,body.dark .wk-card,body.dark .decision-card{background:linear-gradient(180deg,rgba(147,228,255,.035),rgba(255,255,255,0)),#0a111a!important;border-color:rgba(147,228,255,.14)!important}
+body.dark .tag.tb,body.dark .tb{background:rgba(56,189,248,.15)!important;color:#bff0ff!important}
+body.dark .tag.tg,body.dark .tg{background:rgba(0,230,118,.14)!important;color:#94f7c6!important}
+body.dark .tag.tr,body.dark .tr{background:rgba(255,82,82,.14)!important;color:#ffb3b3!important}
+body.dark .tag.ta,body.dark .ta{background:rgba(255,209,102,.14)!important;color:#ffe29b!important}
+.report-filter-card{display:flex;align-items:end;gap:8px;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(79,70,229,.06)}
+.analytics-history-list{display:flex;flex-direction:column;gap:7px}
+.analytics-history-row{display:grid;grid-template-columns:84px 70px 54px 80px 68px 1fr 74px;gap:8px;align-items:center;border:1px solid var(--b);background:var(--bg3);border-radius:12px;padding:9px 11px;cursor:pointer;transition:all .15s}
+.analytics-history-row:hover{border-color:var(--ac2);transform:translateY(-1px);box-shadow:0 8px 22px rgba(56,189,248,.10)}
+.analytics-history-row.missed{border-style:dashed;opacity:.92}
+.analytics-history-row .ah-date{font-family:var(--mono);font-size:10px;color:var(--t3)}
+.analytics-history-row .ah-pair{font-family:var(--mono);font-size:12px;font-weight:800;color:var(--t)}
+.analytics-history-row .ah-small{font-size:11px;color:var(--t2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.analytics-history-row .ah-num{font-family:var(--mono);font-size:12px;font-weight:800}
+@media(max-width:620px){.analytics-history-row{grid-template-columns:1fr auto;gap:4px 8px}.analytics-history-row .ah-date{grid-column:1/2}.analytics-history-row .ah-status{grid-column:2/3;justify-self:end}.analytics-history-row .ah-pair{grid-column:1/2;font-size:15px}.analytics-history-row .ah-num{grid-column:2/3;justify-self:end}.analytics-history-row .ah-small{grid-column:1/-1;white-space:normal}.analytics-history-row .ah-r{grid-column:1/2}.analytics-history-row .ah-grade{grid-column:2/3;justify-self:end}}
+
+.report-filter-card .fld{min-width:132px}.report-filter-card .fld select,.report-filter-card .fld input{padding:7px 10px;font-size:12px}.report-summary-pill{font-size:10px;font-weight:800;color:var(--ac);background:var(--ac3);border:1px solid var(--b2);border-radius:999px;padding:6px 10px;margin-left:auto;align-self:center}
+body.dark .report-filter-card{background:#0a111a;border-color:rgba(147,228,255,.14);box-shadow:0 14px 36px rgba(0,0,0,.28)}
+body.dark .report-summary-pill{color:#bff0ff;background:rgba(56,189,248,.14);border-color:rgba(147,228,255,.22)}
+#discipline-popup.on{align-items:center;background:rgba(0,0,0,.82);backdrop-filter:blur(9px)}
+#discipline-popup .modal{max-width:620px!important;border-radius:26px!important;padding:28px!important;border:2px solid rgba(255,82,82,.55)!important;box-shadow:0 0 0 1px rgba(255,82,82,.18),0 30px 90px rgba(0,0,0,.62),0 0 70px rgba(255,82,82,.16)!important;background:linear-gradient(180deg,rgba(255,82,82,.08),rgba(255,255,255,0)),var(--bg2)!important}
+#dp-icon{font-size:64px!important;filter:drop-shadow(0 0 22px rgba(255,82,82,.42))}
+#dp-title{font-size:34px!important;line-height:1.08!important;letter-spacing:-.04em;text-transform:uppercase;color:#ff5252!important;text-shadow:0 0 28px rgba(255,82,82,.28)}
+#dp-msg{font-size:18px!important;line-height:1.65!important;color:var(--t)!important;font-weight:700!important;max-width:520px;margin:0 auto 18px!important}
+#dp-stats{font-size:15px!important;padding:14px!important;border-radius:16px!important;background:rgba(255,82,82,.09)!important;border-color:rgba(255,82,82,.24)!important;color:var(--t2)!important}
+.discipline-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.discipline-actions .btn{padding:13px!important;font-size:13px!important;border-radius:14px!important}.discipline-actions .stop-btn{background:linear-gradient(135deg,#ff5252,#b91c1c)!important;border-color:#ff5252!important;color:#fff!important;font-weight:900!important}.discipline-actions .review-btn{background:rgba(56,189,248,.12)!important;border-color:rgba(147,228,255,.30)!important;color:var(--ac2)!important;font-weight:800!important}
+@media(max-width:620px){#discipline-popup .modal{max-width:92vw!important;padding:22px!important}#dp-title{font-size:26px!important}#dp-msg{font-size:15px!important}.discipline-actions{grid-template-columns:1fr}.report-filter-card{display:grid;grid-template-columns:1fr 1fr}.report-summary-pill{grid-column:1/-1;margin-left:0;text-align:center}.report-filter-card .fld{min-width:0}}
+
+
+/* === v7.8.9 Dashboard Range + TikTok Share Card === */
+.dash-range-card{display:flex;align-items:end;gap:8px;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--b);border-radius:14px;padding:12px 14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(79,70,229,.06)}
+.dash-range-card .fld{min-width:150px}.dash-range-card .fld select{padding:8px 11px;font-size:12px}.dash-range-summary{font-size:10px;font-weight:800;color:var(--ac);background:var(--ac3);border:1px solid var(--b2);border-radius:999px;padding:7px 12px;margin-left:auto;align-self:center}
+.share-btn{background:linear-gradient(135deg,#22d3ee,#4f46e5)!important;border-color:rgba(125,211,252,.35)!important;color:#fff!important;font-weight:800!important;box-shadow:0 10px 24px rgba(56,189,248,.14)}
+#share-card-wrap{position:fixed;left:-2000px;top:0;width:1080px;height:1920px;z-index:-1;pointer-events:none}
+.share-card{width:1080px;height:1920px;background:radial-gradient(circle at 20% -10%,rgba(56,189,248,.28),transparent 34%),radial-gradient(circle at 90% 0%,rgba(167,139,250,.22),transparent 30%),linear-gradient(180deg,#07111f,#05080d);color:#f8fafc;padding:72px;font-family:'Inter','IBM Plex Sans Thai',sans-serif;position:relative;overflow:hidden}
+.share-card:before{content:'';position:absolute;right:-120px;top:170px;width:420px;height:420px;border-radius:50%;background:rgba(56,189,248,.10);border:1px solid rgba(125,211,252,.18)}
+.share-brand{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:800;letter-spacing:.08em;color:#7dd3fc;text-transform:uppercase}.share-title{font-size:74px;line-height:1.03;font-weight:800;margin-top:28px;letter-spacing:-.04em}.share-range{font-family:'IBM Plex Mono',monospace;color:#c7d4e1;font-size:24px;margin-top:16px}.share-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:70px}.share-stat{background:rgba(255,255,255,.06);border:1px solid rgba(125,211,252,.18);border-radius:30px;padding:30px;min-height:170px}.share-label{font-size:20px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#9fb3c8}.share-value{font-family:'IBM Plex Mono',monospace;font-size:54px;font-weight:800;margin-top:18px;line-height:1}.share-green{color:#00e676}.share-red{color:#ff5252}.share-cyan{color:#38bdf8}.share-amber{color:#ffd166}.share-section{margin-top:58px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.10);border-radius:34px;padding:34px}.share-section h2{font-size:30px;margin-bottom:22px;color:#e0f2fe}.share-list{display:flex;flex-direction:column;gap:16px}.share-item{font-size:30px;line-height:1.35;color:#e2e8f0}.share-footer{position:absolute;left:72px;right:72px;bottom:58px;display:flex;justify-content:space-between;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:22px;color:#7d8da3}.share-hide-money .money-value{filter:blur(12px)}
+body.dark .dash-range-card{background:#0a111a;border-color:rgba(147,228,255,.14);box-shadow:0 14px 36px rgba(0,0,0,.28)}
+@media(max-width:620px){.dash-range-card{display:grid;grid-template-columns:1fr 1fr}.dash-range-card .fld{min-width:0}.dash-range-summary{grid-column:1/-1;margin-left:0;text-align:center}.dash-range-card .btn{width:100%}}
+
+
+/* === v7.9.0 Share Pro Templates + Audit Metrics === */
+.share-export-panel{display:flex;align-items:end;gap:8px;flex-wrap:wrap;background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,0)),var(--bg2);border:1px solid var(--b);border-radius:16px;padding:12px 14px;margin:10px 0 12px;box-shadow:0 10px 28px rgba(15,23,42,.08)}
+.share-export-panel .fld{min-width:145px}.share-export-panel .fld select{padding:8px 11px;font-size:12px}.share-toggle{display:flex;align-items:center;gap:6px;border:1px solid var(--b2);background:var(--bg3);border-radius:10px;padding:8px 10px;font-size:11px;font-weight:800;color:var(--t2);cursor:pointer}.share-toggle input{accent-color:var(--ac)}
+.share-preview-chip{font-size:10px;font-weight:900;color:var(--ac);background:var(--ac3);border:1px solid var(--b2);border-radius:999px;padding:8px 12px;align-self:center}.metric-note-card{background:var(--bg2);border:1px dashed var(--b2);border-radius:14px;padding:12px 14px;margin-bottom:10px;color:var(--t2);font-size:12px;line-height:1.65}.metric-note-card strong{color:var(--ac)}
+.share-card{isolation:isolate}.share-card:after{content:'';position:absolute;inset:36px;border:1px solid rgba(255,255,255,.08);border-radius:42px;pointer-events:none}.share-hook{font-size:36px;line-height:1.25;font-weight:900;margin-top:34px;color:#fff;max-width:850px}.share-mode-badge{display:inline-flex;margin-top:18px;border-radius:999px;padding:11px 18px;font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07)}.share-watermark{position:absolute;right:54px;top:48px;font-family:'IBM Plex Mono',monospace;font-size:116px;font-weight:900;letter-spacing:-.08em;opacity:.045;transform:rotate(-8deg)}
+.share-card.template-neon{background:radial-gradient(circle at 15% 0%,rgba(34,211,238,.34),transparent 34%),radial-gradient(circle at 100% 12%,rgba(124,58,237,.24),transparent 33%),linear-gradient(180deg,#06101a,#02050a);color:#f8fafc}.share-card.template-neon .share-brand,.share-card.template-neon .share-cyan{color:#67e8f9}.share-card.template-neon .share-stat{border-color:rgba(103,232,249,.24);box-shadow:0 0 32px rgba(34,211,238,.08)}
+.share-card.template-red{background:radial-gradient(circle at 20% 0%,rgba(255,82,82,.34),transparent 34%),linear-gradient(180deg,#190406,#050000);color:#fff5f5}.share-card.template-red .share-brand,.share-card.template-red .share-cyan{color:#ff8585}.share-card.template-red .share-stat,.share-card.template-red .share-section{border-color:rgba(255,82,82,.25);background:rgba(255,82,82,.07)}.share-card.template-red .share-title{color:#fff}.share-card.template-red .share-mode-badge{color:#fecaca;border-color:rgba(255,82,82,.35)}
+.share-card.template-gold{background:radial-gradient(circle at 70% 0%,rgba(255,209,102,.32),transparent 34%),linear-gradient(180deg,#1a1400,#060500);color:#fff7d6}.share-card.template-gold .share-brand,.share-card.template-gold .share-cyan{color:#ffd166}.share-card.template-gold .share-stat,.share-card.template-gold .share-section{border-color:rgba(255,209,102,.28);background:rgba(255,209,102,.06)}.share-card.template-gold .share-mode-badge{color:#fde68a;border-color:rgba(255,209,102,.35)}
+.share-card.template-clean{background:#f8fafc;color:#0f172a}.share-card.template-clean:after{border-color:rgba(15,23,42,.12)}.share-card.template-clean .share-brand{color:#0f172a}.share-card.template-clean .share-title,.share-card.template-clean .share-hook,.share-card.template-clean .share-section h2{color:#0f172a}.share-card.template-clean .share-range,.share-card.template-clean .share-label,.share-card.template-clean .share-footer,.share-card.template-clean .share-item{color:#334155}.share-card.template-clean .share-stat,.share-card.template-clean .share-section{background:#fff;border-color:#dbe3ef;box-shadow:0 18px 44px rgba(15,23,42,.08)}.share-card.template-clean .share-mode-badge{background:#eef6ff;color:#0284c7;border-color:#bae6fd}
+.share-card.template-shock{background:linear-gradient(135deg,#050505 0%,#050505 52%,#ffd400 52%,#ffd400 100%);color:#fff}.share-card.template-shock .share-brand{color:#ffd400}.share-card.template-shock .share-title{font-size:86px;text-transform:uppercase;color:#fff;text-shadow:5px 5px 0 #000}.share-card.template-shock .share-stat{background:#080808;border:3px solid #ffd400;box-shadow:12px 12px 0 rgba(0,0,0,.8)}.share-card.template-shock .share-section{background:#080808;border:3px solid #fff}.share-card.template-shock .share-section h2{color:#ffd400}.share-card.template-shock .share-mode-badge{background:#ffd400;color:#000;border-color:#fff}.share-card.template-shock .share-footer{color:#111}.share-card.template-shock .share-watermark{opacity:.08;color:#000}
+/* === v7.9.2 Visual Backup Pro: data ring + dashboard clean === */
+.share-card:before{display:none!important}
+.share-data-ring{position:absolute;right:72px;top:210px;width:300px;height:300px;border-radius:50%;background:conic-gradient(var(--share-ring-color,#38bdf8) var(--share-ring-pct,0%),rgba(255,255,255,.08) 0);display:flex;align-items:center;justify-content:center;box-shadow:0 0 42px rgba(56,189,248,.18);z-index:1}
+.share-data-ring:before{content:'';position:absolute;inset:18px;border-radius:50%;background:rgba(2,6,12,.92);border:1px solid rgba(255,255,255,.09)}
+.share-ring-inner{position:relative;z-index:2;text-align:center}.share-ring-label{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:900;letter-spacing:.12em;color:#9fb3c8}.share-ring-value{font-family:'IBM Plex Mono',monospace;font-size:54px;font-weight:900;margin-top:8px;color:var(--share-ring-color,#38bdf8)}
+.share-card.template-red .share-data-ring{--share-ring-color:#ff5252;box-shadow:0 0 44px rgba(255,82,82,.22)}
+.share-card.template-gold .share-data-ring{--share-ring-color:#ffd166;box-shadow:0 0 44px rgba(255,209,102,.20)}
+.share-card.template-clean .share-data-ring{box-shadow:0 18px 50px rgba(15,23,42,.12)}.share-card.template-clean .share-data-ring:before{background:#fff;border-color:#dbe3ef}.share-card.template-clean .share-ring-label{color:#475569}
+.share-card.template-shock .share-data-ring{--share-ring-color:#ffd400;right:58px;top:190px;box-shadow:12px 12px 0 rgba(0,0,0,.85);border:3px solid #000}.share-card.template-shock .share-data-ring:before{background:#080808;border:3px solid #fff}
+@media(max-width:620px){.dash-range-card{margin-bottom:12px}}
+
+body.dark .share-export-panel{background:#0a111a;border-color:rgba(147,228,255,.14);box-shadow:0 14px 36px rgba(0,0,0,.28)}
+@media(max-width:620px){.share-export-panel{display:grid;grid-template-columns:1fr 1fr}.share-export-panel .fld{min-width:0}.share-export-panel .share-btn{grid-column:1/-1}.share-preview-chip{grid-column:1/-1;text-align:center}.metric-note-card{font-size:11px}}
+
+
+/* === v7.9.2 VISUAL REVIEW + BACKUP + SETUP ANALYTICS === */
+.pro-panel{background:var(--bg2);border:1px solid var(--b);border-radius:16px;padding:14px;margin-bottom:10px;box-shadow:0 2px 10px rgba(79,70,229,.07)}
+.pro-panel-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;flex-wrap:wrap}.pro-panel-title strong{font-size:12px;color:var(--t2)}.pro-sub{font-size:10px;color:var(--t3);font-weight:600}
+.backup-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.backup-action{border-radius:12px;padding:12px;border:1px solid var(--b);background:var(--bg3);cursor:pointer;transition:.16s;text-align:left}.backup-action:hover{transform:translateY(-1px);border-color:var(--ac2);background:var(--bg4)}.backup-action b{display:block;font-size:12px;color:var(--t);margin-bottom:3px}.backup-action span{font-size:10px;color:var(--t3)}
+.backup-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}.backup-stat{background:var(--bg3);border:1px solid var(--b);border-radius:12px;padding:10px}.backup-stat .k{font-size:9px;color:var(--t3);letter-spacing:.08em;text-transform:uppercase;font-weight:800}.backup-stat .v{font-family:var(--mono);font-size:15px;font-weight:800;margin-top:3px}
+.setup-pro-table{width:100%;border-collapse:collapse;font-size:11px}.setup-pro-table th{color:var(--t3);font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-align:left;background:var(--bg4);padding:8px;border-bottom:1px solid var(--b)}.setup-pro-table td{padding:8px;border-bottom:1px solid var(--b);color:var(--t2);vertical-align:top}.setup-pro-table tr:hover td{background:var(--bg4)}.setup-name{font-weight:800;color:var(--t);font-size:12px}.setup-mistake{font-size:10px;color:var(--rd)}
+.insight-pro-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.insight-pro-card{background:var(--bg3);border:1px solid var(--b);border-radius:12px;padding:12px;min-height:80px}.insight-pro-card b{display:block;font-size:11px;margin-bottom:5px;color:var(--t)}.insight-pro-card span{font-size:11px;color:var(--t2);line-height:1.55}
+.vr-filter-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}.vr-chip{padding:6px 10px;border-radius:999px;border:1px solid var(--b2);background:var(--bg3);color:var(--t3);font-size:11px;font-weight:700;cursor:pointer;transition:.15s}.vr-chip:hover{border-color:var(--ac2);color:var(--t)}.vr-chip.on{background:var(--ac);border-color:var(--ac);color:#fff;box-shadow:0 0 0 3px var(--ac3)}
+.visual-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.vr-card{background:var(--bg3);border:1px solid var(--b);border-radius:14px;padding:10px;cursor:pointer;transition:.16s;overflow:hidden}.vr-card:hover{transform:translateY(-2px);border-color:var(--ac2);box-shadow:0 10px 28px rgba(0,0,0,.12)}.vr-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.vr-pair{font-family:var(--mono);font-size:13px;font-weight:900;color:var(--t)}.vr-meta{font-size:10px;color:var(--t3);font-family:var(--mono)}.vr-img-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}.vr-img{height:78px;border-radius:9px;background:var(--bg4);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--t3);font-size:9px;text-align:center}.vr-img img{width:100%;height:100%;object-fit:cover;display:block}.vr-footer{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.vr-lesson{font-size:11px;color:var(--t2);line-height:1.4;max-height:32px;overflow:hidden}.vr-r{font-family:var(--mono);font-size:12px;font-weight:900}
+body.dark .pro-panel,body.dark .backup-action,body.dark .backup-stat,body.dark .insight-pro-card,body.dark .vr-card{border-color:rgba(125,211,252,.12)}body.dark .vr-card:hover{box-shadow:0 18px 45px rgba(0,0,0,.34),0 0 0 1px rgba(56,189,248,.12)}@media(max-width:720px){.backup-grid,.backup-stat-row,.insight-pro-grid,.visual-review-grid{grid-template-columns:1fr}.vr-img{height:92px}}
+
 </style>
 </head>
 <body class="dark">
 <nav class="nav">
-  <div class="logo">MIND<s>/</s>EDGE <span style="color:var(--ac2)">Journal v7.8</span></div>
+  <div class="logo">MIND<s>/</s>EDGE <span style="color:var(--ac2)">Journal v7.9.2</span></div>
   <div class="ntab on" onclick="go('dashboard')">🏠 Dashboard</div>
   <div class="ntab" onclick="go('form')">บันทึก</div>
   <div class="ntab" onclick="go('list')">รายการ</div>
@@ -594,11 +749,17 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
     </div>
   </div>
 
+
+  <!-- Performance Snapshot Range -->
+  <div class="dash-range-card no-print">
+    <div class="fld"><label>Performance Snapshot</label><select id="dash-range" onchange="onDashboardRangeChange();renderDashboard()"><option value="today">Today</option><option value="week">This Week</option><option value="month" selected>This Month</option><option value="all">All Time</option></select></div>
+    <div class="dash-range-summary" id="dash-range-summary">This Month</div><button class="btn" onclick="go('analytics')" style="padding:8px 12px;font-size:11px">Share / Export →</button>
+  </div>
   <!-- KPI row -->
   <div class="dash-kpi-grid" id="dash-kpi-grid">
     <div class="dash-kpi"><div class="dash-kpi-label">Trades</div><div class="dash-kpi-val sn" id="dk-trades">0</div><div class="dash-kpi-sub">ทั้งหมด</div></div>
     <div class="dash-kpi"><div class="dash-kpi-label">Win Rate</div><div class="dash-kpi-val" id="dk-wr">—</div><div class="dash-kpi-sub">closed trades</div></div>
-    <div class="dash-kpi"><div class="dash-kpi-label">Avg R</div><div class="dash-kpi-val" id="dk-avgr">—</div><div class="dash-kpi-sub">realized</div></div>
+    <div class="dash-kpi"><div class="dash-kpi-label">SUM R</div><div class="dash-kpi-val" id="dk-avgr">—</div><div class="dash-kpi-sub">Avg R/trade</div></div>
     <div class="dash-kpi"><div class="dash-kpi-label">Open</div><div class="dash-kpi-val sam" id="dk-open">0</div><div class="dash-kpi-sub">กำลังเปิด</div></div>
   </div>
 
@@ -1025,9 +1186,41 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
     </div>
   </div>
 
-  <div style="display:flex;gap:6px;margin-bottom:40px">
-    <button class="btn bp" id="save-btn" onclick="doSave('closed')" style="flex:1;padding:10px;font-size:13px">บันทึก Trade</button>
+  <!-- MISSED ENTRY LOG -->
+  <div class="card missed-card" id="sec-missed">
+    <div class="ct"><span class="tag ta">Missed Entry Log</span><span style="font-size:11px;color:var(--t3);font-weight:500">ใช้เมื่อวางแผนแล้วเข้าไม่ทัน / ลังเล / ไม่ได้กด</span></div>
+    <div class="missed-hint">บันทึกไม้ที่ “ควรเข้าแต่ไม่ได้เข้า” เพื่อแยกปัญหา execution ออกจากกลยุทธ์จริง — ไม่เอาไปรวม Winrate / P&L จริง</div>
+    <div class="g3" style="margin-bottom:8px">
+      <div class="fld"><label>Miss Reason</label>
+        <select id="f-missed-reason" onchange="autosaveDraft()">
+          <option value="">เลือกเหตุผล</option>
+          <option>เข้าไม่ทัน</option>
+          <option>ลังเล / ไม่กล้ากด</option>
+          <option>กลัวหลังแพ้</option>
+          <option>ตั้ง Alert ไม่ทัน</option>
+          <option>ไม่อยู่หน้าจอ</option>
+          <option>เห็นช้า</option>
+          <option>Spread / News</option>
+          <option>Setup ยังไม่ชัวร์</option>
+        </select>
+      </div>
+      <div class="fld"><label>Would Result</label>
+        <select id="f-missed-would" onchange="autosaveDraft()">
+          <option value="Unknown">Unknown</option>
+          <option value="Win">Would Win</option>
+          <option value="Loss">Would Loss</option>
+          <option value="BE">Would BE</option>
+        </select>
+      </div>
+      <div class="fld"><label>Missed R</label><input class="missed-r-input" type="number" id="f-missed-r" step="0.01" placeholder="เช่น 1.50" oninput="autosaveDraft()"></div>
+    </div>
+    <div class="fld"><label>Missed Note</label><textarea id="f-missed-note" placeholder="เช่น ราคาแตะ POI แล้วไป TP2 แต่ตอนนั้นลังเล เพราะเพิ่งแพ้ก่อนหน้า" oninput="autosaveDraft()"></textarea></div>
+  </div>
+
+  <div style="display:flex;gap:6px;margin-bottom:40px;flex-wrap:wrap">
+    <button class="btn bp" id="save-btn" onclick="doSave('closed')" style="flex:1;padding:10px;font-size:13px;min-width:150px">บันทึก Trade</button>
     <button class="btn ba" onclick="doSave('open')" style="padding:10px;font-size:12px">Pre-only</button>
+    <button class="btn btn-missed" onclick="doSave('missed')" style="padding:10px;font-size:12px">Missed Entry</button>
     <button class="btn" onclick="clearForm()">ล้าง</button>
   </div>
   </div><!-- /form-wrap -->
@@ -1042,7 +1235,7 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
       <select id="fp" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">ทุก Pair</option></select>
       <select id="fd" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">Dir</option><option>Long</option><option>Short</option></select>
       <select id="fg" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">Grade</option><option>A</option><option>B</option><option>C</option></select>
-      <select id="fst" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">Status</option><option value="open">Open</option><option value="closed">ปิด</option></select>
+      <select id="fst" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">Status</option><option value="open">Open</option><option value="closed">ปิด</option><option value="missed">Missed</option></select>
       <select id="ftag" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">Setup</option></select>
       <select id="fmkt" onchange="renderList()" style="background:var(--bg2);border:1px solid var(--b);color:var(--t2);padding:4px 7px;border-radius:5px;font-family:var(--sans);font-size:11px"><option value="">Condition</option><option>Trending</option><option>Range</option><option>Expansion</option><option>Choppy</option><option>Pre-news</option><option>Post-news</option></select>
     </div>
@@ -1062,8 +1255,25 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
       <select id="analytics-acct" onchange="renderAnalytics()" style="background:var(--bg4);border:1px solid var(--ac3);color:var(--ac);padding:4px 10px;border-radius:7px;font-family:var(--sans);font-size:11px;font-weight:700"></select>
     </div>
   </div>
+  <div class="report-filter-card no-print" id="analytics-date-filter">
+    <div class="fld"><label>ช่วงข้อมูล</label><select id="analytics-range" onchange="onReportRangeChange('analytics');renderAnalytics()"><option value="all">All Time</option><option value="today">Today</option><option value="yesterday">Yesterday</option><option value="week">This Week</option><option value="month">This Month</option><option value="custom">Custom</option></select></div>
+    <div class="fld"><label>From</label><input type="date" id="analytics-from" onchange="onReportDateInput('analytics');renderAnalytics()"></div>
+    <div class="fld"><label>To</label><input type="date" id="analytics-to" onchange="onReportDateInput('analytics');renderAnalytics()"></div>
+    <div class="report-summary-pill" id="analytics-filter-summary">All Time</div>
+  </div>
+  <div class="metric-note-card no-print"><strong>Share Studio</strong> · Export recap 9:16 สำหรับ TikTok/Story ใช้ข้อมูลตามช่วงวันที่ที่เลือกใน Analytics</div>
+  <div class="share-export-panel no-print">
+    <div class="fld"><label>Export Theme</label><select id="share-template-analytics"><option value="neon">Dark Neon</option><option value="red">Red Discipline</option><option value="gold">Gold Profit</option><option value="clean">Minimal Clean</option><option value="shock">TikTok Shock</option></select></div>
+    <div class="fld"><label>Card Mode</label><select id="share-mode-analytics"><option value="auto">Auto</option><option value="profit">Profit Mode</option><option value="discipline">Discipline Mode</option><option value="lesson">Lesson Mode</option><option value="missed">Missed Entry Mode</option></select></div>
+    <label class="share-toggle"><input type="checkbox" id="share-hide-money-analytics" onchange="window.shareHideMoney=this.checked"> Hide Money</label>
+    <button class="btn share-btn" onclick="exportShareCard('analytics')">Export 9:16 TikTok</button>
+  </div>
   <div class="sg" id="sg1"></div>
   <div class="sg" id="sg2" style="margin-top:-3px"></div>
+  <div class="sg" id="sg3" style="margin-top:-3px"></div>
+  
+  <div class="pro-panel" id="setup-tag-analytics-pro"><div class="pro-panel-title"><strong>📊 Setup Tag Analytics Pro</strong><span class="pro-sub">กลยุทธ์ไหนทำเงิน / กลยุทธ์ไหนควรลด</span></div><div id="setup-tag-pro-body"></div></div>
+  <div class="metric-note-card" id="analytics-metric-note"><strong>Metric Note:</strong> Winrate ไม่นับ BE · SUM Net R = ผลรวม R ของช่วงที่เลือก · Missed Entry ไม่ถูกรวมใน P&L จริง</div>
   <!-- ACCOUNT COMPARISON STRIP -->
   <div id="acct-compare-strip" style="margin-bottom:10px"></div>
   <div class="ca">
@@ -1103,6 +1313,10 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
     <div class="ct"><span class="tag tg">Performance Heatmap — วัน × Session</span><span style="font-size:10px;color:var(--t3);margin-left:4px">สีเข้ม = Win rate สูง / ขนาดตัวเลข = จำนวน trades</span></div>
     <div id="perf-heatmap"></div>
   </div>
+  <div class="ca" style="margin-top:9px">
+    <div class="ct"><span class="tag tb">Trade History ตามช่วงข้อมูล</span><span style="font-size:10px;color:var(--t3);margin-left:4px">อิง filter เดียวกับ Analytics</span></div>
+    <div id="analytics-history"></div>
+  </div>
 </div>
 
 <!-- ===== INSIGHTS ===== -->
@@ -1111,6 +1325,13 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
     <div class="sl" style="margin:0">Insights — ระบบสอนกลับ</div>
     <div id="insights-acct-badge" style="font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;background:var(--bg4);border:1px solid var(--b)"></div>
   </div>
+  <div class="report-filter-card no-print" id="insights-date-filter">
+    <div class="fld"><label>ช่วงข้อมูล</label><select id="insights-range" onchange="onReportRangeChange('insights');renderInsights()"><option value="all">All Time</option><option value="today">Today</option><option value="yesterday">Yesterday</option><option value="week">This Week</option><option value="month">This Month</option><option value="custom">Custom</option></select></div>
+    <div class="fld"><label>From</label><input type="date" id="insights-from" onchange="onReportDateInput('insights');renderInsights()"></div>
+    <div class="fld"><label>To</label><input type="date" id="insights-to" onchange="onReportDateInput('insights');renderInsights()"></div>
+    <div class="report-summary-pill" id="insights-filter-summary">All Time</div>
+  </div>
+  <div class="pro-panel" id="mistake-mood-insight-pro"><div class="pro-panel-title"><strong>🧠 Mistake × Mood Insight</strong><span class="pro-sub">ดูว่าอารมณ์แบบไหนพาไปพลาดบ่อย</span></div><div id="mistake-mood-pro-body"></div></div>
   <div class="card">
     <div class="ct"><span class="tag tg">Best Conditions</span></div>
     <div id="bc-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px"></div>
@@ -1150,12 +1371,21 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
     </div>
     <button class="btn bp" onclick="newReview()">+ Review ใหม่</button>
   </div>
+  
+  <div class="pro-panel" id="visual-review-pro"><div class="pro-panel-title"><strong>🖼️ Visual Trade Review</strong><span class="pro-sub">กดดู Setup A / Win / Loss / Missed ด้วยภาพ เพื่อทบทวนเร็ว</span></div><div class="vr-filter-row" id="vr-filter-row"><button class="vr-chip on" data-vr="all" onclick="setVisualReviewFilter('all')">All</button><button class="vr-chip" data-vr="setupA" onclick="setVisualReviewFilter('setupA')">Setup A</button><button class="vr-chip" data-vr="setupB" onclick="setVisualReviewFilter('setupB')">Setup B</button><button class="vr-chip" data-vr="setupC" onclick="setVisualReviewFilter('setupC')">Setup C</button><button class="vr-chip" data-vr="win" onclick="setVisualReviewFilter('win')">Win</button><button class="vr-chip" data-vr="loss" onclick="setVisualReviewFilter('loss')">Loss</button><button class="vr-chip" data-vr="be" onclick="setVisualReviewFilter('be')">BE</button><button class="vr-chip" data-vr="missed" onclick="setVisualReviewFilter('missed')">Missed</button><button class="vr-chip" data-vr="fomo" onclick="setVisualReviewFilter('fomo')">FOMO</button><button class="vr-chip" data-vr="notPlan" onclick="setVisualReviewFilter('notPlan')">Not Follow Plan</button></div><div id="visual-review-grid" class="visual-review-grid"></div></div>
   <div id="review-list"></div>
 </div>
 
 <!-- ===== SETTINGS ===== -->
 <div class="page" id="page-settings">
   <div class="sl">Settings</div>
+
+  <div class="pro-panel no-print" id="backup-center-pro">
+    <div class="pro-panel-title"><strong>🛡️ Backup Center</strong><span class="pro-sub">กันข้อมูลหาย สำหรับระบบ localStorage</span></div>
+    <div class="backup-grid"><div class="backup-action" onclick="doExp()"><b>Export JSON</b><span>สำรองข้อมูลครบ ใช้นำกลับเข้าได้</span></div><div class="backup-action" onclick="expCSV()"><b>Export CSV</b><span>เปิดใน Excel / Google Sheets</span></div><div class="backup-action" onclick="doImp()"><b>Import Backup</b><span>นำไฟล์ JSON กลับเข้า account ปัจจุบัน</span></div><div class="backup-action" onclick="go('analytics')"><b>Check Data</b><span>ดูช่วงข้อมูล + ประวัติเทรด</span></div></div>
+    <div class="backup-stat-row" id="backup-center-stats"></div>
+  </div>
+
 
   <div class="card no-print" id="backup-card">
     <div class="ct"><span class="tag tg">Backup</span><span style="font-size:11px;color:var(--t3)">กันข้อมูลหาย / ส่งออกเฉพาะ Account ปัจจุบัน</span></div>
@@ -1164,6 +1394,7 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
       <button class="btn" onclick="doImp()" style="padding:8px 14px;font-size:12px">นำเข้า Backup</button>
       <span style="font-size:11px;color:var(--t3)">แนะนำ backup หลังจบสัปดาห์ หรือก่อนแก้ระบบ</span>
     </div>
+    <div class="backup-reminder" id="backup-reminder-box">⚠️ แนะนำให้ Backup ตอนนี้ เพื่อกันข้อมูลหาย <button onclick="doExp();dismissBackupReminder()">Backup Now</button><button onclick="dismissBackupReminder()">ซ่อน</button></div>
   </div>
 
 
@@ -1274,6 +1505,34 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
 
 
 
+
+<!-- SHARE CARD EXPORT 9:16 -->
+<div id="share-card-wrap" aria-hidden="true">
+  <div id="share-card" class="share-card template-neon">
+    <div class="share-watermark">EDGE</div>
+    <div class="share-brand">MIND/EDGE JOURNAL</div>
+    <div class="share-mode-badge" id="sc-mode">DISCIPLINE MODE</div>
+    <div class="share-title" id="sc-title">Trading<br>Recap</div>
+    <div class="share-hook" id="sc-hook">สัปดาห์นี้ไม่ได้แพ้ตลาด…แพ้วินัยตัวเอง</div>
+    <div class="share-range" id="sc-range">This Month</div>
+    <div class="share-data-ring" id="sc-ring" aria-label="Win rate ring">
+      <div class="share-ring-inner">
+        <div class="share-ring-label" id="sc-ring-label">WIN RATE</div>
+        <div class="share-ring-value" id="sc-ring-value">0%</div>
+      </div>
+    </div>
+    <div class="share-grid">
+      <div class="share-stat"><div class="share-label">Trades</div><div class="share-value share-cyan" id="sc-trades">0</div></div>
+      <div class="share-stat"><div class="share-label">Win Rate</div><div class="share-value" id="sc-winrate">—</div></div>
+      <div class="share-stat"><div class="share-label">Net P&L</div><div class="share-value money-value" id="sc-pnl">$0</div></div>
+      <div class="share-stat"><div class="share-label">Sum R</div><div class="share-value" id="sc-r">0.00R</div></div>
+    </div>
+    <div class="share-section"><h2 id="sc-mistake-title">Top Mistakes</h2><div class="share-list" id="sc-mistakes"><div class="share-item">—</div></div></div>
+    <div class="share-section"><h2 id="sc-improve-title">Next Improvement</h2><div class="share-list" id="sc-improve"><div class="share-item">—</div></div></div>
+    <div class="share-footer"><span id="sc-account">Account</span><span>Not financial advice</span></div>
+  </div>
+</div>
+
 <!-- DISCIPLINE POPUP -->
 <div class="ov" id="discipline-popup" onclick="closeDisciplinePopup(event)">
   <div class="modal" style="max-width:420px;text-align:center;border-width:2px" onclick="event.stopPropagation()">
@@ -1281,7 +1540,7 @@ body:not(.dark) .focus-stat-card,body:not(.dark) .focus-session-pill,body:not(.d
     <div id="dp-title" style="font-size:18px;font-weight:800;color:var(--rd);margin-bottom:8px">เตือนสติ</div>
     <div id="dp-msg" style="font-size:13px;color:var(--t2);line-height:1.7;margin-bottom:14px"></div>
     <div id="dp-stats" style="background:var(--bg4);border:1px solid var(--b);border-radius:12px;padding:10px;margin-bottom:14px;font-family:var(--mono);font-size:12px;color:var(--t2)"></div>
-    <button class="btn bp" onclick="closeDisciplinePopup()" style="width:100%;padding:10px;font-size:13px">รับทราบ / กลับไปทำตามแผน</button>
+    <div class="discipline-actions"><button class="btn stop-btn" onclick="closeDisciplinePopup()">หยุดวันนี้ / รักษาวินัย</button><button class="btn review-btn" onclick="closeDisciplinePopup();go('review')">เปิด Review วันนี้</button></div>
   </div>
 </div>
 
@@ -1318,6 +1577,7 @@ async function saveTradeToCloud(t){if(!cloudMode){console.log('Cloud Sync OFF: s
 async function saveTradeOnline(t){return saveTradeToCloud(t);}
 async function loadTradesFromCloud(showToast){if(showToast===undefined)showToast=true;if(!cloudMode){loadAccountTrades();setCloudStatus('local','Cloud Sync OFF — using localStorage');renderDashboard();return trades;}if(!sbClient&&!initSupabase())return trades;setCloudStatus('syncing','Loading trades from Supabase...');try{var res=await sbClient.from('trades').select('*').eq('user_id',String(activeAccountId||'personal')).order('date',{ascending:false});if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}trades=(res.data||[]).map(cloudRowToTrade);saveData();setCloudStatus('online','Loaded '+trades.length+' rows from Supabase');if(showToast)toast('☁ Loaded from Supabase: '+trades.length+' rows');updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();if(cur&&cur.id==='page-insights')renderInsights();if(cur&&cur.id==='page-review')renderReviews();return trades;}catch(e){console.error('Supabase load exception:',e);setCloudStatus('offline',e.message||'Load failed');if(showToast)toast('Sync fail');return trades;}}
 async function syncFromCloud(){return loadTradesFromCloud(true);}
+
 
 
 var DEFAULT_TEMPLATES=[
@@ -1388,7 +1648,7 @@ function loadAccountTrades(){
     }
   }
 }
-function saveData(){try{var key=getAccountDBKey(activeAccountId);localStorage.setItem(key,JSON.stringify(trades));return true;}catch(e){console.error('localStorage save failed:',e);alert('บันทึก localStorage ไม่สำเร็จ: '+(e.message||e));return false;}}
+/* saveData is defined once below with write verification + fallback backup. */
 function switchAccount(id){
   activeAccountId=id;
   settings.activeAccountId=id;
@@ -1424,6 +1684,8 @@ renderDashboard();
     if(balEl){balEl.value=acct.balance;onCalc();}
   }
   toast('เปลี่ยนเป็น Account: '+(acct?acct.name:''));
+  // switchAccountCloudRefresh: ถ้าเปิด Cloud Sync ให้โหลดข้อมูล account นี้จาก Supabase ทันที
+  try{if(typeof cloudMode!=='undefined'&&cloudMode&&typeof loadTradesFromCloud==='function'){loadTradesFromCloud(false);}}catch(e){console.error('cloud reload after switch failed',e);}
 }
 function addAccount(){
   var name=prompt('ชื่อ Account ใหม่ (เช่น FTMO Challenge, Personal)');
@@ -1518,7 +1780,54 @@ function migrateTradeV5(t){
   if(!t.exitDate&&t.date&&t.exitTime){t.exitDate=t.date;}
   return t;
 }
-function saveData(){try{localStorage.setItem(getAccountDBKey(activeAccountId),JSON.stringify(trades));return true;}catch(e){console.error('localStorage save failed:',e);alert('บันทึก localStorage ไม่สำเร็จ: '+(e.message||e));return false;}}
+function saveData(){
+  var key=getAccountDBKey(activeAccountId);
+  var payload=JSON.stringify(trades);
+  try{
+    localStorage.setItem(key,payload);
+    localStorage.setItem('smc_v6_last_active_key',key);
+    localStorage.setItem('smc_v6_last_backup',payload);
+    var check=JSON.parse(localStorage.getItem(key)||'[]');
+    if(!Array.isArray(check))throw new Error('readback failed');
+    return true;
+  }catch(e){
+    alert('บันทึกไม่สำเร็จ: พื้นที่ browser/localStorage อาจเต็ม หรือโหมดส่วนตัวกำลังบล็อกข้อมูล\nแนะนำกด Backup Now แล้วลองลบรูป/URL รูปที่ยาวเกินไป');
+    console.error('saveData failed',e);
+    return false;
+  }
+}
+
+function shouldSuggestBackup(){
+  var closed=trades.filter(isClosedRealTrade).length;
+  var total=trades.length;
+  var count=Math.max(closed,total);
+  if(count>0&&count%5===0){
+    var key='smc_v6_backup_reminded_'+activeAccountId+'_'+count;
+    try{return localStorage.getItem(key)!=='1';}catch(e){return true;}
+  }
+  return false;
+}
+function markBackupSuggested(){
+  var count=Math.max(trades.filter(isClosedRealTrade).length,trades.length);
+  try{localStorage.setItem('smc_v6_backup_reminded_'+activeAccountId+'_'+count,'1');}catch(e){}
+}
+function showBackupReminder(){
+  var box=document.getElementById('backup-reminder-box');
+  if(box)box.classList.add('on');
+  markBackupSuggested();
+}
+function dismissBackupReminder(){
+  var box=document.getElementById('backup-reminder-box');
+  if(box)box.classList.remove('on');
+}
+function maybeSuggestBackupAfterSave(){
+  if(!shouldSuggestBackup())return;
+  showBackupReminder();
+  if(confirm('ครบ '+trades.length+' trades แล้ว — ต้องการ Backup ไฟล์ JSON ไว้กันข้อมูลหายไหม?')){
+    doExp();
+    dismissBackupReminder();
+  }
+}
 function saveSettings(){
   settings.maxDailyLoss=parseFloat(document.getElementById('s-maxloss').value)||150;
   settings.maxDailyProfitR=parseFloat(document.getElementById('s-maxprofit-r').value)||2;
@@ -1610,7 +1919,7 @@ function setMode(m){
 }
 
 // ===================== INIT =====================
-document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+document.getElementById('f-date').value=getLocalDateKey();
 document.getElementById('f-time').value=new Date().toTimeString().slice(0,5);
 
 // Mood scale
@@ -1976,9 +2285,17 @@ function getMtypes(){var r=[];document.querySelectorAll('#mt .s').forEach(functi
 function getMoodVal(){var s=document.querySelector('#mood-scale .s,#mood-scale .sw');return s?parseInt(s.dataset.v):0;}
 
 // ===================== SAVE =====================
+function isClosedRealTrade(t){return t&&t.status!=='open'&&t.status!=='missed';}
+function isMissedTrade(t){return t&&t.status==='missed';}
+function getMissedReason(){var el=document.getElementById('f-missed-reason');return el?el.value:'';}
+function getMissedWould(){var el=document.getElementById('f-missed-would');return el?el.value:'Unknown';}
+function getMissedR(){var el=document.getElementById('f-missed-r');return el?(parseFloat(el.value)||0):0;}
+function getMissedNote(){var el=document.getElementById('f-missed-note');return el?el.value:'';}
+
 function buildTrade(status){
   var date=document.getElementById('f-date').value,pair=document.getElementById('f-pair').value.trim();
   if(!date||!pair){toast('ใส่วันที่และ Instrument ก่อน');return null;}
+  var isMissedStatus=status==='missed';
   var tmpl=getActiveTmpl();
   var chks={};document.querySelectorAll('.chk').forEach(function(c){chks[c.dataset.id]=c.checked?1:0;});
   var rawPnl=parseFloat(document.getElementById('f-pnl').value)||0;
@@ -1989,6 +2306,7 @@ function buildTrade(status){
   var netPnl=pnlType==='net'?rawPnl:(rawPnl-comm);
   var risk=parseFloat(document.getElementById('f-risk').value)||0;
   var netR=risk>0?netPnl/risk:0
+  if(isMissedStatus){rawPnl=0;comm=0;spreadCost=0;netPnl=0;netR=0;}
 
   var entryDate=date,entryTime=document.getElementById('f-time').value;
   var exitDate=document.getElementById('f-exitdate').value;
@@ -2007,6 +2325,8 @@ function buildTrade(status){
   return{
     id:editId||Date.now(),
     accountId:activeAccountId,
+    isMissed:isMissedStatus,
+    missedReason:getMissedReason(),missedWould:getMissedWould(),missedR:getMissedR(),missedNote:getMissedNote(),
     date:date,time:entryTime,
     exitDate:exitDate||'',exitTime:exitTime,duration:dur,
     session:document.getElementById('f-session').value,pair:pair.toUpperCase(),
@@ -2038,7 +2358,7 @@ function buildTrade(status){
     moodPre:getMoodVal(),moodPreTags:getMs('mood-pre'),preThought:document.getElementById('f-prethought').value,
     pnl:rawPnl,grossPnl:rawPnl,spreadCost:0,commission:comm,
     netPnl:netPnl,netR:netR,pnlType:pnlType,
-    resultStatus:[inferOutcomeFromNetPnl(netPnl)],
+    resultStatus:isMissedStatus?['Missed']:[inferOutcomeFromNetPnl(netPnl)],
     exitReason:getExitHits().join(', '),
     exitHits:getExitHits(),followPlan:getFollowPlan(),
     partialExits:[],
@@ -2059,15 +2379,19 @@ function buildTrade(status){
 async function doSave(status){
   syncClickHiddenFields();
   if(status==='closed'&&getG('gset')==='C'){if(!confirm('Grade C — บันทึกต่อหรือไม่?'))return;}
+  if(status==='missed'&&typeof getMissedReason==='function'&&!getMissedReason()){if(!confirm('ยังไม่ได้เลือก Miss Reason — บันทึกเป็น Missed Entry ต่อไหม?'))return;}
   var t=buildTrade(status);if(!t)return;
+  var prevTrades=trades.slice();
   var wasEdit=!!editId;
   if(editId){trades=trades.map(function(x){return x.id===editId?t:x;});}else{trades.push(t);}
-  var localOk=saveData();
-  if(localOk){await saveTradeToCloud(t);}
+  if(!saveData()){trades=prevTrades;return;}
+  if(typeof saveTradeToCloud==='function'){
+    try{await saveTradeToCloud(t);}catch(e){console.error('saveTradeToCloud failed:',e);}
+  }
   try{localStorage.removeItem(DRAFT);}catch(e){}
-  clearForm();updateGuardBar();checkDisciplinePopups(false);toast(wasEdit?'อัปเดตแล้ว':'บันทึก trade แล้ว');editId=null;go('list');
+  clearForm();updateGuardBar();checkDisciplinePopups(false);toast(wasEdit?'อัปเดตแล้ว':(status==='missed'?'บันทึก Missed Entry แล้ว':'บันทึก trade'));editId=null;go('list');
+  maybeSuggestBackupAfterSave();
 }
-
 function clearForm(){
   editId=null;
   try{localStorage.removeItem(DRAFT);}catch(e){}
@@ -2081,7 +2405,7 @@ function clearForm(){
   document.querySelectorAll('#mood-scale .s,#mood-scale .sw').forEach(function(b){b.classList.remove('s','sw');});
   document.querySelectorAll('#page-form .gb.gg,.gb.ga,.gb.gr').forEach(function(b){b.classList.remove('gg','ga','gr');});
   document.querySelectorAll('#mt .s').forEach(function(b){b.classList.remove('s');});
-  document.getElementById('f-date').value=new Date().toISOString().split('T')[0];
+  document.getElementById('f-date').value=getLocalDateKey();
   document.getElementById('f-time').value=new Date().toTimeString().slice(0,5);
   renderAutoOutcome(0);
   ['w-mood','w-risk','w-news'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
@@ -2097,6 +2421,8 @@ function clearForm(){
     var oEl=document.getElementById('f-tp'+n+'-out');if(oEl)oEl.value='';
   });
   var pw=document.getElementById('partial-wrap');if(pw)pw.innerHTML='';partialCount=0;
+  ['f-missed-reason','f-missed-would'].forEach(function(id){var el=document.getElementById(id);if(el)el.selectedIndex=0;});
+  ['f-missed-r','f-missed-note'].forEach(function(id){var el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('form-lbl').textContent='บันทึก Trade ใหม่';
   checkSaveBtn(false);
   setMode('quick');
@@ -2127,16 +2453,35 @@ function go(p){
 }
 
 
+// ===================== DATE SYSTEM (LOCAL / DEVICE DATE) =====================
+// ใช้ local date ของเครื่องแทน UTC เพื่อกัน Dashboard/Guardrail เพี้ยนข้ามวัน
+// สำคัญ: toISOString() เป็น UTC อาจทำให้ช่วงเช้าไทยยังถูกนับเป็นเมื่อวาน
+function getLocalDateKey(d){
+  d=d||new Date();
+  var y=d.getFullYear();
+  var m=String(d.getMonth()+1).padStart(2,'0');
+  var day=String(d.getDate()).padStart(2,'0');
+  return y+'-'+m+'-'+day;
+}
+function parseLocalDateKey(key){
+  if(!key)return null;
+  var parts=String(key).split('-').map(function(x){return parseInt(x,10);});
+  if(parts.length!==3||parts.some(isNaN))return null;
+  return new Date(parts[0],parts[1]-1,parts[2]);
+}
+function isTradeOnLocalDate(t,dateKey){return !!(t&&t.date===dateKey);}
+
 // ===================== DISCIPLINE POPUP =====================
-function getTodayKey(){return new Date().toISOString().split('T')[0];}
+function getTodayKey(){return getLocalDateKey();}
 function getClosedTodayTrades(){
   var today=getTodayKey();
-  return trades.filter(function(t){return t.date===today&&t.status!=='open';});
+  return trades.filter(function(t){return isTradeOnLocalDate(t,today)&&isClosedRealTrade(t);});
 }
 function getTodayPnl(){return getClosedTodayTrades().reduce(function(a,t){return a+getNetPnl(t);},0);}
 function getTodayNetR(){return getClosedTodayTrades().reduce(function(a,t){return a+(getNetR(t)||0);},0);}
 function getConsecutiveLossCount(){
-  var closed=trades.filter(function(t){return t.status!=='open';}).slice().sort(function(a,b){return (a.id||0)-(b.id||0);});
+  // Daily guardrail: นับเฉพาะไม้ที่ปิดจริงของวันนี้ เพื่อไม่ให้แพ้เมื่อวานลาก popup มาวันใหม่
+  var closed=getClosedTodayTrades().slice().sort(function(a,b){return (a.id||0)-(b.id||0);});
   var c=0;
   for(var i=closed.length-1;i>=0;i--){
     if(getNetPnl(closed[i])<0)c++;
@@ -2200,17 +2545,18 @@ function checkDisciplinePopups(force){
 
 // ===================== GUARD BAR =====================
 function updateGuardBar(){
-  var today=new Date().toISOString().split('T')[0];
-  var todayTrades=trades.filter(function(t){return t.date===today;});
+  var today=getTodayKey();
+  var todayTrades=trades.filter(function(t){return isTradeOnLocalDate(t,today);});
+  var todayClosed=todayTrades.filter(isClosedRealTrade);
   var msgs=[];
-  var dailyPnl=todayTrades.reduce(function(a,t){return a+(t.netPnl||0);},0);
-  var dailyR=getTodayNetR();
+  var dailyPnl=todayClosed.reduce(function(a,t){return a+getNetPnl(t);},0);
+  var dailyR=todayClosed.reduce(function(a,t){return a+(getNetR(t)||0);},0);
   var maxProfitR=settings.maxDailyProfitR||settings.goalDayR||0;
   if(maxProfitR&&dailyR>=maxProfitR)msgs.push('Daily profit target ถึงเป้า (+'+dailyR.toFixed(2)+'R) — ระวังคืนตลาด');
   if(settings.maxDailyLoss&&dailyPnl<=-settings.maxDailyLoss)msgs.push('Max daily loss ถึง limit ('+dailyPnl.toFixed(0)+'$)');
-  if(settings.maxTradesPerDay&&todayTrades.filter(function(t){return t.status!=='open';}).length>=settings.maxTradesPerDay)msgs.push('Max trades/day ครบ ('+todayTrades.filter(function(t){return t.status!=='open';}).length+')');
-  var recent=trades.filter(function(t){return t.status!=='open';}).slice(-(settings.maxConsecLoss||2));
-  if(settings.maxConsecLoss&&recent.length===settings.maxConsecLoss&&recent.every(function(t){return(t.netPnl||0)<0;}))msgs.push('Consecutive losses '+settings.maxConsecLoss+' ไม้ — หยุดก่อน');
+  if(settings.maxTradesPerDay&&todayClosed.length>=settings.maxTradesPerDay)msgs.push('Max trades/day ครบ ('+todayClosed.length+')');
+  var recent=todayClosed.slice(-(settings.maxConsecLoss||2));
+  if(settings.maxConsecLoss&&recent.length===settings.maxConsecLoss&&recent.every(function(t){return getNetPnl(t)<0;}))msgs.push('Consecutive losses '+settings.maxConsecLoss+' ไม้ — หยุดก่อน');
   var gb=document.getElementById('guard-bar');
   var acct=getActiveAccount();
   var prefix=acct?'['+acct.name+'] ':'';
@@ -2279,19 +2625,19 @@ function renderList(){
   tags.forEach(function(t){tEl.innerHTML+='<option value="'+t+'"'+(t===tcur?' selected':'')+'>'+t+'</option>';});
   var filtered=sourceTrades.filter(function(t){
     return(!pf||t.pair===pf)&&(!df||t.dir===df)&&(!gf||t.gradeSetup===gf)&&
-    (!sf||(sf==='open'?t.status==='open':t.status!=='open'))&&
+    (!sf||(sf==='open'?t.status==='open':sf==='missed'?t.status==='missed':isClosedRealTrade(t)))&&
     (!tf||t.setupTag===tf)&&(!mf||t.marketCondition===mf);
   }).slice().reverse();
   if(!filtered.length){list.innerHTML='<div class="empty"><div class="big">[ ]</div><div>ไม่พบ trade</div></div>';return;}
   list.innerHTML=filtered.map(function(t){
-    var isOpen=t.status==='open';var pnl=t.netPnl||t.pnl||0;
-    var pnlH=isOpen?'<span class="po">OPEN</span>':'<span class="'+(pnl>=0?'pp':'pn')+'">'+(pnl>=0?'+':'')+pnl.toFixed(0)+'</span>';
-    var nR=getNetR(t);var rrH=isOpen?'—':(nR!=null?'<span style="font-family:var(--mono);font-size:11px;color:'+(nR>=0?'var(--gn)':'var(--rd)')+'">'+( nR>=0?'+':'')+nR.toFixed(2)+'R</span>':'—');
+    var isOpen=t.status==='open';var isMissed=t.status==='missed';var pnl=t.netPnl||t.pnl||0;
+    var pnlH=isMissed?'<span class="po" style="color:var(--am)">MISSED</span>':(isOpen?'<span class="po">OPEN</span>':'<span class="'+(pnl>=0?'pp':'pn')+'">'+(pnl>=0?'+':'')+pnl.toFixed(0)+'</span>');
+    var nR=getNetR(t);var rrH=isMissed?'<span style="font-family:var(--mono);font-size:11px;color:var(--am)">'+((t.missedR||0)?((t.missedR>0?'+':'')+Number(t.missedR).toFixed(2)+'R'):'—')+'</span>':(isOpen?'—':(nR!=null?'<span style="font-family:var(--mono);font-size:11px;color:'+(nR>=0?'var(--gn)':'var(--rd)')+'">'+( nR>=0?'+':'')+nR.toFixed(2)+'R</span>':'—'));
     var gc=t.gradeSetup==='A'?'tg':t.gradeSetup==='B'?'ta':t.gradeSetup==='C'?'tr':'';
     // account color dot
     var acctData=getAccounts().find(function(a){return a.id===t.accountId;});
     var acctDot=acctData?'<span title="'+acctData.name+'" style="width:7px;height:7px;border-radius:50%;background:'+acctData.color+';flex-shrink:0;display:inline-block"></span>':'';
-    return'<div class="tr_'+(isOpen?' to':'')+'" onclick="openDetail('+t.id+')">'+
+    return'<div class="tr_'+(isOpen?' to':isMissed?' missed-row':'')+'" onclick="openDetail('+t.id+')">'+
       '<span class="dt">'+(t.date||'')+'</span>'+
       '<span class="pr">'+(t.pair||'—')+'</span>'+
       '<span class="'+(t.dir==='Long'?'dl':'ds')+'">'+(t.dir||'—')+'</span>'+
@@ -2300,7 +2646,7 @@ function renderList(){
       '<span style="font-family:var(--mono);font-size:10px;color:'+(t.moodPre>=(settings.minMood||6)?'var(--gn)':t.moodPre>0?'var(--rd)':'var(--t3)')+'">'+(t.moodPre||'—')+'/10</span>'+
       '<div style="display:flex;align-items:center;gap:4px">'+
       acctDot+
-      '<span class="gbadge tag '+gc+'">'+(isOpen?'OPEN':t.gradeSetup||'—')+'</span>'+
+      '<span class="gbadge tag '+(isMissed?'missed-badge':gc)+'">'+(isMissed?'MISSED':(isOpen?'OPEN':t.gradeSetup||'—'))+'</span>'+
       '<button class="qu-btn" onclick="event.stopPropagation();quickUpdate('+t.id+')">✏ Update</button>'+
       '</div>'+
     '</div>';
@@ -2309,11 +2655,11 @@ function renderList(){
 
 function openDetail(id){
   var t=trades.find(function(x){return x.id===id;});if(!t)return;
-  var pnl=t.netPnl||t.pnl||0;var isOpen=t.status==='open';
+  var pnl=t.netPnl||t.pnl||0;var isOpen=t.status==='open';var isMissed=t.status==='missed';
   // account badge in title
   var acctData=getAccounts().find(function(a){return a.id===t.accountId;});
   var acctBadge=acctData?(' <span style="font-size:10px;padding:1px 7px;border-radius:4px;font-weight:700;background:rgba('+hexToRgb(acctData.color)+',.12);color:'+acctData.color+'">'+acctData.name+'</span>'):'';
-  document.getElementById('mtitle').innerHTML=t.pair+' '+(t.setupTag?'['+t.setupTag+']':'')+' — '+t.date+(isOpen?' [OPEN]':'')+acctBadge;
+  document.getElementById('mtitle').innerHTML=t.pair+' '+(t.setupTag?'['+t.setupTag+']':'')+' — '+t.date+(isOpen?' [OPEN]':isMissed?' [MISSED]':'')+acctBadge;
   // แสดงรูปภาพ Side-by-Side — dynamic columns + glow ตามผลกำไร
   var ssH='';
   if(t.ssSetup||t.ssLtf||t.ssResult){
@@ -2340,6 +2686,7 @@ function openDetail(id){
   var partH=t.partialExits&&t.partialExits.length?'<div style="margin:7px 0"><div class="dlb" style="margin-bottom:3px">Partial Exits</div>'+t.partialExits.map(function(p,i){return'<div style="font-size:12px;color:var(--t2);font-family:var(--mono)">Exit '+(i+1)+': '+(p.date||'')+' '+(p.time||'')+' price='+p.price+' lot='+(p.lot||p.pct||0)+' gross=$'+p.pnl+'</div>';}).join('')+'</div>':'';
   var chkH=t.checkSnapshot?'<div style="margin:7px 0"><div class="dlb" style="margin-bottom:3px">Checklist ('+t.checkSnapshot.templateName+')</div>'+t.checkSnapshot.items.map(function(it){return'<div style="font-size:11px;color:'+(it.passed?'var(--gn)':'var(--rd)')+';">'+(it.passed?'✓':'✗')+' '+it.text+(it.required?' *':'')+'</div>';}).join('')+'</div>':'';
   var costStr='Spread: $'+(t.spreadCost||0).toFixed(2)+' + Comm: $'+(t.commission||0).toFixed(2);
+  var missedDetailH=isMissed?('<div style="margin:10px 0;background:var(--am2);border:1px solid var(--am3);border-radius:12px;padding:12px"><div class="dlb" style="margin-bottom:4px;color:var(--am)">Missed Entry Review</div><div style="font-size:12px;color:var(--t2);line-height:1.7"><b>Reason:</b> '+(t.missedReason||'—')+'<br><b>Would Result:</b> '+(t.missedWould||'Unknown')+'<br><b>Missed R:</b> '+((t.missedR||0)?((t.missedR>0?'+':'')+Number(t.missedR).toFixed(2)+'R'):'—')+'<br><b>Note:</b> '+(t.missedNote||'—')+'</div></div>') : '';
 
   // EDITABLE INLINE FIELDS — 2dp for stats, 5dp for price
   var editBlock=
@@ -2391,7 +2738,7 @@ function openDetail(id){
       dr('Grade',t.gradeChk+'/'+t.gradeEmo+'/'+t.gradeSetup)+
     '</div>'+
     editBlock+
-    tpPlanH+ssH+mgmtH+partH+chkH+
+    tpPlanH+missedDetailH+ssH+mgmtH+partH+chkH+
     (t.mistakeTypes&&t.mistakeTypes.length?'<div style="margin:7px 0"><div class="dlb" style="margin-bottom:2px">Mistakes</div><div style="font-size:12px;color:var(--rd)">'+t.mistakeTypes.join(', ')+'</div></div>':'')+
     (t.learn?'<div style="margin:7px 0"><div class="dlb" style="margin-bottom:2px">บทเรียน</div><div style="font-size:12px;color:var(--t2)">'+t.learn+'</div></div>':'')+
     '<div style="margin-top:12px;display:flex;gap:6px">'+
@@ -2524,6 +2871,39 @@ function getNetR(t){
   return null;
 }
 
+function calcMaxDrawdownR(arr){
+  var peak=0, equity=0, maxDD=0;
+  (arr||[]).slice().sort(function(a,b){return (a.id||0)-(b.id||0);}).forEach(function(t){
+    var r=getNetR(t); if(typeof r!=='number'||isNaN(r))r=0;
+    equity+=r; peak=Math.max(peak,equity); maxDD=Math.min(maxDD,equity-peak);
+  });
+  return maxDD;
+}
+function calcStreaksByOutcome(arr){
+  var maxWin=0,maxLoss=0,curWin=0,curLoss=0,currentType='',current=0;
+  (arr||[]).slice().sort(function(a,b){return (a.id||0)-(b.id||0);}).forEach(function(t){
+    if(isWinTrade(t)){curWin++;curLoss=0;currentType='W';current=curWin;}
+    else if(isLossTrade(t)){curLoss++;curWin=0;currentType='L';current=curLoss;}
+    else {curWin=0;curLoss=0;currentType='BE';current=0;}
+    maxWin=Math.max(maxWin,curWin);maxLoss=Math.max(maxLoss,curLoss);
+  });
+  return{maxWin:maxWin,maxLoss:maxLoss,currentType:currentType,current:current};
+}
+function calcFollowPlanPct(arr){
+  var vals=(arr||[]).filter(function(t){return t.followPlan;});
+  if(!vals.length)return null;
+  var yes=vals.filter(function(t){return t.followPlan==='A'||String(t.followPlan).toLowerCase().indexOf('yes')>=0;}).length;
+  var partial=vals.filter(function(t){return t.followPlan==='B'||String(t.followPlan).toLowerCase().indexOf('partial')>=0;}).length;
+  return Math.round(((yes + partial*0.5)/vals.length)*100);
+}
+function calcDisciplineScore(arr,missed){
+  var fp=calcFollowPlanPct(arr); if(fp==null)fp=70;
+  var mistakes=(arr||[]).reduce(function(a,t){return a+((t.mistakeTypes||[]).length?1:0);},0);
+  var mistakePenalty=arr&&arr.length?Math.min(30,Math.round(mistakes/arr.length*30)):0;
+  var missedPenalty=missed&&missed.length?Math.min(15,missed.length*3):0;
+  return Math.max(0,Math.min(100,fp-mistakePenalty-missedPenalty));
+}
+
 // ===================== ANALYTICS =====================
 function renderAnalytics(){
   // Account-isolated: analytics always uses only current account
@@ -2535,12 +2915,19 @@ function renderAnalytics(){
     aEl.title='Analytics นี้อิงเฉพาะ Account ปัจจุบัน';
   }
   var srcTrades=trades.filter(function(t){return !t.accountId||t.accountId===activeAccountId;});
-  var cl=srcTrades.filter(function(t){return t.status!=='open';});
+  var cl=srcTrades.filter(isClosedRealTrade);
 
   var stripEl=document.getElementById('acct-compare-strip');
   if(stripEl){stripEl.innerHTML='';}
 
-  if(!cl.length){document.getElementById('sg1').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:40px">ยังไม่มีข้อมูล</div>';return;}
+  if(!cl.length){
+    document.getElementById('sg1').innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:26px">ยังไม่มี closed trade ในช่วงนี้</div>';
+    var openOnly=srcTrades.filter(function(t){return t.status==='open';}).length;
+    var missedOnly=srcTrades.filter(isMissedTrade).length;
+    document.getElementById('sg2').innerHTML=sc('Closed Trades','0','sn')+sc('SUM Net R','0.00R','sn','Avg 0.00R/trade')+sc('Open / Missed',openOnly+' / '+missedOnly,'sn')+sc('Net P&L','$0','sn'); var sg3=document.getElementById('sg3'); if(sg3)sg3.innerHTML=sc('Max DD','0.00R','sn')+sc('Follow Plan','—','sn')+sc('Streak','—','sn')+sc('Discipline','—','sn');
+    if(typeof drawAnalyticsHistory==='function')drawAnalyticsHistory(srcTrades);
+    return;
+  }
   var tot=cl.length,stats=tradeOutcomeStats(cl),wins=stats.wins,losses=stats.losses;
   var totalPnl=cl.reduce(function(a,t){return a+getNetPnl(t);},0);
   var gW=cl.filter(isWinTrade).reduce(function(a,t){return a+getNetPnl(t);},0);
@@ -2550,11 +2937,15 @@ function renderAnalytics(){
   var exp=(wins+losses)?(wins/(wins+losses))*aW-(losses/(wins+losses))*aL:0;
   var pf=gL>0?gW/gL:gW>0?999:0;
   var rRs=cl.map(getNetR).filter(function(v){return typeof v==='number'&&!isNaN(v);});
-  var avgRR=rRs.length?rRs.reduce(function(a,v){return a+v;},0)/rRs.length:0;
+  var sumRR=rRs.length?rRs.reduce(function(a,v){return a+v;},0):0;
+  var avgRR=rRs.length?sumRR/rRs.length:0;
   var openN=srcTrades.filter(function(t){return t.status==='open';}).length;
+  var missedN=srcTrades.filter(isMissedTrade).length;
   document.getElementById('sg1').innerHTML=sc('Trades',tot,'sn')+sc('Win rate',wr==null?'—':wr.toFixed(1)+'%',wrNum>=50?'su':'sd','BE ไม่นับ')+sc('BE Rate',stats.beRate.toFixed(1)+'%',stats.beRate<=20?'sn':'sam',stats.be+' BE')+sc('Net P&L','$'+totalPnl.toFixed(0),totalPnl>=0?'su':'sd');
-  document.getElementById('sg2').innerHTML=sc('Expectancy','$'+exp.toFixed(2),exp>=0?'su':'sd','per trade')+sc('Avg Net R',avgRR.toFixed(2)+'R',avgRR>=1?'su':'sd')+sc('Profit factor',pf>999?'∞':pf.toFixed(2),pf>=2?'su':pf>=1?'sam':'sd')+sc('Open',openN,'sn');
-  drawEq(cl);drawGradeCmp(cl);drawMoodTrend(cl);drawSession(cl);drawTagChart(cl);drawGrade(cl);drawRRCmp(cl);drawRBreak(cl);drawPair(cl);drawEmo(cl);drawMktChart(cl);drawHeatmap(cl);
+  document.getElementById('sg2').innerHTML=sc('Expectancy','$'+exp.toFixed(2),exp>=0?'su':'sd','per trade')+sc('SUM Net R',sumRR.toFixed(2)+'R',sumRR>=0?'su':'sd','Avg '+avgRR.toFixed(2)+'R/trade')+sc('Profit factor',pf>999?'∞':pf.toFixed(2),pf>=2?'su':pf>=1?'sam':'sd')+sc('Open / Missed',openN+' / '+missedN,'sn');
+  var maxDD=calcMaxDrawdownR(cl), streak=calcStreaksByOutcome(cl), fpPct=calcFollowPlanPct(cl), disc=calcDisciplineScore(cl,srcTrades.filter(isMissedTrade));
+  var sg3=document.getElementById('sg3'); if(sg3)sg3.innerHTML=sc('Max Drawdown',maxDD.toFixed(2)+'R',maxDD>=-2?'sn':'sd','peak-to-valley')+sc('Follow Plan',fpPct==null?'—':fpPct+'%',fpPct==null?'sn':fpPct>=70?'su':'sam','Yes + Partial/2')+sc('Streak',streak.currentType?streak.currentType+' '+streak.current:'—',streak.currentType==='W'?'su':streak.currentType==='L'?'sd':'sn','Max W '+streak.maxWin+' / L '+streak.maxLoss)+sc('Discipline',disc+'/100',disc>=75?'su':disc>=55?'sam':'sd','rule quality');
+  drawEq(cl);drawGradeCmp(cl);drawMoodTrend(cl);drawSession(cl);drawTagChart(cl);drawGrade(cl);drawRRCmp(cl);drawRBreak(cl);drawPair(cl);drawEmo(cl);drawMktChart(cl);drawHeatmap(cl);if(typeof drawAnalyticsHistory==='function')drawAnalyticsHistory(srcTrades);
 }
 function sc(l,v,t,sub){return'<div class="sc-"><div class="sl-">'+l+'</div><div class="sv '+t+'">'+v+'</div>'+(sub?'<div class="ssb">'+sub+'</div>':'')+' </div>';}
 
@@ -2606,7 +2997,7 @@ function drawMoodTrend(cl){
 }
 function drawSession(cl){
   var sessions=['London','New York','Asia','London+NY'];var el=document.getElementById('session-chart');
-  var max=0;var rows=sessions.map(function(s){var sub=cl.filter(function(t){return t.session===s;});var pnl=sub.reduce(function(a,t){return a+getNetPnl(t);},0);max=Math.max(max,Math.abs(pnl));return{s:s,pnl:pnl,n:sub.length};});
+  var max=0;var rows=sessions.map(function(s){var sub=snapClosed.filter(function(t){return t.session===s;});var pnl=sub.reduce(function(a,t){return a+getNetPnl(t);},0);max=Math.max(max,Math.abs(pnl));return{s:s,pnl:pnl,n:sub.length};});
   el.innerHTML=rows.map(function(r){return bar(r.s+' ('+r.n+')',r.pnl,max,r.pnl>=0?'bfg':'bfr','$'+r.pnl.toFixed(0));}).join('');
 }
 function drawTagChart(cl){
@@ -2759,7 +3150,7 @@ function renderInsights(){
   var acct=getActiveAccount();
   var badge=document.getElementById('insights-acct-badge');
   if(badge&&acct){badge.textContent='◉ '+acct.name;badge.style.color=acct.color||'var(--ac)';}
-  var cl=trades.filter(function(t){return t.status!=='open';});
+  var cl=trades.filter(isClosedRealTrade);
 
   // Best conditions
   var bc=document.getElementById('bc-grid');
@@ -2767,8 +3158,8 @@ function renderInsights(){
   else{
     var bestSess='',bestSessR=-Infinity,bestTag='',bestTagR=-Infinity,bestMood='',bestMoodR=-Infinity;
     var sess=['London','New York','Asia','London+NY'];
-    sess.forEach(function(s){var sub=cl.filter(function(t){return t.session===s;});var avg=sub.length?sub.reduce(function(a,t){return a+getNetPnl(t);},0)/sub.length:-Infinity;if(avg>bestSessR){bestSessR=avg;bestSess=s;}});
-    var tags=[...new Set(cl.map(function(t){return t.setupTag;}).filter(Boolean))];
+    sess.forEach(function(s){var sub=snapClosed.filter(function(t){return t.session===s;});var avg=sub.length?sub.reduce(function(a,t){return a+getNetPnl(t);},0)/sub.length:-Infinity;if(avg>bestSessR){bestSessR=avg;bestSess=s;}});
+    var tags=[...new Set(snapClosed.map(function(t){return t.setupTag;}).filter(Boolean))];
     tags.forEach(function(t){var sub=cl.filter(function(x){return x.setupTag===t;});var avg=sub.length?sub.reduce(function(a,x){return a+getNetPnl(x);},0)/sub.length:-Infinity;if(avg>bestTagR){bestTagR=avg;bestTag=t;}});
     for(var m=6;m<=10;m++){var sub=cl.filter(function(t){return t.moodPre===m;});if(sub.length>=2){var avg=sub.reduce(function(a,t){return a+getNetPnl(t);},0)/sub.length;if(avg>bestMoodR){bestMoodR=avg;bestMood=m;}}}
     bc.innerHTML=
@@ -2807,7 +3198,7 @@ function renderInsights(){
   var gs=document.getElementById('gs-tbody');
   var sessions=['London','New York','Asia'];
   gs.innerHTML=sessions.map(function(s){
-    var sub=cl.filter(function(t){return t.session===s;});
+    var sub=snapClosed.filter(function(t){return t.session===s;});
     var ga=sub.filter(function(t){return t.gradeSetup==='A';}).length;
     var gb=sub.filter(function(t){return t.gradeSetup==='B';}).length;
     var gc=sub.filter(function(t){return t.gradeSetup==='C';}).length;
@@ -2893,7 +3284,7 @@ function autoFillReview(){
   var s=document.getElementById('rv-start').value;
   var e=document.getElementById('rv-end').value;
   if(!s||!e){toast('กรุณาเลือกวันที่ เริ่มต้น และ สิ้นสุด ก่อนครับ');return;}
-  var cl=trades.filter(function(t){return t.status!=='open'&&t.date>=s&&t.date<=e;});
+  var cl=trades.filter(function(t){return isClosedRealTrade(t)&&t.date>=s&&t.date<=e;});
   if(!cl.length){toast('ไม่พบ Trade ในช่วงเวลาที่เลือก');return;}
   var tot=cl.length;
   var pnl=cl.reduce(function(a,t){return a+getNetPnl(t);},0);
@@ -3062,7 +3453,7 @@ function getGoalStats(srcTrades){
   var weekStart=startOfWeek(now);
   var monthStart=new Date(now.getFullYear(),now.getMonth(),1);
   var yearStart=new Date(now.getFullYear(),0,1);
-  var closed=(srcTrades||trades).filter(function(t){return t.status!=='open';});
+  var closed=(srcTrades||trades).filter(isClosedRealTrade);
   var res={weekR:0,monthR:0,monthUsd:0,yearUsd:0,weekTrades:0,monthTrades:0,yearTrades:0};
   closed.forEach(function(t){
     if(!t.date)return;
@@ -3171,7 +3562,7 @@ function updateFocusStats(todayT,todayPnl,todayR,decision){
 
 function renderDashboard(){
   var acct=getActiveAccount();
-  var today=new Date().toISOString().split('T')[0];
+  var today=getTodayKey();
 
   // โหลดเฉพาะ Trades ของ Account ที่กำลังเปิดอยู่เท่านั้น
   var srcTrades=trades;
@@ -3179,9 +3570,18 @@ function renderDashboard(){
     try{srcTrades=JSON.parse(localStorage.getItem(getAccountDBKey(activeAccountId)))||[];}catch(e){srcTrades=[];}
   }
 
-  var cl=srcTrades.filter(function(t){return t.status!=='open';});
+  var cl=srcTrades.filter(isClosedRealTrade);
+  var dashRange=getDashboardRange();
+  var snapTrades=filterTradesByDashboardRange(srcTrades,dashRange);
+  var snapClosed=snapTrades.filter(isClosedRealTrade);
+  var snapOpen=snapTrades.filter(function(t){return t.status==='open';});
+  var snapMissed=snapTrades.filter(isMissedTrade);
   var openT=srcTrades.filter(function(t){return t.status==='open';});
-  var todayT=srcTrades.filter(function(t){return t.date===today;});
+  var missedT=srcTrades.filter(isMissedTrade);
+  var todayT=srcTrades.filter(function(t){return isTradeOnLocalDate(t,today);});
+  var todayClosed=todayT.filter(isClosedRealTrade);
+  var todayOpen=todayT.filter(function(t){return t.status==='open';});
+  var todayMissed=todayT.filter(isMissedTrade);
 
   // Hero totals + account name
   var totalPnl=cl.reduce(function(a,t){return a+getNetPnl(t);},0);
@@ -3201,25 +3601,30 @@ function renderDashboard(){
   document.getElementById('dash-streak').textContent=(streak>0?'🔥':'—')+' '+streak+' wins streak';
 
   // Today summary
-  var todayPnl=todayT.reduce(function(a,t){return a+getNetPnl(t);},0);
+  var todayPnl=todayClosed.reduce(function(a,t){return a+getNetPnl(t);},0);
+  var todayR=todayClosed.reduce(function(a,t){return a+(getNetR(t)||0);},0);
   var tdEl=document.getElementById('dash-today-summary');
-  tdEl.textContent=todayT.length?('วันนี้: '+todayT.length+' trades | Net $'+todayPnl.toFixed(2)):'วันนี้: ยังไม่มี trade';
+  tdEl.textContent=todayT.length?('วันนี้: ปิดจริง '+todayClosed.length+' | Open '+todayOpen.length+' | Missed '+todayMissed.length+' | Net $'+todayPnl.toFixed(2)):'วันนี้: ยังไม่มี trade';
 
   // KPIs
-  var stDash=tradeOutcomeStats(cl);
+  var stDash=tradeOutcomeStats(snapClosed);
   var wr=stDash.winrate==null?null:Math.round(stDash.winrate);
-  var rRs=cl.map(getNetR).filter(function(v){return typeof v==='number'&&!isNaN(v);});
-  var avgR=rRs.length?rRs.reduce(function(a,v){return a+v;},0)/rRs.length:null;
+  var rRs=snapClosed.map(getNetR).filter(function(v){return typeof v==='number'&&!isNaN(v);});
+  var sumR=rRs.length?rRs.reduce(function(a,v){return a+v;},0):0;
+  var avgR=rRs.length?sumR/rRs.length:null;
 
-  var dk=document.getElementById('dk-trades');dk.textContent=srcTrades.length;
+  var dk=document.getElementById('dk-trades');dk.textContent=snapTrades.length;
+  var dkSub=dk.parentNode.querySelector('.dash-kpi-sub');if(dkSub)dkSub.textContent=dashRange.shortLabel;
   var dkwr=document.getElementById('dk-wr');
   dkwr.textContent=wr!==null?wr+'%':'—';
   dkwr.className='dash-kpi-val '+(wr>=50?'su':'sd');
   var wrSub=dkwr.parentNode.querySelector('.dash-kpi-sub');if(wrSub)wrSub.textContent='BE '+stDash.be+' | excluded';
   var dkr=document.getElementById('dk-avgr');
-  dkr.textContent=avgR!==null?avgR.toFixed(2)+'R':'—';
-  dkr.className='dash-kpi-val '+(avgR&&avgR>=1?'su':'sd');
-  document.getElementById('dk-open').textContent=openT.length;
+  dkr.textContent=rRs.length?sumR.toFixed(2)+'R':'—';
+  dkr.className='dash-kpi-val '+(sumR>=0?'su':'sd');
+  var rSub=dkr.parentNode.querySelector('.dash-kpi-sub');if(rSub)rSub.textContent='Avg '+(avgR!==null?avgR.toFixed(2):'0.00')+'R/trade';
+  document.getElementById('dk-open').textContent=snapOpen.length;
+  var openSub=document.getElementById('dk-open').parentNode.querySelector('.dash-kpi-sub');if(openSub)openSub.textContent='Missed '+snapMissed.length;
 
   renderGoalProgress(srcTrades);
 
@@ -3229,7 +3634,7 @@ function renderDashboard(){
     var baseStart=startOfWeek(new Date());
     var wStart=new Date(baseStart);wStart.setDate(baseStart.getDate()-w*7);
     var wEnd=new Date(wStart);wEnd.setDate(wStart.getDate()+6);
-    var ws=wStart.toISOString().split('T')[0];var we=wEnd.toISOString().split('T')[0];
+    var ws=getLocalDateKey(wStart);var we=getLocalDateKey(wEnd);
     var wT=cl.filter(function(t){return t.date>=ws&&t.date<=we;});
     var wPnl=wT.reduce(function(a,t){return a+getNetPnl(t);},0);
     weekPnl.push({pnl:wPnl,n:wT.length,label:'W'+(8-w)});
@@ -3253,14 +3658,14 @@ function renderDashboard(){
     todayEl.innerHTML='<div style="color:var(--t3);font-size:12px;text-align:center;padding:16px 0">ยังไม่มี trade วันนี้</div>';
   }else{
     todayEl.innerHTML=todayT.map(function(t){
-      var pnl=getNetPnl(t);var isOpen=t.status==='open';
-      var pnlStr=isOpen?'OPEN':(pnl>=0?'+':'')+pnl.toFixed(2);
-      var pnlColor=isOpen?'var(--am)':pnl>=0?'var(--gn)':'var(--rd)';
+      var pnl=getNetPnl(t);var isOpen=t.status==='open';var isMissed=t.status==='missed';
+      var pnlStr=isMissed?'MISSED':(isOpen?'OPEN':(pnl>=0?'+':'')+pnl.toFixed(2));
+      var pnlColor=(isOpen||isMissed)?'var(--am)':pnl>=0?'var(--gn)':'var(--rd)';
       return'<div class="dash-trade-pill" onclick="openDetail('+t.id+')">'+
         '<span style="font-family:var(--mono);font-size:11px;font-weight:700;color:'+(t.dir==='Long'?'var(--gn)':'var(--rd)')+'">'+t.dir+'</span>'+
         '<span style="font-weight:700;font-size:12px">'+t.pair+'</span>'+
         '<span style="font-size:11px;color:var(--t3)">'+( t.session||'')+'</span>'+
-        '<span style="margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:700;color:'+pnlColor+'">'+(isOpen?pnlStr:'$'+pnlStr)+'</span>'+
+        '<span style="margin-left:auto;font-family:var(--mono);font-size:12px;font-weight:700;color:'+pnlColor+'">'+(isOpen||isMissed?pnlStr:'$'+pnlStr)+'</span>'+
         '<span style="font-size:9px;padding:2px 6px;border-radius:4px;font-weight:700;background:'+(t.gradeSetup==='A'?'var(--gn3)':t.gradeSetup==='B'?'var(--am2)':t.gradeSetup?'var(--rd2)':'var(--bg4)')+';color:'+(t.gradeSetup==='A'?'#065f46':t.gradeSetup==='B'?'#92400e':t.gradeSetup?'var(--rd)':'var(--t3)')+'">'+( t.gradeSetup||'—')+'</span>'+
       '</div>';
     }).join('');
@@ -3268,16 +3673,17 @@ function renderDashboard(){
 
   // Guardrails
   var gEl=document.getElementById('dash-guard-body');
-  var dailyPnl=todayT.reduce(function(a,t){return a+(t.netPnl||0);},0);
+  var dailyPnl=todayPnl;
+  var dailyR=todayR;
   var maxLoss=settings.maxDailyLoss||150;var profitTargetR=settings.maxDailyProfitR||settings.goalDayR||0;var maxTr=settings.maxTradesPerDay||3;
   var lossColor=(-dailyPnl)>=(maxLoss*0.7)?'var(--rd)':'var(--gn)';
-  var trColor=todayT.length>=(maxTr*0.7)?'var(--am)':'var(--gn)';
-  var recentCl=trades.filter(function(t){return t.status!=='open';}).slice(-( settings.maxConsecLoss||2));
-  var consLoss=recentCl.length===( settings.maxConsecLoss||2)&&recentCl.every(function(t){return(t.netPnl||0)<0;});
+  var trColor=todayClosed.length>=(maxTr*0.7)?'var(--am)':'var(--gn)';
+  var recentCl=todayClosed.slice(-( settings.maxConsecLoss||2));
+  var consLoss=recentCl.length===( settings.maxConsecLoss||2)&&recentCl.every(function(t){return getNetPnl(t)<0;});
   var decision='TRADE',dCls='var(--gn)',dReason='วันนี้ยังเทรดได้ตาม guardrail';
-  if((profitTargetR>0&&getTodayNetR()>=profitTargetR)||(-dailyPnl)>=maxLoss||todayT.length>=maxTr||consLoss){decision='STOP';dCls=(profitTargetR>0&&getTodayNetR()>=profitTargetR)?'var(--gn)':'var(--rd)';dReason=(profitTargetR>0&&getTodayNetR()>=profitTargetR)?'กำไรถึงเป้า R แล้ว ระวังคืนตลาด ควรหยุดวันนี้':'แตะ guardrail แล้ว ควรหยุดวันนี้';}
-  else if((-dailyPnl)>=(maxLoss*0.7)||todayT.length>=(maxTr*0.7)||(profitTargetR>0&&getTodayNetR()>=(profitTargetR*0.7))){decision='REDUCE';dCls='var(--am)';dReason='ใกล้ limit/เป้าแล้ว ลด size / คัด setup เฉพาะ A';}
-  updateFocusStats(todayT,dailyPnl,getTodayNetR(),decision);
+  if((profitTargetR>0&&dailyR>=profitTargetR)||(-dailyPnl)>=maxLoss||todayClosed.length>=maxTr||consLoss){decision='STOP';dCls=(profitTargetR>0&&dailyR>=profitTargetR)?'var(--gn)':'var(--rd)';dReason=(profitTargetR>0&&dailyR>=profitTargetR)?'กำไรถึงเป้า R แล้ว ระวังคืนตลาด ควรหยุดวันนี้':'แตะ guardrail แล้ว ควรหยุดวันนี้';}
+  else if((-dailyPnl)>=(maxLoss*0.7)||todayClosed.length>=(maxTr*0.7)||(profitTargetR>0&&dailyR>=(profitTargetR*0.7))){decision='REDUCE';dCls='var(--am)';dReason='ใกล้ limit/เป้าแล้ว ลด size / คัด setup เฉพาะ A';}
+  updateFocusStats(todayClosed,dailyPnl,dailyR,decision);
   gEl.innerHTML=
     '<div style="flex-basis:100%;background:var(--bg2);border:1px solid var(--b);border-radius:12px;padding:10px 14px">'+
       '<div style="font-size:10px;color:var(--t3);font-weight:700;letter-spacing:.06em;text-transform:uppercase">Today Decision</div>'+
@@ -3285,31 +3691,31 @@ function renderDashboard(){
       '<div style="font-size:11px;color:var(--t3)">'+dReason+'</div>'+
     '</div>'+
     pill('Daily Loss','$'+(-dailyPnl).toFixed(0)+' / $'+maxLoss,lossColor)+
-    (profitTargetR>0?pill('Profit Target',getTodayNetR().toFixed(2)+'R / '+profitTargetR+'R',getTodayNetR()>=profitTargetR?'var(--gn)':'var(--ac)'):'')+
-    pill('Trades/Day',todayT.length+' / '+maxTr,trColor)+
+    (profitTargetR>0?pill('Profit Target',dailyR.toFixed(2)+'R / '+profitTargetR+'R',dailyR>=profitTargetR?'var(--gn)':'var(--ac)'):'')+
+    pill('Trades/Day',todayClosed.length+' / '+maxTr,trColor)+
     pill('Consec. Loss',consLoss?'⚠ หยุดก่อน':'ปกติ',consLoss?'var(--rd)':'var(--gn)');
 
   // Best conditions
   var bcEl=document.getElementById('dash-best-cond');
-  if(cl.length<3){
+  if(snapClosed.length<3){
     bcEl.innerHTML='<div style="grid-column:1/-1;color:var(--t3);font-size:11px">ต้องการ ≥3 trades</div>';
   }else{
     var sessions=['London','New York','Asia','London+NY'];
     var bestSess='',bestSessAvg=-Infinity;
     sessions.forEach(function(s){
-      var sub=cl.filter(function(t){return t.session===s;});
+      var sub=snapClosed.filter(function(t){return t.session===s;});
       if(!sub.length)return;
       var avg=sub.reduce(function(a,t){return a+getNetPnl(t);},0)/sub.length;
       if(avg>bestSessAvg){bestSessAvg=avg;bestSess=s;}
     });
-    var tags=[...new Set(cl.map(function(t){return t.setupTag;}).filter(Boolean))];
+    var tags=[...new Set(snapClosed.map(function(t){return t.setupTag;}).filter(Boolean))];
     var bestTag='',bestTagAvg=-Infinity;
     tags.forEach(function(tag){
-      var sub=cl.filter(function(t){return t.setupTag===tag;});
+      var sub=snapClosed.filter(function(t){return t.setupTag===tag;});
       var avg=sub.reduce(function(a,t){return a+getNetPnl(t);},0)/sub.length;
       if(avg>bestTagAvg){bestTagAvg=avg;bestTag=tag;}
     });
-    var rRsA=cl.map(getNetR).filter(function(v){return typeof v==='number'&&!isNaN(v);});
+    var rRsA=snapClosed.map(getNetR).filter(function(v){return typeof v==='number'&&!isNaN(v);});
     var avgRall=rRsA.length?rRsA.reduce(function(a,v){return a+v;},0)/rRsA.length:0;
     bcEl.innerHTML=
       bcard('Best Session',bestSess||'—','avg $'+(bestSessAvg>-Infinity?bestSessAvg.toFixed(0):'—'))+
@@ -3400,16 +3806,17 @@ function hmClick(sess,day){
   if(!sess){heatmapFilter=null;}
   else if(heatmapFilter&&heatmapFilter.session===sess&&heatmapFilter.day===day){heatmapFilter=null;}
   else{heatmapFilter={session:sess,day:day};}
-  var cl=trades.filter(function(t){return t.status!=='open';});
+  var cl=trades.filter(isClosedRealTrade);
   drawHeatmap(cl);
 }
 
 // ===================== EXPORT / IMPORT =====================
 function doExp(){
   var acct=getActiveAccount();
-  var blob=new Blob([JSON.stringify({version:7.8,account:acct,accountId:activeAccountId,exported:new Date().toISOString(),trades:trades,settings:settings,reviews:reviews},null,2)],{type:'application/json'});
+  var blob=new Blob([JSON.stringify({version:7.85,account:acct,accountId:activeAccountId,exported:new Date().toISOString(),trades:trades,settings:settings,reviews:reviews},null,2)],{type:'application/json'});
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='mind_edge_journal_'+(acct?acct.name.replace(/\s+/g,'_'):'export')+'_'+new Date().toISOString().split('T')[0]+'.json';a.click();
+  a.download='mind_edge_journal_'+(acct?acct.name.replace(/\s+/g,'_'):'export')+'_'+getLocalDateKey()+'.json';a.click();
+  try{localStorage.setItem('smc_v6_last_export_at',new Date().toISOString());}catch(e){}
   toast('ส่งออก ['+( acct?acct.name:'')+']: '+trades.length+' trades');
 }
 function doImp(){document.getElementById('impf').click();}
@@ -3438,7 +3845,7 @@ function handleImp(e){
 function expCSV(){
   if(!trades.length){toast('ไม่มีข้อมูล');return;}
   var acct=getActiveAccount();
-  var headers=['id','accountId','accountName','date','time','exitDate','exitTime','session','pair','dir','setupTag','bias','marketCondition','entry','sl','tp1ZoneFrom','tp1ZoneTo','tp2','rr','lot','risk','balance','spread','grossPnl','spreadCost','commission','netPnl','netR','duration','resultStatus','exitReason','followPlan','gradeChk','gradeEmo','gradeSetup','moodPre','checkScore','notes'];
+  var headers=['id','accountId','accountName','status','date','time','exitDate','exitTime','session','pair','dir','setupTag','bias','marketCondition','entry','sl','tp1ZoneFrom','tp1ZoneTo','tp2','rr','lot','risk','balance','spread','grossPnl','spreadCost','commission','netPnl','netR','duration','resultStatus','exitReason','followPlan','gradeChk','gradeEmo','gradeSetup','moodPre','checkScore','missedReason','missedWould','missedR','missedNote','notes'];
   var acctMap={};getAccounts().forEach(function(a){acctMap[a.id]=a.name;});
   var rows=trades.map(function(t){
     return headers.map(function(h){
@@ -3450,7 +3857,7 @@ function expCSV(){
   var csv=[headers.join(',')].concat(rows).join('\n');
   var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   var a=document.createElement('a');a.href=URL.createObjectURL(blob);
-  a.download='smc_trades_'+(acct?acct.name.replace(/\s+/g,'_'):'all')+'_'+new Date().toISOString().split('T')[0]+'.csv';
+  a.download='smc_trades_'+(acct?acct.name.replace(/\s+/g,'_'):'all')+'_'+getLocalDateKey()+'.csv';
   a.click();
   toast('Export CSV ['+( acct?acct.name:'')+'] — '+trades.length+' trades');
 }
@@ -3489,6 +3896,201 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLightbo
 
 function toast(msg){var el=document.getElementById('toast');el.textContent=msg;el.classList.add('on');setTimeout(function(){el.classList.remove('on');},3000);}
 
+
+
+
+// ===================== v7.8.8 ANALYTICS RANGE HISTORY PATCH =====================
+function onReportDateInput(prefix){
+  var rangeEl=document.getElementById(prefix+'-range');
+  if(rangeEl)rangeEl.value='custom';
+  var f=document.getElementById(prefix+'-from'),t=document.getElementById(prefix+'-to');
+  if(f)f.disabled=false;if(t)t.disabled=false;
+  var sum=document.getElementById(prefix+'-filter-summary');
+  if(sum)sum.textContent='Custom · '+((f&&f.value)||'...')+' → '+((t&&t.value)||'...');
+}
+function formatDateShort(key){
+  if(!key)return '—';
+  var p=String(key).split('-');
+  return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:key;
+}
+function drawAnalyticsHistory(list){
+  var el=document.getElementById('analytics-history');
+  if(!el)return;
+  var arr=(list||[]).filter(function(t){return !t.accountId||t.accountId===activeAccountId;})
+    .slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))||((b.id||0)-(a.id||0));});
+  if(!arr.length){el.innerHTML='<div style="text-align:center;color:var(--t3);padding:20px;font-size:12px">ไม่มีประวัติในช่วงวันที่นี้</div>';return;}
+  el.innerHTML='<div class="analytics-history-list">'+arr.map(function(t){
+    var missed=isMissedTrade(t), open=t.status==='open';
+    var pnl=getNetPnl(t)||0;
+    var nr=getNetR(t);
+    var pnlText=missed?'Missed':open?'OPEN':((pnl>=0?'+':'')+'$'+pnl.toFixed(0));
+    var pnlCls=missed?'sam':open?'sn':(pnl>=0?'su':'sd');
+    var rText=missed?((t.missedR!==undefined&&t.missedR!=='')?('Miss '+Number(t.missedR).toFixed(2)+'R'):'Miss R —'):(nr!=null?((nr>=0?'+':'')+nr.toFixed(2)+'R'):'—');
+    var status=missed?'MISSED':open?'OPEN':((Array.isArray(t.resultStatus)?t.resultStatus.join('/'):(t.resultStatus||''))||inferOutcomeFromNetPnl(pnl));
+    var setup=(t.setupTag||t.reason||t.missedReason||'—');
+    var grade=t.gradeSetup||'—';
+    return '<div class="analytics-history-row '+(missed?'missed':'')+'" onclick="openDetail('+t.id+')">'+
+      '<span class="ah-date">'+formatDateShort(t.date)+'</span>'+ 
+      '<span class="ah-pair">'+(t.pair||'—')+'</span>'+ 
+      '<span class="ah-small">'+(t.dir||'—')+'</span>'+ 
+      '<span class="ah-num '+pnlCls+'">'+pnlText+'</span>'+ 
+      '<span class="ah-num ah-r '+(String(rText).indexOf('-')===0?'sd':'sn')+'">'+rText+'</span>'+ 
+      '<span class="ah-small">'+setup+'</span>'+ 
+      '<span class="tag '+(missed?'ta':open?'tt':grade==='A'?'tg':grade==='B'?'ta':grade==='C'?'tr':'tb')+' ah-status">'+status+'</span>'+ 
+    '</div>';
+  }).join('')+'</div>';
+}
+
+// ===================== v7.8.7 REPORT DATE FILTER + DISCIPLINE LOCK OVERRIDES =====================
+function reportStartOfWeekKey(dateKey){var d=parseLocalDate(dateKey||getLocalDateKey());if(!d)return getLocalDateKey();var day=d.getDay();var weekStart=(settings&&settings.weekStart)==='sunday'?0:1;var diff=(day-weekStart+7)%7;d.setDate(d.getDate()-diff);return getLocalDateKey(d);}
+function reportEndOfWeekKey(dateKey){var d=parseLocalDate(reportStartOfWeekKey(dateKey));d.setDate(d.getDate()+6);return getLocalDateKey(d);}
+function getReportRange(prefix){var rangeEl=document.getElementById(prefix+'-range');var range=rangeEl?rangeEl.value:'all';var today=getLocalDateKey();var from='',to='',label='All Time';if(range==='today'){from=today;to=today;label='Today · '+today;}else if(range==='yesterday'){var y=parseLocalDate(today);y.setDate(y.getDate()-1);from=to=getLocalDateKey(y);label='Yesterday · '+from;}else if(range==='week'){from=reportStartOfWeekKey(today);to=reportEndOfWeekKey(today);label='This Week · '+from+' → '+to;}else if(range==='month'){from=today.slice(0,8)+'01';to=today;label='This Month · '+from+' → '+to;}else if(range==='custom'){var f=document.getElementById(prefix+'-from'),t=document.getElementById(prefix+'-to');from=f?f.value:'';to=t?t.value:'';label='Custom · '+(from||'...')+' → '+(to||'...');}var sum=document.getElementById(prefix+'-filter-summary');if(sum)sum.textContent=label;return{range:range,from:from,to:to,label:label};}
+function onReportRangeChange(prefix){var r=getReportRange(prefix);var f=document.getElementById(prefix+'-from'),t=document.getElementById(prefix+'-to');if(f)f.disabled=false;if(t)t.disabled=false;if(f&&r.range!=='custom')f.value=r.from||'';if(t&&r.range!=='custom')t.value=r.to||'';}
+function filterTradesByReportRange(list,prefix){var r=getReportRange(prefix);if(!r.from&&!r.to)return list.slice();return list.filter(function(t){if(!t||!t.date)return false;if(r.from&&t.date<r.from)return false;if(r.to&&t.date>r.to)return false;return true;});}
+function clearReportPanels(){['session-chart','tag-chart','grade-chart','rr-cmp','rbreak','pair-chart','emo-chart','mkt-chart','perf-heatmap','grade-cmp','moodtrend','ddbox','acct-compare-strip'].forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML='';});var cv=document.getElementById('eq-cv');if(cv&&cv.getContext){var ctx=cv.getContext('2d');ctx.clearRect(0,0,cv.width,cv.height);}}
+var __baseRenderAnalytics=renderAnalytics;
+renderAnalytics=function(){onReportRangeChange('analytics');var original=trades;trades=filterTradesByReportRange(original,'analytics');try{__baseRenderAnalytics();}finally{trades=original;}var cl=filterTradesByReportRange(original,'analytics').filter(function(t){return (!t.accountId||t.accountId===activeAccountId)&&isClosedRealTrade(t);});if(!cl.length){clearReportPanels();}};
+var __baseRenderInsights=renderInsights;
+renderInsights=function(){onReportRangeChange('insights');var original=trades;trades=filterTradesByReportRange(original,'insights');try{__baseRenderInsights();}finally{trades=original;}};
+var __baseShowDisciplinePopup=showDisciplinePopup;
+showDisciplinePopup=function(type,title,msg,stats,force){if(type==='trades'){title='หยุด — วันนี้พอแล้ว';msg='มึงไม่ได้ต้องการ trade เพิ่ม<br>มึงต้องการรักษากำไรและวินัย<br><br><span style="color:#ff5252">ครบจำนวนไม้ที่ตั้งไว้แล้ว</span><br>ถ้าเปิดต่อ นี่ไม่ใช่แผน — นี่คือ overtrade';}else if(type==='loss'){title='หยุด — ปกป้องทุนก่อน';msg='แตะ Max Daily Loss แล้ว<br>งานของมึงตอนนี้ไม่ใช่เอาคืน<br><br><span style="color:#ff5252">งานของมึงคือรอดไปเทรดวันถัดไป</span>';}else if(type==='streak'){title='พักก่อน — สมองเริ่ม tilt';msg='แพ้ติดกันครบ limit แล้ว<br>ถ้าเปิดต่อ โอกาสสูงที่มึงจะเทรดด้วยอารมณ์<br><br><span style="color:#ff5252">หยุด จด Review แล้วกลับมาใหม่</span>';}__baseShowDisciplinePopup(type,title,msg,stats,force);var box=document.getElementById('discipline-popup');if(box){box.dataset.type=type;}};
+setTimeout(function(){onReportRangeChange('analytics');onReportRangeChange('insights');},0);
+
+
+
+// ===================== v7.8.9 DASHBOARD RANGE + TIKTOK SHARE EXPORT =====================
+function getDashboardRange(){
+  var el=document.getElementById('dash-range');
+  var range=el?el.value:'month';
+  var today=getLocalDateKey();
+  var from='',to='',label='All Time',shortLabel='All Time';
+  if(range==='today'){from=today;to=today;label='Today · '+today;shortLabel='Today';}
+  else if(range==='week'){from=reportStartOfWeekKey(today);to=reportEndOfWeekKey(today);label='This Week · '+from+' → '+to;shortLabel='This Week';}
+  else if(range==='month'){from=today.slice(0,8)+'01';to=today;label='This Month · '+from+' → '+to;shortLabel='This Month';}
+  else {label='All Time';shortLabel='All Time';}
+  var sum=document.getElementById('dash-range-summary');if(sum)sum.textContent=label;
+  return{range:range,from:from,to:to,label:label,shortLabel:shortLabel};
+}
+function onDashboardRangeChange(){getDashboardRange();}
+function filterTradesByDashboardRange(list,r){
+  r=r||getDashboardRange();
+  if(!r.from&&!r.to)return (list||[]).slice();
+  return (list||[]).filter(function(t){if(!t||!t.date)return false;if(r.from&&t.date<r.from)return false;if(r.to&&t.date>r.to)return false;return true;});
+}
+
+function getShareSelectValue(source,idBase,def){
+  var el=document.getElementById(idBase+(source==='analytics'?'-analytics':''));
+  if(!el && source==='analytics')el=document.getElementById(idBase);
+  return el?el.value:def;
+}
+function determineShareMode(mode,closed,all,sumR,stats){
+  if(mode&&mode!=='auto')return mode;
+  var missed=(all||[]).filter(isMissedTrade).length;
+  if(missed>=Math.max(2,Math.ceil((all||[]).length*0.25)))return 'missed';
+  if(sumR>0 && (stats.winrate||0)>=50)return 'profit';
+  if((stats.winrate||0)<50 || sumR<0)return 'discipline';
+  return 'lesson';
+}
+function getShareCopy(mode,sumR,stats,all){
+  var map={
+    profit:{title:'Profit\nRecap',badge:'PROFIT MODE',hook:'กำไรไม่ได้มาจากเดาถูก แต่มาจากทำซ้ำตามแผน'},
+    discipline:{title:'Discipline\nReport',badge:'DISCIPLINE MODE',hook:'ไม่ได้แพ้ตลาด…แพ้วินัยตัวเอง'},
+    lesson:{title:'Lesson\nRecap',badge:'LESSON MODE',hook:'ทุกไม้ที่จด คือข้อมูลให้ไม้ต่อไปคมขึ้น'},
+    missed:{title:'Missed\nEntry',badge:'MISSED MODE',hook:'ไม้ที่ไม่ได้เข้า อาจบอกปัญหา execution ได้ชัดที่สุด'}
+  };
+  return map[mode]||map.lesson;
+}
+function getMissedSummaryItems(list){
+  var missed=(list||[]).filter(isMissedTrade);
+  if(!missed.length)return [];
+  var r=missed.reduce(function(a,t){return a+(parseFloat(t.missedR)||0);},0);
+  return ['Missed '+missed.length+' setups','Potential '+(r>=0?'+':'')+r.toFixed(2)+'R','Top reason: '+(countTopMistakes(missed)[0]||'—')];
+}
+function getShareSourceData(source){
+  var src=trades.filter(function(t){return !t.accountId||t.accountId===activeAccountId;});
+  var label='All Time';
+  if(source==='analytics'&&document.getElementById('analytics-range')){var r=getReportRange('analytics');src=filterTradesByReportRange(src,'analytics');label=r.label;}
+  else {var dr=getDashboardRange();src=filterTradesByDashboardRange(src,dr);label=dr.label;}
+  return{trades:src,label:label};
+}
+function countTopMistakes(list){
+  var cnt={};
+  (list||[]).forEach(function(t){
+    (t.mistakeTypes||[]).forEach(function(m){if(m)cnt[m]=(cnt[m]||0)+1;});
+    if(isMissedTrade(t)&&t.missedReason)cnt['Missed: '+t.missedReason]=(cnt['Missed: '+t.missedReason]||0)+1;
+  });
+  return Object.keys(cnt).sort(function(a,b){return cnt[b]-cnt[a];}).slice(0,3).map(function(k){return k+' ×'+cnt[k];});
+}
+function getImproveItems(list){
+  var learns=(list||[]).map(function(t){return (t.learn||t.notes||'').trim();}).filter(Boolean);
+  var top=countTopMistakes(list);
+  if(learns.length)return learns.slice(-3).reverse();
+  if(top.length)return top.map(function(x){return 'แก้: '+x.replace(/ ×\\d+$/,'');});
+  return ['รักษาวินัยตามแผน','เลือกเฉพาะ setup ที่ชัด','หยุดเมื่อถึง daily guardrail'];
+}
+function setShareList(id,items){
+  var el=document.getElementById(id);if(!el)return;
+  el.innerHTML=(items&&items.length?items:['—']).slice(0,3).map(function(x){return '<div class="share-item">• '+String(x).replace(/[<>]/g,'')+'</div>';}).join('');
+}
+function exportShareCard(source){
+  source = source || 'analytics';
+  if(source !== 'analytics') source = 'analytics';
+  var hm=document.getElementById('share-hide-money-analytics'); if(hm)window.shareHideMoney=hm.checked;
+  if(typeof html2canvas==='undefined'){toast('โหลดตัว export ไม่สำเร็จ — เช็กอินเทอร์เน็ตก่อน');return;}
+  var data=getShareSourceData(source);
+  var all=data.trades||[];
+  var closed=all.filter(isClosedRealTrade);
+  var stats=tradeOutcomeStats(closed);
+  var pnl=closed.reduce(function(a,t){return a+getNetPnl(t);},0);
+  var rArr=closed.map(getNetR).filter(function(v){return typeof v==='number'&&!isNaN(v);});
+  var sumR=rArr.reduce(function(a,v){return a+v;},0);
+  var acct=getActiveAccount();
+  var template=getShareSelectValue(source,'share-template','neon');
+  var modeChoice=getShareSelectValue(source,'share-mode','auto');
+  var shareMode=determineShareMode(modeChoice,closed,all,sumR,stats);
+  var copy=getShareCopy(shareMode,sumR,stats,all);
+  document.getElementById('sc-range').textContent=data.label;
+  document.getElementById('sc-title').innerHTML=copy.title.replace(/\n/g,'<br>');
+  document.getElementById('sc-mode').textContent=copy.badge;
+  document.getElementById('sc-hook').textContent=copy.hook;
+  document.getElementById('sc-trades').textContent=all.length;
+  var wrText=stats.winrate==null?'—':stats.winrate.toFixed(1)+'%';
+  var wrEl=document.getElementById('sc-winrate');wrEl.textContent=wrText;wrEl.className='share-value '+((stats.winrate||0)>=50?'share-green':'share-red');
+  var ring=document.getElementById('sc-ring');
+  var ringVal=document.getElementById('sc-ring-value');
+  var ringLabel=document.getElementById('sc-ring-label');
+  var ringPct=Math.max(0,Math.min(100,stats.winrate||0));
+  if(ring){ring.style.setProperty('--share-ring-pct',ringPct.toFixed(1)+'%');ring.style.setProperty('--share-ring-color',ringPct>=50?'#00e676':'#ff5252');}
+  if(ringVal)ringVal.textContent=(stats.winrate==null?'—':ringPct.toFixed(0)+'%');
+  if(ringLabel)ringLabel.textContent='WIN RATE';
+  var pnlEl=document.getElementById('sc-pnl');pnlEl.textContent=(pnl>=0?'+':'')+'$'+pnl.toFixed(0);pnlEl.className='share-value money-value '+(pnl>=0?'share-green':'share-red');
+  var rEl=document.getElementById('sc-r');rEl.textContent=(sumR>=0?'+':'')+sumR.toFixed(2)+'R';rEl.className='share-value '+(sumR>=0?'share-green':'share-red');
+  document.getElementById('sc-account').textContent=(acct?acct.name:'Account')+' · '+getLocalDateKey();
+  setShareList('sc-mistakes',countTopMistakes(all));
+  setShareList('sc-improve',getImproveItems(all));
+  var card=document.getElementById('share-card');
+  card.className='share-card template-'+template;
+  card.classList.toggle('share-hide-money',!!window.shareHideMoney);
+  if(shareMode==='missed'){
+    setShareList('sc-mistakes',getMissedSummaryItems(all));
+    document.getElementById('sc-mistake-title').textContent='Missed Entry';
+    document.getElementById('sc-improve-title').textContent='Fix Process';
+    var missedCount=all.filter(function(t){return t.status==='missed';}).length;
+    if(ring){ring.style.setProperty('--share-ring-pct',Math.min(100,missedCount*20)+'%');ring.style.setProperty('--share-ring-color','#ffd166');}
+    if(ringLabel)ringLabel.textContent='MISSED';
+    if(ringVal)ringVal.textContent=missedCount;
+  }
+  else {document.getElementById('sc-mistake-title').textContent='Top Mistakes'; document.getElementById('sc-improve-title').textContent='Next Improvement';}
+  toast('กำลังสร้างรูป 9:16...');
+  html2canvas(card,{backgroundColor:null,scale:1,useCORS:true,logging:false}).then(function(canvas){
+    var a=document.createElement('a');
+    a.download='mind-edge-trading-recap-'+getLocalDateKey()+'.png';
+    a.href=canvas.toDataURL('image/png');
+    a.click();
+    toast('Export รูป 9:16 สำเร็จ');
+  }).catch(function(err){toast('Export ไม่สำเร็จ: '+(err&&err.message?err.message:'unknown'));});
+}
+
 // ===================== PWA Service Worker =====================
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
@@ -3496,10 +4098,24 @@ if('serviceWorker' in navigator){
   });
 }
 
+// ===================== LOCAL DATE ROLLOVER WATCHER =====================
+// ถ้าเปิดแอพข้ามเที่ยงคืน ให้รีเซ็ต Dashboard/Guard/Popup เป็นวันใหม่อัตโนมัติ
+var __lastLocalDateKey=getTodayKey();
+setInterval(function(){
+  var nowKey=getTodayKey();
+  if(nowKey!==__lastLocalDateKey){
+    __lastLocalDateKey=nowKey;
+    closeDisciplinePopup();
+    updateGuardBar();
+    if(document.getElementById('page-dashboard')&&document.getElementById('page-dashboard').classList.contains('on'))renderDashboard();
+    var dateEl=document.getElementById('f-date');
+    if(dateEl&&!editId&&!dateEl.value)dateEl.value=nowKey;
+    if(typeof toast==='function')toast('เริ่มวันใหม่แล้ว — Dashboard รีเฟรชเป็น '+nowKey);
+  }
+},30000);
+
 // ===================== INIT CALLS =====================
 initTheme();
-initSupabase();
-if(cloudMode){loadTradesFromCloud(false);}
 renderFormChecklist();
 renderSetupTagsDatalist();
 renderAccountDropdown();
@@ -3519,6 +4135,33 @@ syncTPLabels();
   }
 })();
 try{syncAccountBalanceToHidden();onInstrumentChange();}catch(e){}
+
+// ===================== v7.9.2 BACKUP + SETUP ANALYTICS + VISUAL REVIEW FIX =====================
+var visualReviewFilter='all';
+function safeArr(x){return Array.isArray(x)?x:(x?[x]:[]);}
+function escHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function escAttr(s){return escHtml(s);}
+function tradeTextHas(t,kw){kw=String(kw||'').toLowerCase();return JSON.stringify(t||{}).toLowerCase().indexOf(kw)>=0;}
+function getTradeOutcomeText(t){if(typeof isMissedTrade==='function'&&isMissedTrade(t))return 'Missed';var rs=safeArr(t.resultStatus).join(' ');if(rs)return rs;if(typeof inferOutcomeFromNetPnl==='function')return inferOutcomeFromNetPnl(getNetPnl(t));return (getNetPnl(t)>0?'Win':getNetPnl(t)<0?'Loss':'BE');}
+function setupKeyForTrade(t){return (t.setupTag&&String(t.setupTag).trim())||('Setup '+(t.gradeSetup||'Ungraded'));}
+function topFromCounts(obj){var best='',n=0;Object.keys(obj||{}).forEach(function(k){if(obj[k]>n){best=k;n=obj[k];}});return best?best+' ('+n+')':'—';}
+function getActiveRangeTrades(prefix){var list=(trades||[]).filter(function(t){return !t.accountId||t.accountId===activeAccountId;});if(prefix&&typeof filterTradesByReportRange==='function'){return filterTradesByReportRange(list,prefix);}return list;}
+function calcSetupTagRows(list){var groups={};(list||[]).filter(function(t){return isClosedRealTrade(t);}).forEach(function(t){var k=setupKeyForTrade(t);if(!groups[k])groups[k]={name:k,trades:0,w:0,l:0,be:0,pnl:0,r:0,rr:[],mistakes:{}};var g=groups[k];g.trades++;if(isWinTrade(t))g.w++;else if(isLossTrade(t))g.l++;else g.be++;var pnl=getNetPnl(t)||0;g.pnl+=pnl;var nr=getNetR(t);if(typeof nr==='number'&&!isNaN(nr)){g.r+=nr;g.rr.push(nr);}safeArr(t.mistakeTypes).forEach(function(m){m=String(m).trim();if(m)g.mistakes[m]=(g.mistakes[m]||0)+1;});});return Object.keys(groups).map(function(k){var g=groups[k];var denom=g.w+g.l;g.wr=denom?g.w/denom*100:null;g.exp=g.rr.length?g.r/g.rr.length:0;g.topMistake=topFromCounts(g.mistakes);return g;}).sort(function(a,b){return b.r-a.r;});}
+function renderSetupTagAnalyticsPro(){var el=document.getElementById('setup-tag-pro-body');if(!el)return;var rows=calcSetupTagRows(getActiveRangeTrades('analytics'));if(!rows.length){el.innerHTML='<div style="text-align:center;color:var(--t3);padding:18px;font-size:12px">ยังไม่มี closed trade ในช่วงนี้</div>';return;}el.innerHTML='<table class="setup-pro-table"><thead><tr><th>Setup</th><th>Trades</th><th>Winrate</th><th>Net P&L</th><th>Sum R</th><th>Expectancy</th><th>Top Mistake</th></tr></thead><tbody>'+rows.map(function(g){return '<tr><td><div class="setup-name">'+escHtml(g.name)+'</div></td><td>'+g.trades+'</td><td>'+(g.wr==null?'—':g.wr.toFixed(1)+'%')+'</td><td style="font-family:var(--mono);color:'+(g.pnl>=0?'var(--gn)':'var(--rd)')+'">'+(g.pnl>=0?'+':'')+'$'+g.pnl.toFixed(2)+'</td><td style="font-family:var(--mono);color:'+(g.r>=0?'var(--gn)':'var(--rd)')+'">'+(g.r>=0?'+':'')+g.r.toFixed(2)+'R</td><td style="font-family:var(--mono)">'+g.exp.toFixed(2)+'R</td><td><div class="setup-mistake">'+escHtml(g.topMistake)+'</div></td></tr>';}).join('')+'</tbody></table>';}
+function renderMistakeMoodInsightPro(){var el=document.getElementById('mistake-mood-pro-body');if(!el)return;var list=getActiveRangeTrades('insights').filter(function(t){return isClosedRealTrade(t);});if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--t3);padding:18px;font-size:12px">ยังไม่มีข้อมูลในช่วงนี้</div>';return;}var low=list.filter(function(t){return (Number(t.moodPre)||0)>0&&(Number(t.moodPre)||0)<(settings.minMood||6);});var high=list.filter(function(t){return (Number(t.moodPre)||0)>=(settings.minMood||6);});var lowR=low.length?low.reduce(function(a,t){return a+(getNetR(t)||0);},0)/low.length:0;var highR=high.length?high.reduce(function(a,t){return a+(getNetR(t)||0);},0)/high.length:0;var mistakeCounts={}, fomoLoss=0, notPlanLoss=0;list.forEach(function(t){safeArr(t.mistakeTypes).forEach(function(m){m=String(m).trim();if(m)mistakeCounts[m]=(mistakeCounts[m]||0)+1;});if(tradeTextHas(t,'fomo')&&isLossTrade(t))fomoLoss++;if((t.followPlan==='C'||String(t.followPlan||'').toLowerCase().includes('no'))&&isLossTrade(t))notPlanLoss++;});var top=topFromCounts(mistakeCounts);var msg1=low.length?'Mood ต่ำกว่า '+(settings.minMood||6)+' มี Avg '+lowR.toFixed(2)+'R/trade':'ยังไม่มีไม้ mood ต่ำ';var msg2=high.length?'Mood ผ่านเกณฑ์มี Avg '+highR.toFixed(2)+'R/trade':'ยังไม่มีไม้ mood ผ่านเกณฑ์';var msg3=top==='—'?'ยังไม่พบ mistake pattern ชัด':'Mistake ที่เจอบ่อยสุด: '+top;el.innerHTML='<div class="insight-pro-grid"><div class="insight-pro-card"><b>อารมณ์ต่ำ</b><span>'+escHtml(msg1)+'</span></div><div class="insight-pro-card"><b>อารมณ์พร้อม</b><span>'+escHtml(msg2)+'</span></div><div class="insight-pro-card"><b>Pattern เสี่ยง</b><span>'+escHtml(msg3)+'<br>FOMO Loss: '+fomoLoss+' · Not Plan Loss: '+notPlanLoss+'</span></div></div>';}
+function setVisualReviewFilter(v){visualReviewFilter=v||'all';document.querySelectorAll('#vr-filter-row .vr-chip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-vr')===visualReviewFilter);});renderVisualReviewPro();}
+function visualFilterPass(t){var v=visualReviewFilter;if(v==='all')return true;if(v==='setupA')return t.gradeSetup==='A';if(v==='setupB')return t.gradeSetup==='B';if(v==='setupC')return t.gradeSetup==='C';if(v==='win')return isWinTrade(t);if(v==='loss')return isLossTrade(t);if(v==='be')return getTradeOutcomeText(t).toLowerCase().indexOf('be')>=0;if(v==='missed')return isMissedTrade(t);if(v==='fomo')return tradeTextHas(t,'fomo');if(v==='notPlan')return t.followPlan==='C'||String(t.followPlan||'').toLowerCase().includes('no');return true;}
+function imgBox(src,label){if(!src)return '<div class="vr-img">'+label+'<br>ไม่มีรูป</div>';return '<div class="vr-img"><img src="'+escAttr(src)+'" onclick="event.stopPropagation();openLightbox(this.src)" onerror="this.parentNode.innerHTML=\''+label+'<br>โหลดไม่ได้\'"></div>';}
+function renderVisualReviewPro(){var el=document.getElementById('visual-review-grid');if(!el)return;var list=(trades||[]).filter(function(t){return !t.accountId||t.accountId===activeAccountId;}).filter(visualFilterPass).filter(function(t){return t.ssSetup||t.ssLtf||t.ssResult||isMissedTrade(t);}).slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))||((b.id||0)-(a.id||0));});if(!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:22px;font-size:12px">ไม่พบ trade ตาม filter นี้ หรือยังไม่มี screenshot</div>';return;}el.innerHTML=list.map(function(t){var nr=getNetR(t), missed=isMissedTrade(t);var rtxt=missed?((t.missedR!==undefined&&t.missedR!=='')?'Miss '+Number(t.missedR).toFixed(2)+'R':'Missed'):(nr!=null?((nr>=0?'+':'')+nr.toFixed(2)+'R'):'—');var outcome=getTradeOutcomeText(t);var lesson=(t.learn||t.missedNote||t.notes||t.reason||'ยังไม่มี lesson');return '<div class="vr-card" onclick="openDetail('+t.id+')"><div class="vr-top"><div><div class="vr-pair">'+escHtml(t.pair||'—')+'</div><div class="vr-meta">'+formatDateShort(t.date)+' · '+escHtml(t.setupTag||'No tag')+'</div></div><span class="tag '+(missed?'ta':isWinTrade(t)?'tg':isLossTrade(t)?'tr':'tb')+'">'+escHtml(outcome)+'</span></div><div class="vr-img-row">'+imgBox(t.ssSetup,'HTF')+imgBox(t.ssLtf,'LTF')+imgBox(t.ssResult,'RESULT')+'</div><div class="vr-footer"><div class="vr-lesson">'+escHtml(lesson)+'</div><div class="vr-r '+(String(rtxt).indexOf('-')>=0?'sd':'su')+'">'+escHtml(rtxt)+'</div></div></div>';}).join('');}
+function renderBackupCenterPro(){var el=document.getElementById('backup-center-stats');if(!el)return;var closed=(trades||[]).filter(isClosedRealTrade).length, missed=(trades||[]).filter(isMissedTrade).length, open=(trades||[]).filter(function(t){return t.status==='open';}).length;var last=localStorage.getItem('smc_v6_last_export_at')||localStorage.getItem('smc_v792_last_backup')||'ยังไม่เคย';var need=((trades||[]).length>0&&((trades||[]).length%5===0));el.innerHTML='<div class="backup-stat"><div class="k">Trades</div><div class="v">'+(trades||[]).length+'</div></div><div class="backup-stat"><div class="k">Closed/Open/Missed</div><div class="v">'+closed+'/'+open+'/'+missed+'</div></div><div class="backup-stat"><div class="k">Last Backup</div><div class="v" style="font-size:11px">'+(last==='ยังไม่เคย'?last:new Date(last).toLocaleString())+'</div></div><div class="backup-stat"><div class="k">Reminder</div><div class="v '+(need?'sd':'su')+'">'+(need?'Backup now':'OK')+'</div></div>';}
+var __v792DoExp=doExp;doExp=function(){__v792DoExp();try{localStorage.setItem('smc_v792_last_backup',new Date().toISOString());}catch(e){}renderBackupCenterPro();};
+var __v792ExpCSV=expCSV;expCSV=function(){__v792ExpCSV();try{localStorage.setItem('smc_v792_last_backup',new Date().toISOString());}catch(e){}renderBackupCenterPro();};
+var __v792RenderAnalytics=renderAnalytics;renderAnalytics=function(){__v792RenderAnalytics();renderSetupTagAnalyticsPro();};
+var __v792RenderInsights=renderInsights;renderInsights=function(){__v792RenderInsights();renderMistakeMoodInsightPro();};
+var __v792RenderReviews=renderReviews;renderReviews=function(){__v792RenderReviews();renderVisualReviewPro();};
+var __v792RenderSettings=renderSettings;renderSettings=function(){__v792RenderSettings();renderBackupCenterPro();};
+setTimeout(function(){renderBackupCenterPro();renderSetupTagAnalyticsPro();renderMistakeMoodInsightPro();renderVisualReviewPro();},0);
+
 </script>
 </body>
 </html>
