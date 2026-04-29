@@ -688,6 +688,13 @@ body.dark .share-export-panel{background:#0a111a;border-color:rgba(147,228,255,.
 .visual-review-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.vr-card{background:var(--bg3);border:1px solid var(--b);border-radius:14px;padding:10px;cursor:pointer;transition:.16s;overflow:hidden}.vr-card:hover{transform:translateY(-2px);border-color:var(--ac2);box-shadow:0 10px 28px rgba(0,0,0,.12)}.vr-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}.vr-pair{font-family:var(--mono);font-size:13px;font-weight:900;color:var(--t)}.vr-meta{font-size:10px;color:var(--t3);font-family:var(--mono)}.vr-img-row{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:8px}.vr-img{height:78px;border-radius:9px;background:var(--bg4);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;overflow:hidden;color:var(--t3);font-size:9px;text-align:center}.vr-img img{width:100%;height:100%;object-fit:cover;display:block}.vr-footer{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:end}.vr-lesson{font-size:11px;color:var(--t2);line-height:1.4;max-height:32px;overflow:hidden}.vr-r{font-family:var(--mono);font-size:12px;font-weight:900}
 body.dark .pro-panel,body.dark .backup-action,body.dark .backup-stat,body.dark .insight-pro-card,body.dark .vr-card{border-color:rgba(125,211,252,.12)}body.dark .vr-card:hover{box-shadow:0 18px 45px rgba(0,0,0,.34),0 0 0 1px rgba(56,189,248,.12)}@media(max-width:720px){.backup-grid,.backup-stat-row,.insight-pro-grid,.visual-review-grid{grid-template-columns:1fr}.vr-img{height:92px}}
 
+
+/* === SUPABASE SYNC ACTIVE UI PATCH === */
+#sync-btn.active,#sync-btn.bg_{background:linear-gradient(135deg,#00e676,#00c853)!important;border-color:rgba(0,230,118,.75)!important;color:#02110a!important;font-weight:900!important;box-shadow:0 0 0 1px rgba(0,230,118,.25),0 0 16px rgba(0,230,118,.36)!important}
+#sync-btn:not(.active){background:var(--bg3)!important;color:var(--t2)!important;box-shadow:none!important}
+#cloud-status.cloud-online{background:rgba(0,230,118,.10)!important;border-color:rgba(0,230,118,.55)!important;color:#00e676!important;font-weight:900!important}
+.instrument-preset-table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px}.instrument-preset-table th{background:var(--bg4);color:var(--t3);font-size:9px;letter-spacing:.08em;text-transform:uppercase;text-align:left;padding:7px;border-bottom:1px solid var(--b)}.instrument-preset-table td{padding:7px;border-bottom:1px solid var(--b);vertical-align:middle}.instrument-preset-table input{background:var(--bg3);border:1px solid var(--b);border-radius:7px;padding:6px 8px;color:var(--t);font-family:var(--mono);font-size:11px;width:100%}.instrument-preset-table input:focus{outline:none;border-color:var(--ac);box-shadow:0 0 0 3px var(--ac3)}.inst-help{font-size:11px;color:var(--t3);line-height:1.55;margin-top:8px}body.dark .instrument-preset-table input{background:#101b29!important;border-color:rgba(147,228,255,.18)!important;color:#f8fbff!important}
+
 </style>
 </head>
 <body class="dark">
@@ -1478,6 +1485,12 @@ body.dark .pro-panel,body.dark .backup-action,body.dark .backup-stat,body.dark .
     <div style="font-size:11px;color:var(--t3)">ค่าเหล่านี้จะถูก pre-fill เมื่อเลือก Mode "% จาก Risk" — แก้ได้ตามระบบของคุณ</div>
   </div>
 
+  <div class="card" id="instrument-preset-card">
+    <div class="ct"><span class="tag tt">Instrument Presets</span><span style="font-size:11px;color:var(--t3)">ตั้งค่า Point Size + $/Point/1 Lot ครั้งเดียว แล้วหน้า Form คำนวณอัตโนมัติ</span><button class="btn bp" onclick="addInstrumentPreset()" style="margin-left:auto;padding:4px 10px;font-size:11px">+ Preset</button></div>
+    <div style="overflow-x:auto"><table class="instrument-preset-table"><thead><tr><th style="min-width:110px">Symbol</th><th style="min-width:130px">Point Size</th><th style="min-width:160px">$ / Point / 1 Lot</th><th style="min-width:170px">Label</th><th style="width:60px">Action</th></tr></thead><tbody id="instrument-preset-body"></tbody></table></div>
+    <div class="inst-help">ตัวอย่าง: XAUUSD = 0.01 / 1 · EURUSD = 0.00001 / 1 · USDJPY = 0.001 / 1 · NAS100/BTCUSD = 1 / 1<br>ถ้า Symbol ไม่ตรง preset ระบบจะใช้ DEFAULT จากตารางนี้</div>
+  </div>
+
   <div class="card">
     <div class="ct"><span class="tag tk">Setup Tag Library</span>
       <button class="btn" onclick="addSetupTag()">+ Tag ใหม่</button>
@@ -1567,15 +1580,40 @@ var CLOUD_MODE_KEY='mind_edge_cloud_mode_on';
 var cloudMode=localStorage.getItem(CLOUD_MODE_KEY)!=='0';
 function getLocalDateKey(){return new Date().toISOString().split('T')[0];}
 function initSupabase(){try{if(!window.supabase){console.error('Supabase CDN not loaded');setCloudStatus('offline','Supabase CDN not loaded');return false;}if(!SUPABASE_URL||!SUPABASE_KEY){console.error('Missing Supabase URL / Publishable Key');setCloudStatus('offline','Missing Supabase config');return false;}sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);updateSyncButton();if(cloudMode){setCloudStatus('checking','Checking Supabase...');pingCloud();}else{setCloudStatus('local','LocalStorage mode');}return true;}catch(e){console.error('Supabase init failed:',e);setCloudStatus('offline',e.message||'Supabase init failed');return false;}}
-function updateSyncButton(){var btn=document.getElementById('sync-btn');if(!btn)return;btn.textContent=cloudMode?'Sync ON':'Sync OFF';btn.className='btn '+(cloudMode?'bg_':'ba');btn.title=cloudMode?'ON: Save/Load ผ่าน Supabase':'OFF: ใช้ localStorage เท่านั้น';}
-function setCloudStatus(state,msg){var el=document.getElementById('cloud-status');if(!el)return;if(state==='online'){el.textContent='☁ Online';el.style.color='var(--gn)';el.style.borderColor='var(--gn3)';}else if(state==='syncing'){el.textContent='☁ Syncing';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else if(state==='checking'){el.textContent='☁ Checking';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else if(state==='local'){el.textContent='💾 Offline';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else{el.textContent='☁ Offline';el.style.color='var(--rd)';el.style.borderColor='var(--rd3)';}if(msg)el.title=msg;updateSyncButton();}
+function updateSyncButton(){var btn=document.getElementById('sync-btn');if(!btn)return;btn.textContent=cloudMode?'Sync ON':'Sync OFF';btn.className='btn '+(cloudMode?'bg_ active':'ba');btn.title=cloudMode?'ON: Save/Load ผ่าน Supabase':'OFF: ใช้ localStorage เท่านั้น';}
+function setCloudStatus(state,msg){var el=document.getElementById('cloud-status');if(!el)return;el.classList.remove('cloud-online');if(state==='online'){el.textContent='☁ Online';el.classList.add('cloud-online');el.style.color='var(--gn)';el.style.borderColor='var(--gn3)';}else if(state==='syncing'){el.textContent='☁ Syncing';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else if(state==='checking'){el.textContent='☁ Checking';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else if(state==='local'){el.textContent='💾 Offline';el.style.color='var(--am)';el.style.borderColor='var(--am3)';}else{el.textContent='☁ Offline';el.style.color='var(--rd)';el.style.borderColor='var(--rd3)';}if(msg)el.title=msg;updateSyncButton();}
 async function pingCloud(){if(!cloudMode){setCloudStatus('local','Cloud Sync OFF — using localStorage');return false;}if(!sbClient&&!initSupabase()){return false;}try{var res=await sbClient.from('trades').select('id',{count:'exact',head:true});if(res.error){console.error('Supabase ping error:',res.error);setCloudStatus('offline',res.error.message);return false;}setCloudStatus('online','Supabase connected');return true;}catch(e){console.error('Supabase ping exception:',e);setCloudStatus('offline',e.message||'Supabase connection failed');return false;}}
 function toggleCloudMode(){cloudMode=!cloudMode;localStorage.setItem(CLOUD_MODE_KEY,cloudMode?'1':'0');updateSyncButton();if(cloudMode){toast('Cloud Sync: ON');initSupabase();loadTradesFromCloud();}else{setCloudStatus('local','Cloud Sync OFF — using localStorage');toast('Cloud Sync: OFF — ใช้ localStorage');loadAccountTrades();updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();}}
-function tradeToCloudRow(t){return {user_id:String(t.accountId||activeAccountId||'personal'),date:String(t.date||getLocalDateKey()),pair:String(t.pair||''),setup:String(t.setupTag||t.gradeSetup||t.reason||''),result:String((t.status==='missed')?'Missed':((t.resultStatus&&t.resultStatus[0])||inferOutcomeFromNetPnl(t.netPnl||0)||'')),net:Number(t.netPnl||0),r:Number(t.netR||0),follow:String(t.followPlan||''),mistake:Array.isArray(t.mistakeTypes)?t.mistakeTypes.join(', '):String(t.mistakeTypes||''),mood:Number(t.moodPre||0)};}
-function cloudRowToTrade(r){var outcome=r.result||inferOutcomeFromNetPnl(r.net||0)||'';return {id:'cloud_'+String(r.id||((r.date||'')+'_'+(r.pair||'')+'_'+Math.random())),cloudId:r.id||null,accountId:r.user_id||activeAccountId,date:(r.date||'').slice(0,10),time:'',pair:r.pair||'',session:'',setupTag:r.setup||'',reason:r.setup||'',resultStatus:[outcome],netPnl:Number(r.net||0),netR:Number(r.r||0),followPlan:r.follow||'',mistakeTypes:r.mistake?String(r.mistake).split(',').map(function(x){return x.trim();}).filter(Boolean):[],moodPre:Number(r.mood||0),status:outcome==='Missed'?'missed':'closed',dir:'',gradeSetup:'',_cloud:true,_v:9};}
-async function saveTradeToCloud(t){if(!cloudMode){console.log('Cloud Sync OFF: saved to localStorage only');setCloudStatus('local','Cloud Sync OFF — using localStorage');return false;}if(!sbClient&&!initSupabase()){alert('Save fail: Supabase client ยังไม่พร้อม ระบบบันทึกไว้ใน localStorage แล้ว');return false;}setCloudStatus('syncing','Saving to Supabase...');try{var row=tradeToCloudRow(t);var res=await sbClient.from('trades').insert([row]).select();if(res.error){console.error('Supabase save error:',res.error,'Payload:',row);setCloudStatus('offline',res.error.message);alert('Save fail: '+res.error.message+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}console.log('Saved to Supabase');setCloudStatus('online','Saved to Supabase');toast('☁ Saved to Supabase');await loadTradesFromCloud(false);return true;}catch(e){console.error('Supabase save exception:',e);setCloudStatus('offline',e.message||'Save failed');alert('Save fail: '+(e.message||e)+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}}
+function getLocalTradeMergeIndexFromCloudRow(r){
+  for(var i=0;i<(trades||[]).length;i++){var t=trades[i]||{};
+    if(r.id&&String(t.cloudId||'')===String(r.id))return i;
+    if(String(t.date||'').slice(0,10)===String(r.date||'').slice(0,10)&&String(t.pair||'')===String(r.pair||'')&&Number(t.netPnl||0)===Number(r.net||0)&&Number(t.netR||0)===Number(r.r||0))return i;
+  }
+  return -1;
+}
+function compactTradeDetails(t){
+  var copy=Object.assign({},t||{});
+  delete copy.cloudId;delete copy._cloud;
+  return copy;
+}
+function tradeToCloudRow(t,includeDetails){
+  var row={user_id:String(t.accountId||activeAccountId||'personal'),date:String(t.date||getLocalDateKey()),pair:String(t.pair||''),setup:String(t.setupTag||t.gradeSetup||t.reason||''),result:String((t.status==='missed')?'Missed':((t.resultStatus&&t.resultStatus[0])||inferOutcomeFromNetPnl(t.netPnl||0)||'')),net:Number(t.netPnl||0),r:Number(t.netR||0),follow:String(t.followPlan||''),mistake:Array.isArray(t.mistakeTypes)?t.mistakeTypes.join(', '):String(t.mistakeTypes||''),mood:Number(t.moodPre||0)};
+  if(includeDetails!==false)row.details=compactTradeDetails(t);
+  return row;
+}
+function cloudRowToTrade(r){
+  if(r&&r.details&&typeof r.details==='object'){var full=Object.assign({},r.details);full.cloudId=r.id||full.cloudId||null;full.accountId=r.user_id||full.accountId||activeAccountId;full._cloud=true;return full;}
+  var outcome=r.result||inferOutcomeFromNetPnl(r.net||0)||'';
+  var idx=getLocalTradeMergeIndexFromCloudRow(r);
+  var base=idx>=0?Object.assign({},trades[idx]):{};
+  return Object.assign(base,{id:base.id||('cloud_'+String(r.id||((r.date||'')+'_'+(r.pair||'')+'_'+Math.random()))),cloudId:r.id||base.cloudId||null,accountId:r.user_id||base.accountId||activeAccountId,date:(r.date||base.date||'').slice(0,10),pair:r.pair||base.pair||'',setupTag:r.setup||base.setupTag||'',reason:base.reason||r.setup||'',resultStatus:base.resultStatus||[outcome],netPnl:Number(r.net||base.netPnl||0),netR:Number(r.r||base.netR||0),followPlan:r.follow||base.followPlan||'',mistakeTypes:base.mistakeTypes||(r.mistake?String(r.mistake).split(',').map(function(x){return x.trim();}).filter(Boolean):[]),moodPre:Number(r.mood||base.moodPre||0),status:base.status||(outcome==='Missed'?'missed':'closed'),_cloud:true,_v:9});
+}
+async function saveTradeToCloud(t){if(!cloudMode){console.log('Cloud Sync OFF: saved to localStorage only');setCloudStatus('local','Cloud Sync OFF — using localStorage');return false;}if(!sbClient&&!initSupabase()){alert('Save fail: Supabase client ยังไม่พร้อม ระบบบันทึกไว้ใน localStorage แล้ว');return false;}setCloudStatus('syncing','Saving to Supabase...');try{var row=tradeToCloudRow(t,true);var res=await sbClient.from('trades').insert([row]).select();if(res.error&&String(res.error.message||'').toLowerCase().indexOf('details')>=0){console.warn('Supabase details column not found, retry without full details. Add details jsonb column to keep Review data across devices.',res.error);row=tradeToCloudRow(t,false);res=await sbClient.from('trades').insert([row]).select();}
+    if(res.error){console.error('Supabase save error:',res.error,'Payload:',row);setCloudStatus('offline',res.error.message);alert('Save fail: '+res.error.message+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}
+    if(res.data&&res.data[0]&&res.data[0].id){t.cloudId=res.data[0].id;}
+    console.log('Saved to Supabase');setCloudStatus('online','Saved to Supabase');toast('☁ Saved to Supabase');await loadTradesFromCloud(false);return true;}catch(e){console.error('Supabase save exception:',e);setCloudStatus('offline',e.message||'Save failed');alert('Save fail: '+(e.message||e)+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}}
 async function saveTradeOnline(t){return saveTradeToCloud(t);}
-async function loadTradesFromCloud(showToast){if(showToast===undefined)showToast=true;if(!cloudMode){loadAccountTrades();setCloudStatus('local','Cloud Sync OFF — using localStorage');renderDashboard();return trades;}if(!sbClient&&!initSupabase())return trades;setCloudStatus('syncing','Loading trades from Supabase...');try{var res=await sbClient.from('trades').select('*').eq('user_id',String(activeAccountId||'personal')).order('date',{ascending:false});if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}trades=(res.data||[]).map(cloudRowToTrade);saveData();setCloudStatus('online','Loaded '+trades.length+' rows from Supabase');if(showToast)toast('☁ Loaded from Supabase: '+trades.length+' rows');updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();if(cur&&cur.id==='page-insights')renderInsights();if(cur&&cur.id==='page-review')renderReviews();return trades;}catch(e){console.error('Supabase load exception:',e);setCloudStatus('offline',e.message||'Load failed');if(showToast)toast('Sync fail');return trades;}}
+async function loadTradesFromCloud(showToast){if(showToast===undefined)showToast=true;if(!cloudMode){loadAccountTrades();setCloudStatus('local','Cloud Sync OFF — using localStorage');renderDashboard();return trades;}if(!sbClient&&!initSupabase())return trades;setCloudStatus('syncing','Loading trades from Supabase...');try{var res=await sbClient.from('trades').select('*').eq('user_id',String(activeAccountId||'personal')).order('date',{ascending:false});if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}trades=(res.data||[]).map(function(r){return cloudRowToTrade(r);});saveData();setCloudStatus('online','Loaded '+trades.length+' rows from Supabase');if(showToast)toast('☁ Loaded from Supabase: '+trades.length+' rows');updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();if(cur&&cur.id==='page-insights')renderInsights();if(cur&&cur.id==='page-review')renderReviews();return trades;}catch(e){console.error('Supabase load exception:',e);setCloudStatus('offline',e.message||'Load failed');if(showToast)toast('Sync fail');return trades;}}
 async function syncFromCloud(){return loadTradesFromCloud(true);}
 
 
@@ -1619,6 +1657,18 @@ var DEFAULT_SETTINGS={
   minMood:6, maxRiskPct:2,
   tp1FromPct:112.72, tp1ToPct:161.8, tp2Pct:161.8, tp3Pct:200,
   setupTags:['NY Sweep','London Reversal','HTF OB Retrace','Trend Continuation','Counter-trend Scalp','NY Sweep + M15 CHoCH'],
+  instrumentPresets:[
+    {symbol:'XAUUSD',label:'Gold / XAUUSD',pointSize:0.01,dollarsPerPointPerLot:1},
+    {symbol:'EURUSD',label:'Forex 5-digit',pointSize:0.00001,dollarsPerPointPerLot:1},
+    {symbol:'GBPUSD',label:'Forex 5-digit',pointSize:0.00001,dollarsPerPointPerLot:1},
+    {symbol:'USDJPY',label:'JPY 3-digit',pointSize:0.001,dollarsPerPointPerLot:1},
+    {symbol:'GBPJPY',label:'JPY 3-digit',pointSize:0.001,dollarsPerPointPerLot:1},
+    {symbol:'NAS100',label:'Index / CFD',pointSize:1,dollarsPerPointPerLot:1},
+    {symbol:'US30',label:'Index / CFD',pointSize:1,dollarsPerPointPerLot:1},
+    {symbol:'BTCUSD',label:'Crypto',pointSize:1,dollarsPerPointPerLot:1},
+    {symbol:'ETHUSD',label:'Crypto',pointSize:1,dollarsPerPointPerLot:1},
+    {symbol:'DEFAULT',label:'Default Custom',pointSize:0.01,dollarsPerPointPerLot:1}
+  ],
   accounts:[{id:'personal',name:'Personal',color:'#4f46e5',balance:5000},{id:'funded',name:'Funded',color:'#059669',balance:10000}],
   activeAccountId:'personal'
 };
@@ -1761,6 +1811,8 @@ function load(){
   try{settings=Object.assign({},DEFAULT_SETTINGS,JSON.parse(localStorage.getItem(ST)));}catch(e){settings=Object.assign({},DEFAULT_SETTINGS);}
   reviews=[];
   if(!settings.templates||!settings.templates.length)settings.templates=DEFAULT_TEMPLATES;
+  if(!settings.instrumentPresets||!settings.instrumentPresets.length)settings.instrumentPresets=DEFAULT_SETTINGS.instrumentPresets.slice();
+  if(!settings.instrumentPresets.some(function(p){return String(p.symbol||'').toUpperCase()==='DEFAULT';}))settings.instrumentPresets.push({symbol:'DEFAULT',label:'Default Custom',pointSize:0.01,dollarsPerPointPerLot:1});
   if(!settings.accounts||!settings.accounts.length)settings.accounts=DEFAULT_SETTINGS.accounts;
   activeAccountId=settings.activeAccountId||'personal';
   loadAccountTrades();
@@ -1855,6 +1907,9 @@ function saveSettings(){
   updateGuardBar();renderDashboard();toast('บันทึก settings');
 }
 load();
+
+// Prepare instrument presets for Settings + Form datalist
+setTimeout(function(){renderInstrumentDatalist();onInstrumentChange();},0);
 
 // ===================== AUTOSAVE DRAFT =====================
 var autosaveTimer=null;
@@ -2010,14 +2065,25 @@ function getAccountBalance(){
   var acct=(typeof getActiveAccount==='function')?getActiveAccount():null;
   return acct&&acct.balance?parseFloat(acct.balance)||0:0;
 }
+function getInstrumentPresets(){
+  if(!settings.instrumentPresets||!settings.instrumentPresets.length){settings.instrumentPresets=DEFAULT_SETTINGS.instrumentPresets.slice();}
+  if(!settings.instrumentPresets.some(function(p){return String(p.symbol||'').toUpperCase()==='DEFAULT';})){settings.instrumentPresets.push({symbol:'DEFAULT',label:'Default Custom',pointSize:0.01,dollarsPerPointPerLot:1});}
+  return settings.instrumentPresets;
+}
+function normalizeSymbol(pair){return String(pair||'').toUpperCase().replace(/\s+/g,'');}
 function getInstrumentPreset(pair){
-  pair=(pair||'').toUpperCase().replace(/\s+/g,'');
-  if(pair==='XAUUSD'||pair==='GOLD')return{x:'xau',label:'XAUUSD · point 0.01 · $1/pt/lot',pointSize:0.01,dollarsPerPointPerLot:1};
-  if(pair==='NAS100'||pair==='US100'||pair==='US30'||pair==='DJ30'||pair==='SPX500'||pair==='US500')return{x:'index',label:pair+' · point 1 · $1/pt/lot',pointSize:1,dollarsPerPointPerLot:1};
-  if(pair==='BTCUSD'||pair==='ETHUSD'||pair==='BTCUSDT'||pair==='ETHUSDT')return{x:'crypto',label:pair+' · point 1 · $1/pt/lot',pointSize:1,dollarsPerPointPerLot:1};
-  if(/JPY$/.test(pair)&&pair.length===6)return{x:'fx3',label:pair+' · JPY point 0.001 · $1/pt/lot',pointSize:0.001,dollarsPerPointPerLot:1};
-  if(/^[A-Z]{6}$/.test(pair))return{x:'fx5',label:pair+' · Forex point 0.00001 · $1/pt/lot',pointSize:0.00001,dollarsPerPointPerLot:1};
-  return{x:'custom',label:'Custom · ตั้งค่า point เอง',pointSize:parseFloat(document.getElementById('f-point-size').value)||0.01,dollarsPerPointPerLot:parseFloat(document.getElementById('f-point-value').value)||1};
+  var sym=normalizeSymbol(pair);
+  var presets=getInstrumentPresets();
+  var found=presets.find(function(p){return normalizeSymbol(p.symbol)===sym;});
+  if(!found){
+    if((sym==='GOLD'||sym==='XAUUSD') && presets.find(function(p){return normalizeSymbol(p.symbol)==='XAUUSD';}))found=presets.find(function(p){return normalizeSymbol(p.symbol)==='XAUUSD';});
+    else if(/JPY$/.test(sym)&&sym.length===6)found=presets.find(function(p){return /JPY$/.test(normalizeSymbol(p.symbol));});
+    else if(/^[A-Z]{6}$/.test(sym))found=presets.find(function(p){return normalizeSymbol(p.symbol)==='EURUSD'||normalizeSymbol(p.symbol)==='GBPUSD';});
+    else if(['NAS100','US100','US30','DJ30','SPX500','US500'].indexOf(sym)>=0)found=presets.find(function(p){return ['NAS100','US30'].indexOf(normalizeSymbol(p.symbol))>=0;});
+    else if(['BTCUSD','ETHUSD','BTCUSDT','ETHUSDT'].indexOf(sym)>=0)found=presets.find(function(p){return ['BTCUSD','ETHUSD'].indexOf(normalizeSymbol(p.symbol))>=0;});
+  }
+  if(!found)found=presets.find(function(p){return normalizeSymbol(p.symbol)==='DEFAULT';})||{symbol:'DEFAULT',label:'Default Custom',pointSize:0.01,dollarsPerPointPerLot:1};
+  return {x:normalizeSymbol(found.symbol)==='DEFAULT'?'custom':normalizeSymbol(found.symbol).toLowerCase(),symbol:normalizeSymbol(found.symbol),label:(sym||found.symbol)+' · '+(found.label||'Preset')+' · point '+Number(found.pointSize||0.01)+' · $'+Number(found.dollarsPerPointPerLot||1)+'/pt/lot',pointSize:Number(found.pointSize||0.01),dollarsPerPointPerLot:Number(found.dollarsPerPointPerLot||1)};
 }
 function syncAccountBalanceToHidden(){
   var balEl=document.getElementById('f-bal');
@@ -2043,9 +2109,8 @@ function getPointMeta(){
 }
 function calcPointDistance(priceA,priceB,pointSize){return Math.abs(priceA-priceB)/pointSize;}
 function onInstChg(){
-  var instEl=document.getElementById('f-inst');
   var cp=document.getElementById('custom-pip');
-  if(cp&&instEl)cp.style.display=instEl.value==='custom'?'grid':'none';
+  if(cp)cp.style.display='none'; // point settings moved to Settings > Instrument Presets
   syncAccountBalanceToHidden();
   onCalc();
 }
@@ -2413,7 +2478,7 @@ function clearForm(){
   document.getElementById('ss3p').innerHTML='<div class="ssp">ยังไม่มีภาพ LTF</div>';
   document.getElementById('ss2p').innerHTML='<div class="ssp">ยังไม่มีภาพ Result</div>';
   document.getElementById('custom-pip').style.display='none';
-  var instReset=document.getElementById('f-inst');if(instReset)instReset.value='xau';
+  var instReset=document.getElementById('f-inst');if(instReset)instReset.value='xau';onInstrumentChange();
   var badge=document.getElementById('tp1-auto-badge');if(badge)badge.style.display='none';
   // reset TP prices + exit lots
   [1,2,3].forEach(function(n){
@@ -2997,7 +3062,7 @@ function drawMoodTrend(cl){
 }
 function drawSession(cl){
   var sessions=['London','New York','Asia','London+NY'];var el=document.getElementById('session-chart');
-  var max=0;var rows=sessions.map(function(s){var sub=snapClosed.filter(function(t){return t.session===s;});var pnl=sub.reduce(function(a,t){return a+getNetPnl(t);},0);max=Math.max(max,Math.abs(pnl));return{s:s,pnl:pnl,n:sub.length};});
+  var max=0;var rows=sessions.map(function(s){var sub=cl.filter(function(t){return t.session===s;});var pnl=sub.reduce(function(a,t){return a+getNetPnl(t);},0);max=Math.max(max,Math.abs(pnl));return{s:s,pnl:pnl,n:sub.length};});
   el.innerHTML=rows.map(function(r){return bar(r.s+' ('+r.n+')',r.pnl,max,r.pnl>=0?'bfg':'bfr','$'+r.pnl.toFixed(0));}).join('');
 }
 function drawTagChart(cl){
@@ -3151,6 +3216,7 @@ function renderInsights(){
   var badge=document.getElementById('insights-acct-badge');
   if(badge&&acct){badge.textContent='◉ '+acct.name;badge.style.color=acct.color||'var(--ac)';}
   var cl=trades.filter(isClosedRealTrade);
+  var snapClosed=cl; // v7.9.3: keep Insights sections connected to the active filtered closed-trade set
 
   // Best conditions
   var bc=document.getElementById('bc-grid');
@@ -3349,7 +3415,7 @@ function renderSettings(){
   var lf=document.querySelector('label[for="f-tp1-from"],#page-form .fld label');
   var tp1fLabel=document.querySelector('#page-form .fld label[for]');
   syncTPLabels();
-  renderTemplatePills();renderTmplEditor();renderTagList();renderSetupTagsDatalist();
+  renderTemplatePills();renderTmplEditor();renderTagList();renderSetupTagsDatalist();renderInstrumentPresetSettings();renderInstrumentDatalist();
   renderAccountList();
 }
 function syncTPLabels(){
@@ -3427,6 +3493,46 @@ function deleteTmpl(){
   settings.templates=settings.templates.filter(function(t){return t.id!==settings.activeTemplate;});
   settings.activeTemplate=settings.templates[0].id;localStorage.setItem(ST,JSON.stringify(settings));renderTemplatePills();renderFormChecklist();
 }
+function renderInstrumentPresetSettings(){
+  var body=document.getElementById('instrument-preset-body');if(!body)return;
+  var presets=getInstrumentPresets();
+  body.innerHTML=presets.map(function(p,i){
+    var sym=String(p.symbol||'').toUpperCase();
+    var isDefault=sym==='DEFAULT';
+    var safeLabel=String(p.label||'').replace(/"/g,'&quot;');
+    var safeSym=sym.replace(/"/g,'&quot;');
+    var action=isDefault?'<span style="font-size:10px;color:var(--t3);font-weight:800">DEFAULT</span>':'<button class="btn br" onclick="removeInstrumentPreset('+i+')" style="padding:3px 7px">×</button>';
+    return '<tr>'+ 
+      '<td><input value="'+safeSym+'" '+(isDefault?'readonly title="DEFAULT ใช้สำหรับ symbol ที่ไม่รู้จัก"':'')+' onchange="updateInstrumentPreset('+i+',&quot;symbol&quot;,this.value)"></td>'+ 
+      '<td><input type="number" step="0.00001" value="'+(p.pointSize||0.01)+'" onchange="updateInstrumentPreset('+i+',&quot;pointSize&quot;,this.value)" oninput="updateInstrumentPreset('+i+',&quot;pointSize&quot;,this.value,true)"></td>'+ 
+      '<td><input type="number" step="0.01" value="'+(p.dollarsPerPointPerLot||1)+'" onchange="updateInstrumentPreset('+i+',&quot;dollarsPerPointPerLot&quot;,this.value)" oninput="updateInstrumentPreset('+i+',&quot;dollarsPerPointPerLot&quot;,this.value,true)"></td>'+ 
+      '<td><input value="'+safeLabel+'" onchange="updateInstrumentPreset('+i+',&quot;label&quot;,this.value)"></td>'+ 
+      '<td>'+action+'</td>'+ 
+    '</tr>';
+  }).join('');
+}
+function updateInstrumentPreset(i,key,val,soft){
+  var presets=getInstrumentPresets();if(!presets[i])return;
+  if(key==='symbol')presets[i][key]=String(val||'').toUpperCase().replace(/\s+/g,'');
+  else if(key==='pointSize'||key==='dollarsPerPointPerLot')presets[i][key]=parseFloat(val)||0;
+  else presets[i][key]=val;
+  localStorage.setItem(ST,JSON.stringify(settings));renderInstrumentDatalist();onInstrumentChange();if(!soft)toast('บันทึก Instrument preset');
+}
+function addInstrumentPreset(){
+  var sym=prompt('Symbol ใหม่ เช่น XAGUSD / GER40 / US100');if(!sym)return;sym=String(sym).toUpperCase().replace(/\s+/g,'');
+  settings.instrumentPresets=getInstrumentPresets();
+  if(settings.instrumentPresets.some(function(p){return normalizeSymbol(p.symbol)===sym;})){toast('มี preset นี้แล้ว');return;}
+  settings.instrumentPresets.push({symbol:sym,label:'Custom Preset',pointSize:0.01,dollarsPerPointPerLot:1});localStorage.setItem(ST,JSON.stringify(settings));renderInstrumentPresetSettings();renderInstrumentDatalist();toast('เพิ่ม Instrument preset: '+sym);
+}
+function removeInstrumentPreset(i){
+  var presets=getInstrumentPresets();if(!presets[i])return;if(normalizeSymbol(presets[i].symbol)==='DEFAULT'){toast('ลบ DEFAULT ไม่ได้');return;}
+  if(!confirm('ลบ preset '+presets[i].symbol+' ?'))return;presets.splice(i,1);localStorage.setItem(ST,JSON.stringify(settings));renderInstrumentPresetSettings();renderInstrumentDatalist();onInstrumentChange();
+}
+function renderInstrumentDatalist(){
+  var dl=document.getElementById('instrument-list');if(!dl)return;
+  dl.innerHTML=getInstrumentPresets().filter(function(p){return normalizeSymbol(p.symbol)!=='DEFAULT';}).map(function(p){return '<option value="'+normalizeSymbol(p.symbol)+'"></option>';}).join('');
+}
+
 function renderTagList(){
   var el=document.getElementById('tag-list');
   el.innerHTML=(settings.setupTags||[]).map(function(t,i){return'<div style="display:flex;align-items:center;gap:5px;background:var(--bg3);border-radius:6px;padding:4px 10px"><span style="font-size:12px;color:var(--t2)">'+t+'</span><button class="btn br" onclick="removeTag('+i+')" style="padding:2px 6px;font-size:10px">×</button></div>';}).join('');
@@ -3951,7 +4057,7 @@ function clearReportPanels(){['session-chart','tag-chart','grade-chart','rr-cmp'
 var __baseRenderAnalytics=renderAnalytics;
 renderAnalytics=function(){onReportRangeChange('analytics');var original=trades;trades=filterTradesByReportRange(original,'analytics');try{__baseRenderAnalytics();}finally{trades=original;}var cl=filterTradesByReportRange(original,'analytics').filter(function(t){return (!t.accountId||t.accountId===activeAccountId)&&isClosedRealTrade(t);});if(!cl.length){clearReportPanels();}};
 var __baseRenderInsights=renderInsights;
-renderInsights=function(){onReportRangeChange('insights');var original=trades;trades=filterTradesByReportRange(original,'insights');try{__baseRenderInsights();}finally{trades=original;}};
+renderInsights=function(){onReportRangeChange('insights');var original=trades;trades=filterTradesByReportRange(original,'insights').filter(function(t){return !t.accountId||t.accountId===activeAccountId;});try{__baseRenderInsights();}finally{trades=original;}};
 var __baseShowDisciplinePopup=showDisciplinePopup;
 showDisciplinePopup=function(type,title,msg,stats,force){if(type==='trades'){title='หยุด — วันนี้พอแล้ว';msg='มึงไม่ได้ต้องการ trade เพิ่ม<br>มึงต้องการรักษากำไรและวินัย<br><br><span style="color:#ff5252">ครบจำนวนไม้ที่ตั้งไว้แล้ว</span><br>ถ้าเปิดต่อ นี่ไม่ใช่แผน — นี่คือ overtrade';}else if(type==='loss'){title='หยุด — ปกป้องทุนก่อน';msg='แตะ Max Daily Loss แล้ว<br>งานของมึงตอนนี้ไม่ใช่เอาคืน<br><br><span style="color:#ff5252">งานของมึงคือรอดไปเทรดวันถัดไป</span>';}else if(type==='streak'){title='พักก่อน — สมองเริ่ม tilt';msg='แพ้ติดกันครบ limit แล้ว<br>ถ้าเปิดต่อ โอกาสสูงที่มึงจะเทรดด้วยอารมณ์<br><br><span style="color:#ff5252">หยุด จด Review แล้วกลับมาใหม่</span>';}__baseShowDisciplinePopup(type,title,msg,stats,force);var box=document.getElementById('discipline-popup');if(box){box.dataset.type=type;}};
 setTimeout(function(){onReportRangeChange('analytics');onReportRangeChange('insights');},0);
@@ -4152,7 +4258,7 @@ function renderMistakeMoodInsightPro(){var el=document.getElementById('mistake-m
 function setVisualReviewFilter(v){visualReviewFilter=v||'all';document.querySelectorAll('#vr-filter-row .vr-chip').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-vr')===visualReviewFilter);});renderVisualReviewPro();}
 function visualFilterPass(t){var v=visualReviewFilter;if(v==='all')return true;if(v==='setupA')return t.gradeSetup==='A';if(v==='setupB')return t.gradeSetup==='B';if(v==='setupC')return t.gradeSetup==='C';if(v==='win')return isWinTrade(t);if(v==='loss')return isLossTrade(t);if(v==='be')return getTradeOutcomeText(t).toLowerCase().indexOf('be')>=0;if(v==='missed')return isMissedTrade(t);if(v==='fomo')return tradeTextHas(t,'fomo');if(v==='notPlan')return t.followPlan==='C'||String(t.followPlan||'').toLowerCase().includes('no');return true;}
 function imgBox(src,label){if(!src)return '<div class="vr-img">'+label+'<br>ไม่มีรูป</div>';return '<div class="vr-img"><img src="'+escAttr(src)+'" onclick="event.stopPropagation();openLightbox(this.src)" onerror="this.parentNode.innerHTML=\''+label+'<br>โหลดไม่ได้\'"></div>';}
-function renderVisualReviewPro(){var el=document.getElementById('visual-review-grid');if(!el)return;var list=(trades||[]).filter(function(t){return !t.accountId||t.accountId===activeAccountId;}).filter(visualFilterPass).filter(function(t){return t.ssSetup||t.ssLtf||t.ssResult||isMissedTrade(t);}).slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))||((b.id||0)-(a.id||0));});if(!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:22px;font-size:12px">ไม่พบ trade ตาม filter นี้ หรือยังไม่มี screenshot</div>';return;}el.innerHTML=list.map(function(t){var nr=getNetR(t), missed=isMissedTrade(t);var rtxt=missed?((t.missedR!==undefined&&t.missedR!=='')?'Miss '+Number(t.missedR).toFixed(2)+'R':'Missed'):(nr!=null?((nr>=0?'+':'')+nr.toFixed(2)+'R'):'—');var outcome=getTradeOutcomeText(t);var lesson=(t.learn||t.missedNote||t.notes||t.reason||'ยังไม่มี lesson');return '<div class="vr-card" onclick="openDetail('+t.id+')"><div class="vr-top"><div><div class="vr-pair">'+escHtml(t.pair||'—')+'</div><div class="vr-meta">'+formatDateShort(t.date)+' · '+escHtml(t.setupTag||'No tag')+'</div></div><span class="tag '+(missed?'ta':isWinTrade(t)?'tg':isLossTrade(t)?'tr':'tb')+'">'+escHtml(outcome)+'</span></div><div class="vr-img-row">'+imgBox(t.ssSetup,'HTF')+imgBox(t.ssLtf,'LTF')+imgBox(t.ssResult,'RESULT')+'</div><div class="vr-footer"><div class="vr-lesson">'+escHtml(lesson)+'</div><div class="vr-r '+(String(rtxt).indexOf('-')>=0?'sd':'su')+'">'+escHtml(rtxt)+'</div></div></div>';}).join('');}
+function renderVisualReviewPro(){var el=document.getElementById('visual-review-grid');if(!el)return;var list=(trades||[]).filter(function(t){return !t.accountId||t.accountId===activeAccountId;}).filter(visualFilterPass).slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''))||((b.id||0)-(a.id||0));});if(!list.length){el.innerHTML='<div style="grid-column:1/-1;text-align:center;color:var(--t3);padding:22px;font-size:12px">ไม่พบ trade ตาม filter นี้</div>';return;}el.innerHTML=list.map(function(t){var nr=getNetR(t), missed=isMissedTrade(t);var rtxt=missed?((t.missedR!==undefined&&t.missedR!=='')?'Miss '+Number(t.missedR).toFixed(2)+'R':'Missed'):(nr!=null?((nr>=0?'+':'')+nr.toFixed(2)+'R'):'—');var outcome=getTradeOutcomeText(t);var lesson=(t.learn||t.missedNote||t.notes||t.reason||'ยังไม่มี lesson');return '<div class="vr-card" onclick="openDetail('+t.id+')"><div class="vr-top"><div><div class="vr-pair">'+escHtml(t.pair||'—')+'</div><div class="vr-meta">'+formatDateShort(t.date)+' · '+escHtml(t.setupTag||'No tag')+'</div></div><span class="tag '+(missed?'ta':isWinTrade(t)?'tg':isLossTrade(t)?'tr':'tb')+'">'+escHtml(outcome)+'</span></div><div class="vr-img-row">'+imgBox(t.ssSetup,'HTF')+imgBox(t.ssLtf,'LTF')+imgBox(t.ssResult,'RESULT')+'</div><div class="vr-footer"><div class="vr-lesson">'+escHtml(lesson)+'</div><div class="vr-r '+(String(rtxt).indexOf('-')>=0?'sd':'su')+'">'+escHtml(rtxt)+'</div></div></div>';}).join('');}
 function renderBackupCenterPro(){var el=document.getElementById('backup-center-stats');if(!el)return;var closed=(trades||[]).filter(isClosedRealTrade).length, missed=(trades||[]).filter(isMissedTrade).length, open=(trades||[]).filter(function(t){return t.status==='open';}).length;var last=localStorage.getItem('smc_v6_last_export_at')||localStorage.getItem('smc_v792_last_backup')||'ยังไม่เคย';var need=((trades||[]).length>0&&((trades||[]).length%5===0));el.innerHTML='<div class="backup-stat"><div class="k">Trades</div><div class="v">'+(trades||[]).length+'</div></div><div class="backup-stat"><div class="k">Closed/Open/Missed</div><div class="v">'+closed+'/'+open+'/'+missed+'</div></div><div class="backup-stat"><div class="k">Last Backup</div><div class="v" style="font-size:11px">'+(last==='ยังไม่เคย'?last:new Date(last).toLocaleString())+'</div></div><div class="backup-stat"><div class="k">Reminder</div><div class="v '+(need?'sd':'su')+'">'+(need?'Backup now':'OK')+'</div></div>';}
 var __v792DoExp=doExp;doExp=function(){__v792DoExp();try{localStorage.setItem('smc_v792_last_backup',new Date().toISOString());}catch(e){}renderBackupCenterPro();};
 var __v792ExpCSV=expCSV;expCSV=function(){__v792ExpCSV();try{localStorage.setItem('smc_v792_last_backup',new Date().toISOString());}catch(e){}renderBackupCenterPro();};
