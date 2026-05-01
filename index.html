@@ -1578,6 +1578,9 @@ var SUPABASE_KEY='sb_publishable_G6pxI5ZcUhR4ggy-GjP6GA_JkgByAJ3';
 var sbClient=null;
 var CLOUD_MODE_KEY='mind_edge_cloud_mode_on';
 var cloudMode=localStorage.getItem(CLOUD_MODE_KEY)!=='0';
+// ใช้ user_id เดียวกันทุกเครื่อง เพื่อให้มือถือ/คอม sync ชุดข้อมูลเดียวกัน
+// ถ้าอนาคตมีระบบ Login ค่อยเปลี่ยน APP_USER_ID เป็น user.id จาก Auth
+var APP_USER_ID='main_user';
 function getLocalDateKey(){return new Date().toISOString().split('T')[0];}
 function initSupabase(){try{if(!window.supabase){console.error('Supabase CDN not loaded');setCloudStatus('offline','Supabase CDN not loaded');return false;}if(!SUPABASE_URL||!SUPABASE_KEY){console.error('Missing Supabase URL / Publishable Key');setCloudStatus('offline','Missing Supabase config');return false;}sbClient=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);updateSyncButton();if(cloudMode){setCloudStatus('checking','Checking Supabase...');pingCloud();}else{setCloudStatus('local','LocalStorage mode');}return true;}catch(e){console.error('Supabase init failed:',e);setCloudStatus('offline',e.message||'Supabase init failed');return false;}}
 function updateSyncButton(){var btn=document.getElementById('sync-btn');if(!btn)return;btn.textContent=cloudMode?'Sync ON':'Sync OFF';btn.className='btn '+(cloudMode?'bg_ active':'ba');btn.title=cloudMode?'ON: Save/Load ผ่าน Supabase':'OFF: ใช้ localStorage เท่านั้น';}
@@ -1597,24 +1600,117 @@ function compactTradeDetails(t){
   return copy;
 }
 function tradeToCloudRow(t,includeDetails){
-  var row={user_id:String(t.accountId||activeAccountId||'personal'),date:String(t.date||getLocalDateKey()),pair:String(t.pair||''),setup:String(t.setupTag||t.gradeSetup||t.reason||''),result:String((t.status==='missed')?'Missed':((t.resultStatus&&t.resultStatus[0])||inferOutcomeFromNetPnl(t.netPnl||0)||'')),net:Number(t.netPnl||0),r:Number(t.netR||0),follow:String(t.followPlan||''),mistake:Array.isArray(t.mistakeTypes)?t.mistakeTypes.join(', '):String(t.mistakeTypes||''),mood:Number(t.moodPre||0)};
-  if(includeDetails!==false)row.details=compactTradeDetails(t);
+  var acctId=String(t.accountId||activeAccountId||'personal');
+  var row={user_id:APP_USER_ID,account_id:acctId,date:String(t.date||getLocalDateKey()),pair:String(t.pair||''),setup:String(t.setupTag||t.gradeSetup||t.reason||''),result:String((t.status==='missed')?'Missed':((t.resultStatus&&t.resultStatus[0])||inferOutcomeFromNetPnl(t.netPnl||0)||'')),net:Number(t.netPnl||0),r:Number(t.netR||0),follow:String(t.followPlan||''),mistake:Array.isArray(t.mistakeTypes)?t.mistakeTypes.join(', '):String(t.mistakeTypes||''),mood:Number(t.moodPre||0)};
+  if(includeDetails!==false)row.details=compactTradeDetails(Object.assign({},t,{accountId:acctId}));
   return row;
 }
 function cloudRowToTrade(r){
-  if(r&&r.details&&typeof r.details==='object'){var full=Object.assign({},r.details);full.cloudId=r.id||full.cloudId||null;full.accountId=r.user_id||full.accountId||activeAccountId;full._cloud=true;return full;}
+  if(r&&r.details&&typeof r.details==='object'){var full=Object.assign({},r.details);full.cloudId=r.id||full.cloudId||null;full.accountId=r.account_id||full.accountId||r.user_id||activeAccountId;full._cloud=true;return full;}
   var outcome=r.result||inferOutcomeFromNetPnl(r.net||0)||'';
   var idx=getLocalTradeMergeIndexFromCloudRow(r);
   var base=idx>=0?Object.assign({},trades[idx]):{};
-  return Object.assign(base,{id:base.id||('cloud_'+String(r.id||((r.date||'')+'_'+(r.pair||'')+'_'+Math.random()))),cloudId:r.id||base.cloudId||null,accountId:r.user_id||base.accountId||activeAccountId,date:(r.date||base.date||'').slice(0,10),pair:r.pair||base.pair||'',setupTag:r.setup||base.setupTag||'',reason:base.reason||r.setup||'',resultStatus:base.resultStatus||[outcome],netPnl:Number(r.net||base.netPnl||0),netR:Number(r.r||base.netR||0),followPlan:r.follow||base.followPlan||'',mistakeTypes:base.mistakeTypes||(r.mistake?String(r.mistake).split(',').map(function(x){return x.trim();}).filter(Boolean):[]),moodPre:Number(r.mood||base.moodPre||0),status:base.status||(outcome==='Missed'?'missed':'closed'),_cloud:true,_v:9});
+  return Object.assign(base,{id:base.id||('cloud_'+String(r.id||((r.date||'')+'_'+(r.pair||'')+'_'+Math.random()))),cloudId:r.id||base.cloudId||null,accountId:r.account_id||base.accountId||r.user_id||activeAccountId,date:(r.date||base.date||'').slice(0,10),pair:r.pair||base.pair||'',setupTag:r.setup||base.setupTag||'',reason:base.reason||r.setup||'',resultStatus:base.resultStatus||[outcome],netPnl:Number(r.net||base.netPnl||0),netR:Number(r.r||base.netR||0),followPlan:r.follow||base.followPlan||'',mistakeTypes:base.mistakeTypes||(r.mistake?String(r.mistake).split(',').map(function(x){return x.trim();}).filter(Boolean):[]),moodPre:Number(r.mood||base.moodPre||0),status:base.status||(outcome==='Missed'?'missed':'closed'),_cloud:true,_v:9});
 }
 async function saveTradeToCloud(t){if(!cloudMode){console.log('Cloud Sync OFF: saved to localStorage only');setCloudStatus('local','Cloud Sync OFF — using localStorage');return false;}if(!sbClient&&!initSupabase()){alert('Save fail: Supabase client ยังไม่พร้อม ระบบบันทึกไว้ใน localStorage แล้ว');return false;}setCloudStatus('syncing','Saving to Supabase...');try{var row=tradeToCloudRow(t,true);var res=await sbClient.from('trades').insert([row]).select();if(res.error&&String(res.error.message||'').toLowerCase().indexOf('details')>=0){console.warn('Supabase details column not found, retry without full details. Add details jsonb column to keep Review data across devices.',res.error);row=tradeToCloudRow(t,false);res=await sbClient.from('trades').insert([row]).select();}
     if(res.error){console.error('Supabase save error:',res.error,'Payload:',row);setCloudStatus('offline',res.error.message);alert('Save fail: '+res.error.message+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}
     if(res.data&&res.data[0]&&res.data[0].id){t.cloudId=res.data[0].id;}
     console.log('Saved to Supabase');setCloudStatus('online','Saved to Supabase');toast('☁ Saved to Supabase');await loadTradesFromCloud(false);return true;}catch(e){console.error('Supabase save exception:',e);setCloudStatus('offline',e.message||'Save failed');alert('Save fail: '+(e.message||e)+'\nระบบ fallback บันทึกไว้ใน localStorage แล้ว');return false;}}
 async function saveTradeOnline(t){return saveTradeToCloud(t);}
-async function loadTradesFromCloud(showToast){if(showToast===undefined)showToast=true;if(!cloudMode){loadAccountTrades();setCloudStatus('local','Cloud Sync OFF — using localStorage');renderDashboard();return trades;}if(!sbClient&&!initSupabase())return trades;setCloudStatus('syncing','Loading trades from Supabase...');try{var res=await sbClient.from('trades').select('*').eq('user_id',String(activeAccountId||'personal')).order('date',{ascending:false});if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}trades=(res.data||[]).map(function(r){return cloudRowToTrade(r);});saveData();setCloudStatus('online','Loaded '+trades.length+' rows from Supabase');if(showToast)toast('☁ Loaded from Supabase: '+trades.length+' rows');updateGuardBar();renderDashboard();var cur=document.querySelector('.page.on');if(cur&&cur.id==='page-list')renderList();if(cur&&cur.id==='page-analytics')renderAnalytics();if(cur&&cur.id==='page-insights')renderInsights();if(cur&&cur.id==='page-review')renderReviews();return trades;}catch(e){console.error('Supabase load exception:',e);setCloudStatus('offline',e.message||'Load failed');if(showToast)toast('Sync fail');return trades;}}
+async function loadTradesFromCloud(showToast){
+  if(showToast===undefined)showToast=true;
+  if(!cloudMode){loadAccountTrades();setCloudStatus('local','Cloud Sync OFF — using localStorage');renderDashboard();return trades;}
+  if(!sbClient&&!initSupabase())return trades;
+  setCloudStatus('syncing','Loading accounts/trades from Supabase...');
+  try{
+    await loadAccountsFromCloud();
+    var res=await sbClient.from('trades').select('*').order('date',{ascending:false});
+    if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}
+    var rows=(res.data||[]).filter(function(r){
+      var acct=String(activeAccountId||'personal');
+      var uid=String(r.user_id||'');
+      var aid=String(r.account_id||'');
+      // ใหม่: user_id = main_user + account_id = account ที่เลือก
+      // เก่า: user_id เคยถูกใช้เป็น account id จึงยังรองรับไว้
+      return (uid===APP_USER_ID && (!aid||aid===acct)) || (aid===acct) || (!aid && uid===acct);
+    });
+    trades=rows.map(function(r){return cloudRowToTrade(r);});
+    saveData();
+    setCloudStatus('online','Loaded '+trades.length+' rows from Supabase');
+    if(showToast)toast('☁ Loaded from Supabase: '+trades.length+' rows');
+    updateGuardBar();renderDashboard();
+    var cur=document.querySelector('.page.on');
+    if(cur&&cur.id==='page-list')renderList();
+    if(cur&&cur.id==='page-analytics')renderAnalytics();
+    if(cur&&cur.id==='page-insights')renderInsights();
+    if(cur&&cur.id==='page-review')renderReviews();
+    return trades;
+  }catch(e){console.error('Supabase load exception:',e);setCloudStatus('offline',e.message||'Load failed');if(showToast)toast('Sync fail');return trades;}
+}
 async function syncFromCloud(){return loadTradesFromCloud(true);}
+
+
+// ===================== SUPABASE ACCOUNT SYNC =====================
+function accountToCloudRow(a){
+  return {
+    id:String(a.id||'personal'),
+    user_id:APP_USER_ID,
+    name:String(a.name||'Account'),
+    color:String(a.color||'#4f46e5'),
+    balance:Number(a.balance||0)
+  };
+}
+async function saveAccountToCloud(a){
+  if(!cloudMode)return false;
+  if(!sbClient&&!initSupabase())return false;
+  try{
+    var res=await sbClient.from('accounts').upsert([accountToCloudRow(a)],{onConflict:'id'}).select();
+    if(res.error){console.error('Supabase account save error:',res.error);toast('Account sync fail: '+res.error.message);return false;}
+    return true;
+  }catch(e){console.error('Account save exception:',e);return false;}
+}
+async function saveAccountsToCloud(){
+  if(!cloudMode)return false;
+  if(!sbClient&&!initSupabase())return false;
+  var rows=getAccounts().map(accountToCloudRow);
+  if(!rows.length)return true;
+  try{
+    var res=await sbClient.from('accounts').upsert(rows,{onConflict:'id'}).select();
+    if(res.error){console.error('Supabase accounts upsert error:',res.error);toast('Accounts sync fail: '+res.error.message);return false;}
+    return true;
+  }catch(e){console.error('Accounts upsert exception:',e);return false;}
+}
+async function loadAccountsFromCloud(){
+  if(!cloudMode)return getAccounts();
+  if(!sbClient&&!initSupabase())return getAccounts();
+  try{
+    var res=await sbClient.from('accounts').select('*').eq('user_id',APP_USER_ID).order('created_at',{ascending:true});
+    if(res.error){console.error('Supabase accounts load error:',res.error);return getAccounts();}
+    var data=res.data||[];
+    if(!data.length){
+      await saveAccountsToCloud();
+      return getAccounts();
+    }
+    settings.accounts=data.map(function(a){return {id:String(a.id),name:String(a.name||'Account'),color:String(a.color||'#4f46e5'),balance:Number(a.balance||0)};});
+    if(!settings.accounts.some(function(a){return a.id===activeAccountId;}))activeAccountId=settings.accounts[0].id;
+    settings.activeAccountId=activeAccountId;
+    localStorage.setItem(ST,JSON.stringify(settings));
+    renderAccountDropdown();
+    renderAccountList();
+    var acct=getActiveAccount();
+    var navEl=document.getElementById('acct-name-nav');if(navEl&&acct)navEl.textContent=acct.name;
+    return settings.accounts;
+  }catch(e){console.error('Accounts load exception:',e);return getAccounts();}
+}
+async function deleteAccountFromCloud(id){
+  if(!cloudMode)return false;
+  if(!sbClient&&!initSupabase())return false;
+  try{
+    var res=await sbClient.from('accounts').delete().eq('id',String(id)).eq('user_id',APP_USER_ID);
+    if(res.error){console.error('Supabase account delete error:',res.error);return false;}
+    return true;
+  }catch(e){console.error('Account delete exception:',e);return false;}
+}
 
 
 
@@ -1746,16 +1842,21 @@ function addAccount(){
   var color=colors[getAccounts().length%colors.length];
   var balance=parseFloat(balStr)||0;
   if(!settings.accounts)settings.accounts=[];
-  settings.accounts.push({id:id,name:name.trim(),color:color,balance:balance});
+  var newAcct={id:id,name:name.trim(),color:color,balance:balance};
+  settings.accounts.push(newAcct);
   localStorage.setItem(ST,JSON.stringify(settings));
   renderAccountList();
-  toast('เพิ่ม Account: '+name.trim()+(balance?' ($'+balance.toLocaleString()+')':''));
+  renderAccountDropdown();
+  saveAccountToCloud(newAcct);
+  switchAccount(id);
+  toast('เพิ่ม Account + Sync: '+name.trim()+(balance?' ($'+balance.toLocaleString()+')':''));
 }
 function removeAccount(id){
   if(id==='personal'){toast('ไม่สามารถลบ Personal Account ได้');return;}
   if(!confirm('ลบ Account นี้? ข้อมูล trades ของ account นี้จะหายไปด้วย'))return;
   localStorage.removeItem(getAccountDBKey(id));
   localStorage.removeItem(getAccountReviewKey(id));
+  deleteAccountFromCloud(id);
   settings.accounts=settings.accounts.filter(function(a){return a.id!==id;});
   if(activeAccountId===id)switchAccount('personal');
   else{localStorage.setItem(ST,JSON.stringify(settings));renderAccountList();}
@@ -1794,7 +1895,7 @@ function renderAccountBalanceEditor(){
 function saveAccountBalance(acctId,val){
   var accts=getAccounts();
   var a=accts.find(function(x){return x.id===acctId;});
-  if(a){a.balance=parseFloat(val)||0;localStorage.setItem(ST,JSON.stringify(settings));}
+  if(a){a.balance=parseFloat(val)||0;localStorage.setItem(ST,JSON.stringify(settings));saveAccountToCloud(a);}
   if(acctId===activeAccountId){
     var balEl=document.getElementById('f-bal');
     if(balEl&&val)balEl.value=parseFloat(val)||'';
@@ -4241,6 +4342,8 @@ syncTPLabels();
   }
 })();
 try{syncAccountBalanceToHidden();onInstrumentChange();}catch(e){}
+// เปิดเว็บแล้วให้ Cloud ดึง Accounts + Trades ทันที เพื่อให้มือถือ/คอมเห็นชุดเดียวกัน
+try{initSupabase();if(cloudMode){loadTradesFromCloud(false);}}catch(e){console.error('initial cloud sync failed',e);}
 
 // ===================== v7.9.2 BACKUP + SETUP ANALYTICS + VISUAL REVIEW FIX =====================
 var visualReviewFilter='all';
