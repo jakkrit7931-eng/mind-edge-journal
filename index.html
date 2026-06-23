@@ -739,6 +739,40 @@ body.dark .pro-panel,body.dark .backup-action,body.dark .backup-stat,body.dark .
 .record-live-panel{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}.record-live-stat{background:rgba(255,255,255,.035);border:1px solid var(--b);border-radius:14px;padding:10px 11px;min-height:62px}.record-live-stat .k{font-size:9px;color:var(--t3);letter-spacing:.09em;text-transform:uppercase;font-weight:900}.record-live-stat .v{font-family:var(--mono);font-size:15px;font-weight:900;color:var(--t);margin-top:3px}.record-feedback{margin-top:9px;display:flex;gap:6px;flex-wrap:wrap}.record-feedback .fb{font-size:10px;font-weight:900;border-radius:999px;padding:6px 9px;border:1px solid var(--b);background:var(--bg3);color:var(--t2)}.record-feedback .fb.ok{background:var(--gn2);border-color:var(--gn3);color:var(--gn)}.record-feedback .fb.warn{background:var(--am2);border-color:var(--am3);color:var(--am)}.record-feedback .fb.bad{background:var(--rd2);border-color:var(--rd3);color:var(--rd)}
 .record-section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:14px 0 8px}.record-section-title b{font-size:11px;color:var(--t3);letter-spacing:.11em;text-transform:uppercase}.active-trades-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.active-trade-card{background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:13px;box-shadow:0 8px 24px rgba(0,0,0,.10);transition:.16s}.active-trade-card:hover{transform:translateY(-1px);border-color:var(--ac2)}.active-trade-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:8px}.active-pair{font-family:var(--mono);font-size:16px;font-weight:900;color:var(--t)}.active-dir{font-size:10px;font-weight:900;border-radius:999px;padding:3px 8px;border:1px solid var(--b)}.active-dir.long{color:var(--gn);background:var(--gn2);border-color:var(--gn3)}.active-dir.short{color:var(--rd);background:var(--rd2);border-color:var(--rd3)}.active-line{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;color:var(--t2);margin:6px 0}.active-line span{font-family:var(--mono);font-weight:800}.active-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}.active-empty{border:1px dashed var(--b2);background:var(--bg3);border-radius:16px;padding:18px;text-align:center;color:var(--t3);font-size:12px}
 .record-advanced-link{font-size:11px;color:var(--ac2);font-weight:800;cursor:pointer;text-decoration:none}.record-advanced-link:hover{color:var(--ac)}
+/* ===== MIND TOOLKIT ===== */
+.mk-emo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.mk-emo-chip{border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;border:2px solid transparent;transition:.15s;background:var(--bg3)}
+.mk-emo-chip:hover{transform:translateY(-2px)}
+.mk-emo-chip.on{border-color:var(--ac)}
+.mk-emo-chip .mk-e-ic{font-size:24px;display:block;margin-bottom:6px}
+.mk-emo-chip .mk-e-t{font-size:12px;font-weight:800}
+.mk-detail{background:var(--bg2);border:1px solid var(--b);border-radius:18px;padding:18px;margin-bottom:14px}
+.mk-detail-head{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.mk-detail-icon{font-size:30px;flex-shrink:0}
+.mk-detail-title{font-size:18px;font-weight:900}
+.mk-detail-sub{font-size:12px;color:var(--t3);margin-top:2px}
+.mk-article{background:var(--bg3);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:13px;line-height:1.7;color:var(--t2)}
+.mk-article b{color:var(--t);font-weight:800}
+.mk-section-label{font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ac2);margin-bottom:8px}
+.mk-tech-card{background:var(--bg3);border:1px solid var(--b);border-radius:12px;padding:12px 14px;margin-bottom:8px}
+.mk-tech-head{display:flex;align-items:center;gap:8px;margin-bottom:6px;cursor:pointer}
+.mk-tech-num{width:22px;height:22px;border-radius:50%;background:var(--ac3);color:var(--ac2);font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mk-tech-title{font-size:13px;font-weight:800;flex:1}
+.mk-tech-dur{font-size:10px;color:var(--t3);background:var(--bg4);padding:2px 8px;border-radius:999px}
+.mk-tech-steps{font-size:12px;color:var(--t2);line-height:1.7;padding-left:30px;margin-top:6px;display:none}
+.mk-tech-card.expanded .mk-tech-steps{display:block}
+.mk-tech-steps li{margin-bottom:3px}
+.mk-feedback-row{display:flex;align-items:center;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--b)}
+.mk-fb-btn{font-size:12px;font-weight:800;padding:6px 14px;border-radius:10px}
+.mk-recent-row{display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg3);border-radius:10px;margin-bottom:6px;font-size:12px}
+.mk-recent-icon{font-size:16px}
+@media(max-width:620px){.mk-emo-grid{grid-template-columns:repeat(2,1fr)}}
+.mk-ai-section{margin-top:14px;padding-top:14px;border-top:1px solid var(--b)}
+.mk-ai-btn{width:100%;font-weight:900;font-size:13px;padding:10px;border-radius:12px;background:var(--ac3);border-color:var(--ac2);color:var(--ac2)}
+.mk-ai-btn:disabled{opacity:.6;cursor:wait}
+.mk-ai-result{margin-top:10px;background:var(--ac3);border:1px solid var(--ac2);border-radius:12px;padding:12px 14px}
+.mk-ai-label{font-size:10px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--ac2);margin-bottom:6px}
+.mk-ai-text{font-size:13px;line-height:1.7;color:var(--t2)}
 /* ===== SPRINT 8 — A11Y + LOADING STATE ===== */
 .sync-loading{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--bg2);border:1px solid var(--b2);border-radius:12px;padding:10px 16px;display:flex;align-items:center;gap:10px;box-shadow:0 4px 16px rgba(0,0,0,.18);z-index:9999;opacity:0;pointer-events:none;transition:.2s}
 .sync-loading.on{transform:translateX(-50%) translateY(0);opacity:1}
@@ -1107,6 +1141,7 @@ body.dark .more-options-menu .btn{background:#101b29}
   <div class="ntab" onclick="go('list')">รายการ</div>
   <div class="ntab" onclick="go('analytics')">Analytics</div>
   <div class="ntab" onclick="go('insights')">Insights</div>
+  <div class="ntab" onclick="go('mindkit')">🧠 Mind Toolkit</div>
   <div class="ntab" onclick="go('review')">Review</div>
   <div class="ntab" onclick="go('settings')">Settings</div>
   <div class="nact no-print">
@@ -1175,6 +1210,7 @@ body.dark .more-options-menu .btn{background:#101b29}
   </div>
   <!-- KPI row -->
   <div class="dash-kpi-grid" id="dash-kpi-grid">
+    <div class="dash-kpi dash-kpi-clickable" onclick="openKpiBreakdown('balance')"><div class="dash-kpi-label">Current Balance</div><div class="dash-kpi-val" id="dk-balance">—</div><div class="dash-kpi-sub" id="dk-balance-sub">เริ่ม $0</div></div>
     <div class="dash-kpi dash-kpi-clickable" onclick="openKpiBreakdown('trades')"><div class="dash-kpi-label">Trades</div><div class="dash-kpi-val sn" id="dk-trades">0</div><div class="dash-kpi-sub">ทั้งหมด</div></div>
     <div class="dash-kpi dash-kpi-clickable" onclick="openKpiBreakdown('winrate')"><div class="dash-kpi-label">Win Rate</div><div class="dash-kpi-val" id="dk-wr">—</div><div class="dash-kpi-sub">closed trades</div></div>
     <div class="dash-kpi dash-kpi-clickable" onclick="openKpiBreakdown('sumr')"><div class="dash-kpi-label">SUM R</div><div class="dash-kpi-val" id="dk-avgr">—</div><div class="dash-kpi-sub">Avg R/trade</div></div>
@@ -1996,6 +2032,47 @@ body.dark .more-options-menu .btn{background:#101b29}
   </div>
 </div>
 
+<!-- ===== MIND TOOLKIT ===== -->
+<div class="page" id="page-mindkit">
+  <div class="sl">🧠 Mind Toolkit</div>
+  <div style="font-size:12px;color:var(--t3);margin-bottom:14px">เลือกอารมณ์ที่กำลังเจอตอนนี้ — มีเทคนิคจัดการให้ทำตามได้ทันที</div>
+
+  <!-- Emotion picker -->
+  <div class="mk-emo-grid" id="mk-emo-grid"></div>
+
+  <!-- Detail panel (shows after selecting an emotion) -->
+  <div class="mk-detail" id="mk-detail" style="display:none">
+    <div class="mk-detail-head">
+      <div class="mk-detail-icon" id="mk-detail-icon">🔥</div>
+      <div>
+        <div class="mk-detail-title" id="mk-detail-title">—</div>
+        <div class="mk-detail-sub" id="mk-detail-sub">—</div>
+      </div>
+      <button class="btn" style="margin-left:auto" onclick="closeMindToolkitDetail()">✕ ปิด</button>
+    </div>
+
+    <div class="mk-article" id="mk-article"></div>
+
+    <div class="mk-section-label">เทคนิคจัดการ — เลือกทำตามได้เลย</div>
+    <div id="mk-techniques"></div>
+
+    <div class="mk-ai-section" id="mk-ai-section">
+      <button class="btn mk-ai-btn" id="mk-ai-btn" onclick="askMindToolkitAi()">🤖 ขอคำแนะนำจาก AI ตามข้อมูลจริงของฉัน</button>
+      <div class="mk-ai-result" id="mk-ai-result" style="display:none"></div>
+    </div>
+
+    <div class="mk-feedback-row" id="mk-feedback-row">
+      <span style="font-size:12px;color:var(--t3)">ลองแล้วรู้สึกยังไง?</span>
+      <button class="btn mk-fb-btn" onclick="logMindToolkitUsage(true)">😌 ดีขึ้น</button>
+      <button class="btn mk-fb-btn" onclick="logMindToolkitUsage(false)">😐 เฉยๆ</button>
+    </div>
+  </div>
+
+  <!-- Usage history -->
+  <div class="mk-section-label" style="margin-top:18px">ใช้บ่อยล่าสุด</div>
+  <div id="mk-recent-usage" style="font-size:12px;color:var(--t3)">ยังไม่มีประวัติการใช้งาน</div>
+</div>
+
 <!-- ===== REVIEW ===== -->
 <div class="page" id="page-review">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:6px">
@@ -2020,6 +2097,7 @@ body.dark .more-options-menu .btn{background:#101b29}
     <button class="settings-tab" id="stab-risk" onclick="setSettingsTab('risk')">🛡 Risk &amp; Goals</button>
     <button class="settings-tab" id="stab-instruments" onclick="setSettingsTab('instruments')">📈 Instruments &amp; Tags</button>
     <button class="settings-tab" id="stab-cloud" onclick="setSettingsTab('cloud')">☁ Cloud &amp; Backup</button>
+    <button class="settings-tab" id="stab-ai" onclick="setSettingsTab('ai')">🤖 AI Assistant</button>
   </div>
 
   <!-- TAB: GENERAL -->
@@ -2113,6 +2191,52 @@ body.dark .more-options-menu .btn{background:#101b29}
       </div>
       <div class="backup-stat-row" id="backup-center-stats"></div>
       <div class="backup-reminder" id="backup-reminder-box">⚠️ แนะนำให้ Backup ตอนนี้ เพื่อกันข้อมูลหาย <button onclick="doExp();dismissBackupReminder()">Backup Now</button><button onclick="dismissBackupReminder()">ซ่อน</button></div>
+    </div>
+  </div>
+
+  <!-- TAB: AI ASSISTANT -->
+  <div class="settings-tab-panel" id="spanel-ai">
+    <div class="card">
+      <div class="ct"><span class="tag" style="background:var(--ac3);color:var(--ac2)">🤖 AI Assistant</span></div>
+      <p style="font-size:12px;color:var(--t3);margin:6px 0 12px;line-height:1.6">
+        AI ช่วยวิเคราะห์ trade และอารมณ์แบบ personalize — ใส่ API key ของคุณเอง (ฟรี) เพื่อเปิดใช้งาน
+        <b style="color:var(--t2)">key จะถูกเก็บไว้ในเครื่องนี้เท่านั้น ไม่ส่งไปที่ไหน</b> และไม่ sync ขึ้น cloud
+      </p>
+
+      <div class="fld" style="margin-bottom:10px">
+        <label class="dlb">AI Provider</label>
+        <select id="ai-provider" class="modal-field-select" onchange="onAiProviderChange()">
+          <option value="">— เลือก Provider —</option>
+          <option value="gemini">Google Gemini (free tier ใจกว้างสุด)</option>
+          <option value="groq">Groq (เร็วมาก ใช้ Llama ฟรี)</option>
+          <option value="openrouter">OpenRouter (รวมหลายโมเดลฟรี)</option>
+        </select>
+      </div>
+
+      <div class="fld" style="margin-bottom:6px">
+        <label class="dlb">API Key</label>
+        <input type="password" id="ai-api-key" class="modal-field-edit" placeholder="วาง API key ที่นี่" autocomplete="off">
+      </div>
+      <div id="ai-provider-hint" class="wiz-hint" style="margin-bottom:10px">เลือก Provider ก่อนเพื่อดูวิธีขอ key ฟรี</div>
+
+      <div style="display:flex;gap:8px;margin-bottom:10px">
+        <button class="btn" style="flex:1" onclick="testAiConnection()">🔌 Test Connection</button>
+        <button class="btn bp" style="flex:1;font-weight:900" onclick="saveAiSettings()">💾 บันทึก</button>
+      </div>
+
+      <div class="wiz-test-box" id="ai-test-box" style="display:none;margin-bottom:10px">
+        <div class="wiz-test-status" id="ai-test-status">—</div>
+      </div>
+
+      <div class="cloud-setup-summary">
+        <div class="css-row"><span class="css-label">สถานะ</span><span class="css-val" id="ai-status-display">ยังไม่ตั้งค่า</span></div>
+        <div class="css-row"><span class="css-label">Provider</span><span class="css-val" id="ai-provider-display">—</span></div>
+      </div>
+
+      <label style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:12px;color:var(--t2);cursor:pointer">
+        <input type="checkbox" id="ai-enabled-toggle" onchange="toggleAiEnabled()" style="width:16px;height:16px">
+        เปิดใช้งาน AI Assistant ใน Mind Toolkit และ Insights
+      </label>
     </div>
   </div>
 </div>
@@ -2220,6 +2344,36 @@ body.dark .more-options-menu .btn{background:#101b29}
       <div style="font-size:10px;color:var(--t3);margin-top:5px">ระบบจะดึง Balance มาใส่ใน form อัตโนมัติเมื่อเปลี่ยน Account</div>
     </div>
     <div class="modal-action-row"><button class="btn" onclick="closeOv('modal-account-manager')">Close</button></div>
+  </div>
+</div>
+
+<!-- ===== DEPOSIT / WITHDRAW POPUP ===== -->
+<div class="ov" id="modal-tx" onclick="closeOv('modal-tx',event)">
+  <div class="modal" style="max-width:380px" onclick="event.stopPropagation()">
+    <div class="mh"><span class="mt" id="tx-modal-title">+ ฝากเงิน</span><span class="mc2" role="button" tabindex="0" aria-label="ปิดหน้าต่าง" onclick="closeOv('modal-tx')">×</span></div>
+    <div style="padding:4px 0">
+      <div class="css-row" style="margin-bottom:12px">
+        <span class="css-label">Current Balance</span>
+        <span class="css-val" id="tx-current-balance">$0.00</span>
+      </div>
+      <div class="fld"><label class="dlb">จำนวนเงิน ($)</label><input type="number" id="tx-amount" class="modal-field-edit" placeholder="500" step="0.01" autofocus></div>
+      <div class="fld"><label class="dlb">วันที่</label><input type="date" id="tx-date" class="modal-field-edit"></div>
+      <div class="fld" style="margin-bottom:8px"><label class="dlb">Note (optional)</label><input type="text" id="tx-note" class="modal-field-edit" placeholder="เช่น เติมทุนรอบใหม่"></div>
+      <button class="btn bp" id="tx-confirm-btn" style="width:100%;font-weight:900;padding:10px" onclick="confirmTxPopup()">+ ยืนยันฝากเงิน</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== TRANSACTION HISTORY POPUP ===== -->
+<div class="ov" id="modal-tx-history" onclick="closeOv('modal-tx-history',event)">
+  <div class="modal bd-modal" onclick="event.stopPropagation()">
+    <div class="bd-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+      <div><div class="bd-title" id="txh-title">📜 ประวัติ ฝาก/ถอน</div><div class="bd-sub" id="txh-sub">—</div></div>
+      <span class="mc2" role="button" tabindex="0" aria-label="ปิดหน้าต่าง" onclick="closeOv('modal-tx-history')">×</span>
+    </div>
+    <div class="bd-stat-bar" id="txh-stat-bar"></div>
+    <div class="td-section-label" style="padding:12px 20px 6px">รายการทั้งหมด</div>
+    <div class="bd-list-wrap" id="txh-list-wrap"></div>
   </div>
 </div>
 
@@ -2740,6 +2894,10 @@ async function loadTradesFromCloud(showToast){
   setCloudStatus('syncing','Loading accounts/trades from Supabase...');
   try{
     await loadAccountsFromCloud();
+    if(typeof loadTransactionsFromCloud==='function'){
+      await loadTransactionsFromCloud();
+      renderAccountList(); // ต้อง render ใหม่หลังโหลด transaction เพราะ loadAccountsFromCloud() render ไปแล้วด้วยข้อมูลเก่า
+    }
     var res=await sbClient.from('trades').select('*').order('date',{ascending:false});
     if(res.error){console.error('Supabase load error:',res.error);setCloudStatus('offline',res.error.message);if(showToast)toast('Sync fail: '+res.error.message);return trades;}
     await loadSettingsFromCloudRows(res.data||[]);
@@ -2895,6 +3053,108 @@ var DEFAULT_SETTINGS={
 
 // ===================== ACCOUNT MANAGEMENT =====================
 function getAccounts(){return settings.accounts||[{id:'personal',name:'Personal',color:'#4f46e5'}];}
+
+// ===================== DEPOSIT / WITHDRAW SYSTEM =====================
+function getTransactions(){if(!Array.isArray(settings.transactions))settings.transactions=[];return settings.transactions;}
+function getAccountTransactions(acctId){return getTransactions().filter(function(tx){return tx.accountId===acctId;}).sort(function(a,b){return String(a.date||'').localeCompare(String(b.date||''))||((a.id||0)-(b.id||0));});}
+
+// Current Balance = Starting Balance + ΣDeposits − ΣWithdrawals + ΣNetPnl(closed trades)
+function getCurrentBalance(acctId){
+  var accts=getAccounts();
+  var a=accts.find(function(x){return x.id===acctId;});
+  var startBal=a&&a.balance?parseFloat(a.balance)||0:0;
+  var txs=getAccountTransactions(acctId);
+  var deposits=txs.filter(function(t){return t.type==='deposit';}).reduce(function(s,t){return s+(parseFloat(t.amount)||0);},0);
+  var withdrawals=txs.filter(function(t){return t.type==='withdraw';}).reduce(function(s,t){return s+(parseFloat(t.amount)||0);},0);
+  // BUG FIX: trades array ใน memory เก็บแค่ข้อมูลของ activeAccountId เท่านั้น (ระบบเก็บ trade
+  // แยกคนละ localStorage key ต่อ account) ถ้า acctId ตรงกับ active account ใช้ trades ใน memory ได้เลย
+  // (เร็วกว่า + ไม่ดึงข้อมูลที่ยังไม่ flush) แต่ถ้าเป็น account อื่น ต้องอ่านจาก localStorage ของ account นั้นตรงๆ
+  var acctTrades;
+  if(acctId===activeAccountId){
+    acctTrades=trades||[];
+  }else{
+    try{acctTrades=JSON.parse(localStorage.getItem(getAccountDBKey(acctId)))||[];}catch(e){acctTrades=[];}
+  }
+  var closedPnl=acctTrades.filter(function(t){return isClosedRealTrade(t);}).reduce(function(s,t){return s+(getNetPnl(t)||0);},0);
+  return startBal+deposits-withdrawals+closedPnl;
+}
+
+function addTransaction(acctId,type,amount,note,date){
+  amount=parseFloat(amount)||0;
+  if(amount<=0){toast('กรุณาใส่จำนวนเงินให้ถูกต้อง');return null;}
+  if(type==='withdraw'){
+    var curBal=getCurrentBalance(acctId);
+    if(amount>curBal){
+      if(!confirm('จำนวนถอน ($'+amount.toFixed(2)+') มากกว่า Current Balance ($'+curBal.toFixed(2)+') ต้องการดำเนินการต่อไหม?'))return null;
+    }
+  }
+  var tx={
+    id:Date.now()+Math.floor(Math.random()*10000),
+    accountId:acctId,
+    type:type, // 'deposit' | 'withdraw'
+    amount:amount,
+    date:date||getLocalDateKey(),
+    note:note||'',
+    createdAt:new Date().toISOString()
+  };
+  getTransactions().push(tx);
+  persistSettings();
+  if(typeof saveTransactionToCloud==='function')saveTransactionToCloud(tx).catch(function(e){console.error('transaction cloud save failed:',e);});
+  return tx;
+}
+
+function deleteTransaction(txId){
+  var idx=getTransactions().findIndex(function(t){return t.id===txId;});
+  if(idx<0)return;
+  var removed=settings.transactions[idx];
+  settings.transactions.splice(idx,1);
+  persistSettings();
+  if(typeof deleteTransactionFromCloud==='function')deleteTransactionFromCloud(txId).catch(function(e){console.error('transaction cloud delete failed:',e);});
+  showUndoToast('ลบรายการแล้ว',function(){
+    settings.transactions.splice(idx,0,removed);
+    persistSettings();
+    if(typeof saveTransactionToCloud==='function')saveTransactionToCloud(removed).catch(function(e){console.error('undo transaction cloud restore failed:',e);});
+    renderAccountList();renderTransactionHistory(removed.accountId);renderDashboard();
+  });
+  renderAccountList();
+  if(typeof renderTransactionHistory==='function')renderTransactionHistory(removed.accountId);
+  renderDashboard();
+}
+
+// ---- Cloud sync (best-effort — falls back silently to localStorage-only if table missing) ----
+async function saveTransactionToCloud(tx){
+  if(!cloudMode)return false;
+  if(!sbClient&&!initSupabase())return false;
+  try{
+    var row=Object.assign({},tx,{user_id:APP_USER_ID});
+    var res=await sbClient.from('transactions').upsert([row],{onConflict:'id'}).select();
+    if(res.error){console.warn('Supabase transaction save skipped:',res.error.message||res.error.code);return false;}
+    return true;
+  }catch(e){console.warn('Transaction cloud save skipped:',e.message||e);return false;}
+}
+async function deleteTransactionFromCloud(txId){
+  if(!cloudMode)return false;
+  if(!sbClient&&!initSupabase())return false;
+  try{
+    var res=await sbClient.from('transactions').delete().eq('id',String(txId)).eq('user_id',APP_USER_ID);
+    if(res.error){console.warn('Supabase transaction delete skipped:',res.error.message);return false;}
+    return true;
+  }catch(e){console.warn('Transaction cloud delete skipped:',e.message||e);return false;}
+}
+async function loadTransactionsFromCloud(){
+  if(!cloudMode)return getTransactions();
+  if(!sbClient&&!initSupabase())return getTransactions();
+  try{
+    var res=await sbClient.from('transactions').select('*').eq('user_id',APP_USER_ID).order('date',{ascending:true});
+    if(res.error){console.warn('Supabase transactions load skipped:',res.error.message);return getTransactions();}
+    var data=res.data||[];
+    if(data.length){
+      settings.transactions=data.map(function(r){return {id:r.id,accountId:r.accountId||r.accountid,type:r.type,amount:Number(r.amount||0),date:r.date,note:r.note||'',createdAt:r.createdAt||r.createdat};});
+      persistSettings(false);
+    }
+    return getTransactions();
+  }catch(e){console.warn('Transactions load skipped:',e.message||e);return getTransactions();}
+}
 function getActiveAccount(){return getAccounts().find(function(a){return a.id===activeAccountId;})||getAccounts()[0];}
 function getAccountDBKey(acctId){return 'smc_v6_trades_'+(acctId||'personal');}
 function getAccountReviewKey(acctId){return RV+'_'+(acctId||'personal');}
@@ -2981,6 +3241,13 @@ function removeAccount(id){
   localStorage.removeItem(getAccountDBKey(id));
   localStorage.removeItem(getAccountReviewKey(id));
   deleteAccountFromCloud(id);
+  // BUG FIX: ลบ transaction (ฝาก/ถอน) ของ account นี้ด้วย ไม่ให้ข้อมูลค้างเป็น orphan
+  if(Array.isArray(settings.transactions)){
+    settings.transactions.filter(function(t){return t.accountId===id;}).forEach(function(t){
+      if(typeof deleteTransactionFromCloud==='function')deleteTransactionFromCloud(t.id).catch(function(e){console.error('cleanup transaction cloud delete failed:',e);});
+    });
+    settings.transactions=settings.transactions.filter(function(t){return t.accountId!==id;});
+  }
   settings.accounts=settings.accounts.filter(function(a){return a.id!==id;});
   if(activeAccountId===id)switchAccount('personal');
   else{persistSettings();renderAccountList();}
@@ -2991,13 +3258,26 @@ function renderAccountList(){
   el.innerHTML=accts.map(function(a){
     var isActive=a.id===activeAccountId;
     var cnt=0;try{cnt=(JSON.parse(localStorage.getItem(getAccountDBKey(a.id)))||[]).length;}catch(e){}
-    return'<div style="display:flex;align-items:center;gap:7px;padding:8px 13px;border-radius:10px;border:2px solid '+(isActive?a.color:'var(--b)')+';background:'+(isActive?'rgba('+hexToRgb(a.color)+',.08)':'var(--bg3)')+';cursor:pointer;transition:all .15s" onclick="switchAccount(\''+a.id+'\')">'+
+    var curBal=getCurrentBalance(a.id);
+    var startBal=a.balance?parseFloat(a.balance)||0:0;
+    var diff=curBal-startBal;
+    return'<div style="display:flex;flex-direction:column;gap:6px;padding:9px 13px;border-radius:10px;border:2px solid '+(isActive?a.color:'var(--b)')+';background:'+(isActive?'rgba('+hexToRgb(a.color)+',.08)':'var(--bg3)')+';transition:all .15s">'+
+      '<div style="display:flex;align-items:center;gap:7px;cursor:pointer" onclick="switchAccount(\''+a.id+'\')">'+
       '<span style="width:10px;height:10px;border-radius:50%;background:'+a.color+';flex-shrink:0"></span>'+
       '<span style="font-weight:'+(isActive?'700':'500')+';font-size:13px;color:'+(isActive?a.color:'var(--t2)')+'">'+a.name+'</span>'+
       '<span style="font-size:10px;color:var(--t3);font-family:var(--mono)">'+cnt+' trades</span>'+
-      (a.balance?'<span style="font-size:10px;color:var(--t3);font-family:var(--mono)">$'+Number(a.balance).toLocaleString()+'</span>':'')+
       (isActive?'<span style="font-size:9px;background:'+a.color+';color:#fff;padding:1px 6px;border-radius:4px;font-weight:700;margin-left:2px">ACTIVE</span>':'')+
       (a.id!=='personal'?'<button class="btn br" onclick="event.stopPropagation();removeAccount(\''+a.id+'\')" style="margin-left:auto;padding:2px 7px;font-size:10px">ลบ</button>':'')+
+      '</div>'+
+      '<div style="display:flex;align-items:center;gap:8px;padding-left:17px">'+
+      '<span style="font-size:13px;font-weight:800;font-family:var(--mono);color:'+(diff>=0?'var(--gn)':'var(--rd)')+'">$'+curBal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>'+
+      (diff!==0?'<span style="font-size:10px;color:var(--t3);font-family:var(--mono)">('+(diff>=0?'+':'')+diff.toFixed(2)+' จาก start $'+startBal.toLocaleString()+')</span>':'<span style="font-size:10px;color:var(--t3)">starting balance</span>')+
+      '</div>'+
+      '<div style="display:flex;gap:6px;padding-left:17px">'+
+      '<button class="btn" style="padding:4px 10px;font-size:11px;font-weight:800;background:var(--gn2);border-color:var(--gn3);color:var(--gn)" onclick="event.stopPropagation();openTxPopup(\''+a.id+'\',\'deposit\')">+ ฝาก</button>'+
+      '<button class="btn" style="padding:4px 10px;font-size:11px;font-weight:800;background:var(--rd2);border-color:var(--rd3);color:var(--rd)" onclick="event.stopPropagation();openTxPopup(\''+a.id+'\',\'withdraw\')">− ถอน</button>'+
+      '<button class="btn" style="padding:4px 10px;font-size:11px;font-weight:700" onclick="event.stopPropagation();openTxHistoryPopup(\''+a.id+'\')">📜 ประวัติ</button>'+
+      '</div>'+
     '</div>';
   }).join('');
   renderAccountBalanceEditor();
@@ -3013,7 +3293,7 @@ function renderAccountBalanceEditor(){
     return'<div style="display:flex;align-items:center;gap:8px">'+
       '<span style="width:8px;height:8px;border-radius:50%;background:'+a.color+';flex-shrink:0"></span>'+
       '<span style="font-size:12px;font-weight:600;color:var(--t2);min-width:100px">'+a.name+'</span>'+
-      '<div class="fld" style="flex:1;margin:0"><input type="number" placeholder="Balance ($)" value="'+(a.balance||'')+'" style="background:var(--bg3);border:1px solid var(--b);border-radius:7px;padding:5px 9px;color:var(--t);font-family:var(--mono);font-size:12px;width:100%;outline:none" onchange="saveAccountBalance(\''+a.id+'\',this.value)" oninput="saveAccountBalance(\''+a.id+'\',this.value)"></div>'+
+      '<div class="fld" style="flex:1;margin:0"><input type="number" placeholder="Balance ($)" value="'+(a.balance||'')+'" style="background:var(--bg3);border:1px solid var(--b);border-radius:7px;padding:5px 9px;color:var(--t);font-family:var(--mono);font-size:12px;width:100%;outline:none" onchange="saveAccountBalance(\''+a.id+'\',this.value)"></div>'+
     '</div>';
   }).join('');
 }
@@ -3026,6 +3306,9 @@ function saveAccountBalance(acctId,val){
     if(balEl&&val)balEl.value=parseFloat(val)||'';
     onCalc();
   }
+  // BUG FIX: refresh account-list card ด้วย ไม่งั้น Current Balance ที่อิง Starting Balance จะไม่ sync จนกว่าจะ reopen popup
+  renderAccountList();
+  if(typeof renderDashboard==='function'&&acctId===activeAccountId)renderDashboard();
 }
 function hexToRgb(hex){
   var r=0,g=0,b=0;
@@ -3433,7 +3716,9 @@ function updateQuickStatus(){
 // ===================== CORE CALCULATOR (v6.6: auto instrument meta) =====================
 function getAccountBalance(){
   var acct=(typeof getActiveAccount==='function')?getActiveAccount():null;
-  return acct&&acct.balance?parseFloat(acct.balance)||0:0;
+  if(!acct)return 0;
+  // ตามที่ตกลง: ใช้ Current Balance (starting + deposits - withdrawals + closed P&L) คำนวณ lot/risk
+  return getCurrentBalance(acct.id);
 }
 function getInstrumentPresets(){
   if(!settings.instrumentPresets||!settings.instrumentPresets.length){settings.instrumentPresets=DEFAULT_SETTINGS.instrumentPresets.slice();}
@@ -4041,7 +4326,7 @@ function go(p){
   document.querySelectorAll('.page').forEach(function(el){el.classList.remove('on');});
   document.querySelectorAll('.ntab').forEach(function(el){el.classList.remove('on');});
   document.getElementById('page-'+p).classList.add('on');
-  var m={dashboard:0,calendar:1,form:2,list:3,analytics:4,insights:5,review:6,settings:7};
+  var m={dashboard:0,calendar:1,form:2,list:3,analytics:4,insights:5,mindkit:6,review:7,settings:8};
   document.querySelectorAll('.ntab')[m[p]].classList.add('on');
   // Sprint 7: sync bottom mobile nav active state
   document.querySelectorAll('.bnav-item').forEach(function(el){el.classList.toggle('on',el.dataset.page===p);});
@@ -4051,6 +4336,7 @@ function go(p){
   if(p==='list')renderList();
   if(p==='analytics')renderAnalytics();
   if(p==='insights')renderInsights();
+  if(p==='mindkit')renderMindToolkit();
   if(p==='review')renderReviews();
   if(p==='settings')renderSettings();
 }
@@ -4168,7 +4454,9 @@ function updateGuardBar(){
   var acct=getActiveAccount();
   var prefix=acct?'['+acct.name+'] ':'';
   gb.style.display=msgs.length?'block':'none';
-  gb.textContent='⛔ '+prefix+msgs.join(' | ');
+  // เชื่อมกับ Mind Toolkit: ถ้ามี warning ใส่ลิงก์ให้กดไปจัดการอารมณ์ได้ทันที
+  gb.innerHTML='⛔ '+escHtml(prefix+msgs.join(' | '))+
+    (msgs.length?' <span style="cursor:pointer;text-decoration:underline;font-weight:800;margin-left:6px" onclick="go(\'mindkit\')">🧠 จัดการอารมณ์ก่อนเทรดต่อ</span>':'');
 }
 updateGuardBar();
 
@@ -4202,12 +4490,9 @@ function onAccountChange(){
     var fEl2=document.getElementById('f-account');
     if(fEl2)fEl2.value=chosen;
   } else {
-    // same account — just fill balance
-    var acct=getAccounts().find(function(a){return a.id===chosen;});
-    if(acct&&acct.balance){
-      var balEl=document.getElementById('f-bal');
-      if(balEl){balEl.value=acct.balance;onCalc();}
-    }
+    // same account — fill ด้วย Current Balance (ตามที่ตกลง: ใช้ current balance คำนวณ lot)
+    var balEl=document.getElementById('f-bal');
+    if(balEl){balEl.value=getAccountBalance();onCalc();}
   }
   autosaveDraft();
 }
@@ -4981,6 +5266,213 @@ function renderAICoach(cl){
   el.innerHTML=cards.join('');
 }
 
+// ===================== MIND TOOLKIT — EMOTION LIBRARY =====================
+// ใช้ vocabulary เดียวกับ mood-pre tags ที่มีอยู่แล้วในระบบ ไม่ต้อง sync data ใหม่ เป็น static reference library
+var MIND_TOOLKIT_LIBRARY=[
+  {
+    id:'fomo',icon:'🔥',label:'FOMO รีบร้อน',
+    sub:'กลัวพลาด setup เลยกดเข้าทั้งที่ยังไม่ชัวร์',
+    article:'FOMO (Fear Of Missing Out) เกิดจากสมองส่วนอารมณ์ตีความ "การไม่ได้กำไร" เหมือนเป็นการ "ขาดทุน" ทั้งที่จริงไม่ได้เสียเงินสักบาท งานวิจัยด้าน trading psychology พบว่า trade ที่เข้าด้วย FOMO มักไม่มี stop loss ที่ชัดเจน เพราะสมองข้ามขั้นตอนวางแผนไปเลย <b>กฎสำคัญ: ถ้า setup ดีจริง มันจะยังดีอยู่อีก 10 นาทีข้างหน้า</b> ตลาดมี setup ใหม่เกิดขึ้นทุกวัน ไม่มีคำว่า "โอกาสเดียวในชีวิต"',
+    techniques:[
+      {title:'กฎ 10 นาที',dur:'10 นาที',steps:['ตั้งเวลา 10 นาทีก่อนกด entry','ใช้เวลานี้เช็ค checklist ปกติของคุณ','ถ้าหลัง 10 นาที setup ยังตรงเงื่อนไขทั้งหมด ค่อยเข้า','ถ้าราคาวิ่งไปไกลแล้ว ปล่อยมันไป — จะมี setup ใหม่เสมอ']},
+      {title:'5-4-3-2-1 Grounding',dur:'60 วินาที',steps:['มองหา 5 สิ่งรอบตัวที่เห็น',' ฟัง 4 เสียงที่ได้ยินตอนนี้','สัมผัส 3 สิ่งที่แตะอยู่ (เก้าอี้ โต๊ะ มือถือ)','ได้กลิ่น 2 อย่าง','ลิ้มรส 1 อย่าง (น้ำ หรือแค่ลิ้นในปาก)']},
+      {title:'ถามตัวเอง 3 คำถาม',dur:'30 วินาที',steps:['นี่คือ setup ที่อยู่ใน playbook ของฉันจริงไหม?','ถ้าพลาดไม้นี้ พอร์ตฉันจะเป็นอะไรไหม?','พรุ่งนี้จะมี setup ใหม่ให้ฉันเทรดไหม? (คำตอบคือ มีเสมอ)']}
+    ]
+  },
+  {
+    id:'angry',icon:'😡',label:'โกรธ / หงุดหงิด',
+    sub:'อารมณ์เสียจากไม้ก่อน หรือเรื่องนอกตลาด',
+    article:'อารมณ์โกรธทำให้สมองส่วน prefrontal cortex (ส่วนคิดเหตุผล) ทำงานลดลง และ amygdala (ส่วนอารมณ์) ทำงานเพิ่มขึ้น พูดง่ายๆ คือ <b>ตอนโกรธ คุณคิดแบบมีเหตุผลได้น้อยลงจริงๆ ทางสมอง</b> ไม่ใช่แค่ความรู้สึก นี่คือเหตุผลที่เทรดตอนโกรธมักจบด้วย revenge trade หรือ oversize เพื่อ "เอาคืน" งานวิจัยพบว่าอารมณ์โกรธต้องใช้เวลาเฉลี่ย 20-30 นาทีในการสลายตัวลงจนกลับสู่ baseline',
+    techniques:[
+      {title:'Box Breathing',dur:'2 นาที',steps:['หายใจเข้า 4 วินาที','กลั้นไว้ 4 วินาที','หายใจออก 4 วินาที','กลั้นไว้ 4 วินาที','ทำซ้ำ 6-8 รอบ จะรู้สึกใจเย็นลงชัดเจน']},
+      {title:'เขียนสิ่งที่โกรธลงกระดาษ',dur:'5 นาที',steps:['เปิดสมุดหรือ note app','เขียนทุกอย่างที่กำลังคิด ไม่ต้องเรียบเรียง','เขียนจนกว่าจะรู้สึกโล่งขึ้น','ปิดสมุด แล้วออกไปเดินเล่น 5 นาทีก่อนกลับมาที่จอ']},
+      {title:'Hard Stop 30 นาที',dur:'30 นาที',steps:['ปิดแพลตฟอร์มเทรดทันที','ตั้ง alarm 30 นาที','ทำอะไรก็ได้ที่ไม่เกี่ยวกับตลาด','เช็คตัวเองก่อนเปิดจอใหม่ว่า "ใจเย็นพอจะตัดสินใจหรือยัง"']}
+    ]
+  },
+  {
+    id:'overconfident',icon:'🚀',label:'มั่นใจเกินไป',
+    sub:'ชนะมาหลายไม้ติด รู้สึกว่าวันนี้ทำอะไรก็ถูก',
+    article:'ความมั่นใจเกินไปหลังชนะติดต่อกัน (Overconfidence Bias) เป็นหนึ่งใน cognitive bias ที่อันตรายที่สุดในการเทรด เพราะสมองจะตีความว่า "ฝีมือ" ทำให้ชนะ ทั้งที่บางครั้งเป็นแค่ "โชค" หรือ market condition ที่เข้ากับ setup พอดี <b>นักเทรดที่ดีที่สุดคือคนที่ sizing เท่าเดิมไม่ว่าจะชนะหรือแพ้มาก่อน</b> เพราะแต่ละ trade เป็นเหตุการณ์อิสระจากกัน ไม่ได้การันตีว่าไม้ต่อไปจะชนะตาม',
+    techniques:[
+      {title:'Lock-in Rule',dur:'ทันที',steps:['ถ้าวันนี้กำไรถึงเป้าที่ตั้งไว้แล้ว ให้หยุดเทรดทันที','เขียนในสมุด: "วันนี้ถึงเป้าแล้ว พรุ่งนี้นับใหม่"','ปิดแพลตฟอร์ม ไปทำอย่างอื่น']},
+      {title:'Size Check',dur:'1 นาที',steps:['เปิด Risk % calculator ในแอป','เช็คว่า lot size เท่ากับไม้ก่อนๆ หรือเปล่า','ถ้าคิดจะเพิ่ม size เพราะ "วันนี้ฟอร์มดี" ให้หยุดและกลับไป risk เดิม']},
+      {title:'มุมมองตรงข้าม (Devil\u2019s Advocate)',dur:'2 นาที',steps:['เขียน 3 เหตุผลว่าทำไม setup นี้อาจผิด','ถ้าคิดไม่ออกสักข้อ นั่นคือสัญญาณว่ากำลังมั่นใจเกินไป','หา 1 เหตุผลที่หนักแน่นที่สุดมาท้าทาย idea ตัวเอง']}
+    ]
+  },
+  {
+    id:'fearmiss',icon:'😰',label:'กลัวพลาด',
+    sub:'ลังเลไม่กล้าเข้า หรือออกเร็วเกินเพราะกลัวเสีย',
+    article:'ความกลัวขาดทุน (Loss Aversion) มีรากฐานจากงานวิจัย Kahneman และ Tversky พบว่า <b>มนุษย์รู้สึกเจ็บปวดจากการขาดทุนมากกว่าความสุขจากการได้กำไรในจำนวนเท่ากันถึง 2 เท่า</b> นี่คือเหตุผลที่นักเทรดมักออกกำไรเร็วเกินไป (กลัวกำไรหาย) แต่ปล่อยขาดทุนนานเกินไป (หวังว่าจะกลับมา) ความกลัวนี้ปกติและเป็นธรรมชาติของมนุษย์ทุกคน ไม่ใช่ความผิดปกติ',
+    techniques:[
+      {title:'Pre-commitment',dur:'ก่อนเข้าเทรด',steps:['เขียน TP/SL ลงในแอปก่อนกด entry ทุกครั้ง','ตั้ง alert ราคาไว้ ไม่ต้องเฝ้าจอ','ให้ระบบทำงานแทนการตัดสินใจกลางอารมณ์']},
+      {title:'Reframe คำถาม',dur:'30 วินาที',steps:['เปลี่ยนจาก "ถ้าพลาดจะเป็นไง" เป็น "ถ้าไม่ลองจะเป็นไง"','ถามว่า การ skip ไม้นี้ทำให้ระบบของฉันดีขึ้นจริงไหม หรือแค่กลัวไปเอง','เทียบกับ expectancy ของ setup นี้จาก Analytics ว่าระยะยาวคุ้มไหม']},
+      {title:'Worst Case Math',dur:'1 นาที',steps:['คำนวณว่าถ้าขาดทุนสุดๆตามแผน จะเสียกี่ % ของพอร์ต','ถ้าตัวเลขนี้รับได้ (เช่น 1-2%) ก็ไม่มีเหตุผลให้กลัว','ถ้าตัวเลขนี้รับไม่ได้ ปัญหาคือ size ใหญ่เกินไป ไม่ใช่ปัญหาความกลัว']}
+    ]
+  },
+  {
+    id:'anxious',icon:'😟',label:'กังวล ไม่แน่ใจ',
+    sub:'รู้สึกไม่มั่นใจใน setup หรือทิศทางตลาด',
+    article:'ความไม่แน่ใจ (Uncertainty) ต่างจากความกลัว — มันคือสมองที่ขาดข้อมูลพอจะสร้างความมั่นใจ ทาง trading psychology แนะนำว่า <b>ความกังวลคือสัญญาณที่ดีกว่าความมั่นใจสุดขีด เพราะมันทำให้เราระวังตัว</b> ปัญหาคือกังวลมากเกินจนไม่กล้าตัดสินใจเลย (analysis paralysis) วิธีแก้คือทำให้กระบวนการตัดสินใจเป็นระบบ ไม่ต้องพึ่ง "ความรู้สึกมั่นใจ 100%" ซึ่งไม่มีอยู่จริงในการเทรด',
+    techniques:[
+      {title:'Checklist เป็นเกณฑ์ตัดสิน',dur:'2 นาที',steps:['เปิด checklist template ที่ตั้งไว้ใน Settings','เช็คทีละข้อ ไม่ใช้ความรู้สึก','ถ้าผ่านเกณฑ์ที่ตั้งไว้ล่วงหน้า เข้าได้ ไม่ต้องรอ "ความมั่นใจ 100%"']},
+      {title:'แบ่ง Position เล็กลง',dur:'ทันที',steps:['ถ้ายังกังวล ลด size ลงครึ่งหนึ่งจากปกติ','เข้าด้วย size ที่เล็กลงเพื่อลดความกดดัน','เมื่อมั่นใจขึ้นในรอบถัดไป ค่อยกลับไป size เดิม']},
+      {title:'เขียน Worst/Best/Likely',dur:'3 นาที',steps:['เขียนสถานการณ์แย่สุดที่จะเกิด','เขียนสถานการณ์ดีสุดที่จะเกิด','เขียนสถานการณ์ที่มักเกิดจริง (most likely)','ตัดสินใจจาก scenario ที่ realistic ไม่ใช่ extreme case']}
+    ]
+  },
+  {
+    id:'calm',icon:'🧘',label:'สงบ มีสติ',
+    sub:'รู้สึกพร้อม มีสติ นี่คือ state ที่ดีที่สุด',
+    article:'นี่คือ state ที่นักเทรดมือโปรเรียกว่า "in the zone" — สงบ มีสติ ไม่ตื่นเต้นเกินไป ไม่กลัวเกินไป งานวิจัยด้าน peak performance พบว่า trader ที่ performance ดีที่สุดมักอยู่ใน state ที่เรียกว่า "relaxed focus" ซึ่งต่างจากทั้ง excited (ตื่นเต้นเกิน) และ bored (เบื่อเกิน) <b>state นี้ไม่ได้อยู่ถาวร ต้องรักษาไว้ด้วยการไม่ฝืนเทรดตอนเหนื่อยหรือ overtrade</b> ใช้ประโยชน์จากช่วงเวลานี้ให้คุ้มค่าที่สุด',
+    techniques:[
+      {title:'รักษา State นี้ไว้',dur:'ตลอดเซสชัน',steps:['เทรดตาม plan ที่วางไว้ ไม่ใช้โอกาสนี้ฝืน oversize','พัก 5 นาทีทุก 1-2 ชั่วโมง ไม่ให้สมองล้า','หยุดเทรดทันทีที่รู้สึก state เปลี่ยนไป (เหนื่อย เครียด หรือเริ่มกังวล)']},
+      {title:'Pre-Trade Ritual',dur:'5 นาที',steps:['ทำกิจวัตรเดิมก่อนเทรดทุกครั้ง (เช่น ดื่มน้ำ เช็ค news calendar ยืดเส้น)','ใช้ ritual นี้เป็น anchor ให้กลับมาสู่ state สงบได้เร็วในวันที่ยาก','จดไว้ว่าวันนี้ทำอะไรก่อนเทรดที่ทำให้รู้สึกพร้อม']}
+    ]
+  },
+  {
+    id:'revenge',icon:'⚔️',label:'Revenge Trade',
+    sub:'อยากเอาคืนตลาดหลังขาดทุน',
+    article:'Revenge Trading คือการเทรดเพื่อ "เอาเงินที่เสียคืน" แทนการเทรดตาม setup จริง เป็นพฤติกรรมที่อันตรายที่สุดในบรรดา trading psychology errors ทั้งหมด เพราะมันมักนำไปสู่การ oversize, ไม่มี stop loss, และ holding position ผิดด้วยความหวัง <b>กฎทองคือ: เงินที่เสียไปแล้ว ไม่มีไม้ไหนเอาคืนได้ มีแต่ไม้ใหม่ที่ตามแผนเท่านั้นที่จะสร้างกำไรได้</b> Loss ที่เกิดแล้วคือ sunk cost ต้องปล่อยมันไป',
+    techniques:[
+      {title:'Hard Stop หลังขาดทุน',dur:'อย่างน้อย 1 ชั่วโมง',steps:['ตั้งกฎตายตัว: ขาดทุน 2 ไม้ติด = ปิดแพลตฟอร์ม 1 ชั่วโมง','ไม่มีข้อยกเว้น ไม่ต่อรองกับตัวเอง','ใช้เวลานี้ทบทวนว่าไม้ที่เสียทำผิด process ตรงไหน']},
+      {title:'พูดกับตัวเองแบบบุคคลที่ 3',dur:'1 นาที',steps:['พูดกับตัวเองเหมือนพูดกับเพื่อน เช่น "[ชื่อ] กำลังจะ revenge trade อยู่นะ"','การมองตัวเองจากมุมบุคคลที่ 3 ช่วยลดความเข้มข้นทางอารมณ์ได้จริงตามงานวิจัย','ถามว่า "ถ้าเพื่อนคนนี้มาขอคำแนะนำตอนนี้ จะบอกเขาว่าไง"']},
+      {title:'เขียน Loss ลง Journal ก่อนเทรดต่อ',dur:'5 นาที',steps:['เปิดหน้า Detail ของไม้ที่ขาดทุน','เขียนว่าทำตาม plan หรือไม่ ทำไมขาดทุน','ปิด journal แล้วถามตัวเองว่า "พร้อมเทรดไม้ใหม่ด้วยใจที่นิ่งหรือยัง"']}
+    ]
+  },
+  {
+    id:'bored',icon:'😴',label:'เบื่อ อยากทำบ้าง',
+    sub:'ไม่มี setup ชัด แต่อยากเทรดเพราะเบื่อ',
+    article:'Boredom Trading เกิดจากการเทรดเพื่อหาความตื่นเต้น ไม่ใช่เพื่อทำกำไร เป็นปัญหาที่พบบ่อยในตลาดที่ sideway นานๆ หรือวันที่ volume ต่ำ สมองมนุษย์ชอบ stimulation และจะหาทางสร้างมันขึ้นมาเองถ้าไม่มี — รวมถึงการเข้าเทรดที่ไม่มี edge จริง <b>การไม่เทรดก็คือการเทรดอย่างหนึ่ง (No trade is a trade)</b> นักเทรดที่ดีที่สุดเข้าใจว่าการรอคืออาชีพเช่นกัน',
+    techniques:[
+      {title:'หา Activity อื่นทดแทน',dur:'ไม่จำกัด',steps:['ลิสต์กิจกรรมที่ทำได้ตอนไม่มี setup เช่น ทบทวน journal เก่า อ่าน analytics','ทำ backtest หรือศึกษา setup ใหม่ในตลาดที่ไม่ active','ออกไปเดิน หรือทำงานอื่นที่ไม่เกี่ยวกับตลาดเลย']},
+      {title:'ตั้งคำถาม Setup Check',dur:'1 นาที',steps:['ถามตัวเองตรงๆ ว่า "นี่คือ setup จริง หรือฉันแค่อยากกดอะไรสักอย่าง"','เปิด checklist เทียบ — ถ้าไม่ผ่านเกณฑ์ ก็ไม่ใช่ setup','บันทึกเป็น Missed Entry ถ้าเห็น pattern น่าสนใจแต่ยังไม่ผ่านเกณฑ์ครบ']}
+    ]
+  }
+];
+
+function renderMindToolkit(){
+  var grid=document.getElementById('mk-emo-grid');
+  if(!grid)return;
+  grid.innerHTML=MIND_TOOLKIT_LIBRARY.map(function(e){
+    return '<div class="mk-emo-chip" id="mk-chip-'+e.id+'" onclick="openMindToolkitDetail(\''+e.id+'\')">'+
+      '<span class="mk-e-ic">'+e.icon+'</span><span class="mk-e-t">'+escHtml(e.label)+'</span></div>';
+  }).join('');
+  renderMindToolkitRecentUsage();
+}
+function openMindToolkitDetail(emoId){
+  var e=MIND_TOOLKIT_LIBRARY.find(function(x){return x.id===emoId;});
+  if(!e)return;
+  document.querySelectorAll('.mk-emo-chip').forEach(function(c){c.classList.toggle('on',c.id==='mk-chip-'+emoId);});
+  document.getElementById('mk-detail-icon').textContent=e.icon;
+  document.getElementById('mk-detail-title').textContent=e.label;
+  document.getElementById('mk-detail-sub').textContent=e.sub;
+  document.getElementById('mk-article').innerHTML=e.article;
+  document.getElementById('mk-techniques').innerHTML=e.techniques.map(function(t,i){
+    return '<div class="mk-tech-card" id="mk-tech-'+emoId+'-'+i+'">'+
+      '<div class="mk-tech-head" onclick="toggleMindToolkitTech(\''+emoId+'\','+i+')">'+
+      '<div class="mk-tech-num">'+(i+1)+'</div>'+
+      '<div class="mk-tech-title">'+escHtml(t.title)+'</div>'+
+      '<div class="mk-tech-dur">'+escHtml(t.dur)+'</div>'+
+      '</div>'+
+      '<ol class="mk-tech-steps">'+t.steps.map(function(s){return '<li>'+escHtml(s)+'</li>';}).join('')+'</ol>'+
+    '</div>';
+  }).join('');
+  window.__mkCurrentEmoId=emoId;
+  document.getElementById('mk-detail').style.display='block';
+  document.getElementById('mk-detail').scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function closeMindToolkitDetail(){
+  document.getElementById('mk-detail').style.display='none';
+  document.querySelectorAll('.mk-emo-chip').forEach(function(c){c.classList.remove('on');});
+  window.__mkCurrentEmoId=null;
+}
+function toggleMindToolkitTech(emoId,idx){
+  var card=document.getElementById('mk-tech-'+emoId+'-'+idx);
+  if(card)card.classList.toggle('expanded');
+}
+function logMindToolkitUsage(felt_better){
+  var emoId=window.__mkCurrentEmoId;
+  if(!emoId)return;
+  if(!Array.isArray(settings.mindToolkitLog))settings.mindToolkitLog=[];
+  settings.mindToolkitLog.push({emoId:emoId,date:getLocalDateKey(),time:new Date().toTimeString().slice(0,5),feltBetter:!!felt_better});
+  // เก็บแค่ 100 รายการล่าสุด กัน storage บวม
+  if(settings.mindToolkitLog.length>100)settings.mindToolkitLog=settings.mindToolkitLog.slice(-100);
+  persistSettings();
+  toast(felt_better?'✓ ดีใจที่ช่วยได้ บันทึกแล้ว':'บันทึกแล้ว — ลองเทคนิคอื่นดูได้นะ');
+  renderMindToolkitRecentUsage();
+}
+function renderMindToolkitRecentUsage(){
+  var el=document.getElementById('mk-recent-usage');
+  if(!el)return;
+  var log=(settings.mindToolkitLog||[]).slice().reverse().slice(0,8);
+  if(!log.length){el.innerHTML='ยังไม่มีประวัติการใช้งาน';return;}
+  el.innerHTML=log.map(function(l){
+    var e=MIND_TOOLKIT_LIBRARY.find(function(x){return x.id===l.emoId;});
+    if(!e)return '';
+    return '<div class="mk-recent-row"><span class="mk-recent-icon">'+e.icon+'</span>'+
+      '<span style="flex:1;font-weight:700;color:var(--t2)">'+escHtml(e.label)+'</span>'+
+      '<span style="color:var(--t3)">'+l.date+' '+l.time+'</span>'+
+      '<span>'+(l.feltBetter?'😌':'😐')+'</span></div>';
+  }).join('');
+}
+
+// ===================== MIND TOOLKIT — AI PERSONALIZED ADVICE =====================
+async function askMindToolkitAi(){
+  var emoId=window.__mkCurrentEmoId;
+  if(!emoId)return;
+  var e=MIND_TOOLKIT_LIBRARY.find(function(x){return x.id===emoId;});
+  if(!e)return;
+
+  if(!isAiReady()){
+    toast('⚠ ยังไม่ได้ตั้งค่า AI — ไปที่ Settings → 🤖 AI Assistant ก่อน');
+    return;
+  }
+
+  var btn=document.getElementById('mk-ai-btn');
+  var resultEl=document.getElementById('mk-ai-result');
+  btn.disabled=true;
+  btn.textContent='🔄 AI กำลังวิเคราะห์...';
+  resultEl.style.display='none';
+
+  try{
+    // ดึง trade ล่าสุด 10 ไม้ของ account ปัจจุบันมาประกอบ prompt ให้ AI เห็น pattern จริง
+    var recentTrades=(trades||[]).filter(function(t){return isClosedRealTrade(t);})
+      .slice().sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));})
+      .slice(0,10);
+    var tradesSummary=recentTrades.map(function(t){
+      var nr=getNetR(t);
+      return (t.date||'?')+' '+(t.pair||'?')+' '+(t.dir||'?')+' P&L:'+(getNetPnl(t)||0).toFixed(2)+
+        ' R:'+(nr!=null?nr.toFixed(2):'?')+' Mood:'+(t.moodPre||'?')+
+        (t.mistakeTypes&&t.mistakeTypes.length?' Mistakes:'+t.mistakeTypes.join(','):'');
+    }).join('\\n');
+
+    var usageHistory=(settings.mindToolkitLog||[]).filter(function(l){return l.emoId===emoId;}).slice(-5);
+    var usageSummary=usageHistory.length?
+      ('เคยใช้เทคนิคจัดการอารมณ์นี้มาก่อน '+usageHistory.length+' ครั้ง ผลลัพธ์: '+usageHistory.filter(function(l){return l.feltBetter;}).length+'/'+usageHistory.length+' ครั้งรู้สึกดีขึ้น'):
+      'ยังไม่เคยใช้เทคนิคจัดการอารมณ์นี้มาก่อน';
+
+    var prompt='คุณเป็นผู้ช่วยด้านจิตวิทยาการเทรด (trading psychology coach) ตอบเป็นภาษาไทย กระชับ ไม่เกิน 150 คำ '+
+      'นักเทรดคนนี้กำลังรู้สึก "'+e.label+'" ('+e.sub+') '+
+      'นี่คือ trade ล่าสุด 10 ไม้ของเขา:\\n'+(tradesSummary||'ยังไม่มีข้อมูล trade')+'\\n\\n'+
+      usageSummary+'\\n\\n'+
+      'ช่วยวิเคราะห์ pattern จาก trade เหล่านี้ที่เกี่ยวกับอารมณ์นี้ และให้คำแนะนำที่ตรงกับสถานการณ์ของเขาจริงๆ '+
+      '(ไม่ใช่คำแนะนำทั่วไป) ตอบสั้น กระชับ เป็นกันเอง';
+
+    var reply=await askAi(prompt);
+    if(reply){
+      resultEl.innerHTML='<div class="mk-ai-label">🤖 คำแนะนำจาก AI (วิเคราะห์จาก trade จริงของคุณ)</div><div class="mk-ai-text">'+escHtml(reply).replace(/\\n/g,'<br>')+'</div>';
+      resultEl.style.display='block';
+    }else{
+      toast('ไม่ได้รับคำตอบจาก AI ลองใหม่อีกครั้ง');
+    }
+  }catch(err){
+    console.error('Mind Toolkit AI error:',err);
+    toast('⚠ AI error: '+(err.message||String(err)));
+  }finally{
+    btn.disabled=false;
+    btn.textContent='🤖 ขอคำแนะนำจาก AI ตามข้อมูลจริงของฉัน';
+  }
+}
+
 function renderInsights(){
   var acct=getActiveAccount();
   var badge=document.getElementById('insights-acct-badge');
@@ -5167,12 +5659,13 @@ function saveReview(idx){
 function getActiveTmpl(){return settings.templates.find(function(t){return t.id===settings.activeTemplate;});}
 // ===================== SPRINT 4 — SETTINGS TABS + SUPABASE WIZARD =====================
 function setSettingsTab(tab){
-  ['general','risk','instruments','cloud'].forEach(function(t){
+  ['general','risk','instruments','cloud','ai'].forEach(function(t){
     var btn=document.getElementById('stab-'+t), panel=document.getElementById('spanel-'+t);
     if(btn)btn.classList.toggle('on',t===tab);
     if(panel)panel.classList.toggle('on',t===tab);
   });
   if(tab==='cloud')renderCloudSetupSummary();
+  if(tab==='ai')renderAiSettingsSummary();
 }
 function renderCloudSetupSummary(){
   var statusEl=document.getElementById('css-status');
@@ -5191,6 +5684,152 @@ function renderCloudSetupSummary(){
 }
 // ---- Wizard logic ----
 var wizPendingUrl='', wizPendingKey='';
+// ===================== AI ASSISTANT — FREE PROVIDER SYSTEM =====================
+// สำคัญ: API key เก็บใน localStorage เท่านั้น ไม่ sync ขึ้น cloud/settings เพื่อความปลอดภัย
+// เพราะถ้า sync ไปกับ settings cloud มันจะถูกอ่านได้จากอุปกรณ์อื่นที่ login เดียวกัน ซึ่งผู้ใช้อาจไม่รู้ตัว
+var AI_KEY_STORAGE='mind_edge_ai_key';
+var AI_PROVIDER_STORAGE='mind_edge_ai_provider';
+var AI_ENABLED_STORAGE='mind_edge_ai_enabled';
+
+var AI_PROVIDER_CONFIG={
+  gemini:{
+    name:'Google Gemini',
+    hint:'ขอ key ฟรีได้ที่ <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener" style="color:var(--ac2)">aistudio.google.com/app/apikey</a> — free tier ~15 req/นาที',
+    endpoint:function(key){return 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='+key;},
+    buildBody:function(prompt){return {contents:[{parts:[{text:prompt}]}]};},
+    extractText:function(data){
+      try{return data.candidates[0].content.parts[0].text;}catch(e){return null;}
+    },
+    headers:function(){return {'Content-Type':'application/json'};}
+  },
+  groq:{
+    name:'Groq',
+    hint:'ขอ key ฟรีได้ที่ <a href="https://console.groq.com/keys" target="_blank" rel="noopener" style="color:var(--ac2)">console.groq.com/keys</a> — เร็วมาก ใช้ Llama 3.1',
+    endpoint:function(){return 'https://api.groq.com/openai/v1/chat/completions';},
+    buildBody:function(prompt){return {model:'llama-3.1-8b-instant',messages:[{role:'user',content:prompt}],temperature:0.7};},
+    extractText:function(data){
+      try{return data.choices[0].message.content;}catch(e){return null;}
+    },
+    headers:function(key){return {'Content-Type':'application/json','Authorization':'Bearer '+key};}
+  },
+  openrouter:{
+    name:'OpenRouter',
+    hint:'ขอ key ฟรีได้ที่ <a href="https://openrouter.ai/keys" target="_blank" rel="noopener" style="color:var(--ac2)">openrouter.ai/keys</a> — เลือกโมเดลที่มีคำว่า "free" ในชื่อ',
+    endpoint:function(){return 'https://openrouter.ai/api/v1/chat/completions';},
+    buildBody:function(prompt){return {model:'meta-llama/llama-3.1-8b-instruct:free',messages:[{role:'user',content:prompt}]};},
+    extractText:function(data){
+      try{return data.choices[0].message.content;}catch(e){return null;}
+    },
+    headers:function(key){return {'Content-Type':'application/json','Authorization':'Bearer '+key};}
+  }
+};
+
+function getAiConfig(){
+  return{
+    provider:localStorage.getItem(AI_PROVIDER_STORAGE)||'',
+    key:localStorage.getItem(AI_KEY_STORAGE)||'',
+    enabled:localStorage.getItem(AI_ENABLED_STORAGE)==='1'
+  };
+}
+function isAiReady(){
+  var cfg=getAiConfig();
+  return !!(cfg.enabled&&cfg.provider&&cfg.key&&AI_PROVIDER_CONFIG[cfg.provider]);
+}
+
+function onAiProviderChange(){
+  var provider=document.getElementById('ai-provider').value;
+  var hintEl=document.getElementById('ai-provider-hint');
+  if(!provider){hintEl.innerHTML='เลือก Provider ก่อนเพื่อดูวิธีขอ key ฟรี';return;}
+  var conf=AI_PROVIDER_CONFIG[provider];
+  hintEl.innerHTML=conf?conf.hint:'';
+}
+
+async function testAiConnection(){
+  var provider=document.getElementById('ai-provider').value;
+  var key=document.getElementById('ai-api-key').value.trim();
+  var statusEl=document.getElementById('ai-test-status');
+  var boxEl=document.getElementById('ai-test-box');
+  boxEl.style.display='block';
+  if(!provider){statusEl.textContent='กรุณาเลือก Provider ก่อน';statusEl.className='wiz-test-status bad';return;}
+  if(!key){statusEl.textContent='กรุณาใส่ API Key ก่อน';statusEl.className='wiz-test-status bad';return;}
+  statusEl.textContent='🔄 กำลังทดสอบ...';statusEl.className='wiz-test-status';
+  try{
+    var reply=await callAiProvider(provider,key,'ตอบกลับด้วยคำว่า "OK" คำเดียวเท่านั้น เพื่อทดสอบการเชื่อมต่อ');
+    if(reply){
+      statusEl.textContent='✓ เชื่อมต่อสำเร็จ! AI ตอบกลับ: "'+reply.slice(0,40)+'"';
+      statusEl.className='wiz-test-status ok';
+    }else{
+      statusEl.textContent='✗ ไม่ได้รับคำตอบจาก AI — ตรวจ key อีกครั้ง';
+      statusEl.className='wiz-test-status bad';
+    }
+  }catch(e){
+    statusEl.textContent='✗ Error: '+(e.message||String(e));
+    statusEl.className='wiz-test-status bad';
+  }
+}
+
+function saveAiSettings(){
+  var provider=document.getElementById('ai-provider').value;
+  var key=document.getElementById('ai-api-key').value.trim();
+  if(!provider){toast('กรุณาเลือก Provider ก่อน');return;}
+  if(!key){toast('กรุณาใส่ API Key ก่อน');return;}
+  localStorage.setItem(AI_PROVIDER_STORAGE,provider);
+  localStorage.setItem(AI_KEY_STORAGE,key);
+  renderAiSettingsSummary();
+  toast('✓ บันทึกการตั้งค่า AI แล้ว (เก็บในเครื่องนี้เท่านั้น)');
+}
+
+function toggleAiEnabled(){
+  var checked=document.getElementById('ai-enabled-toggle').checked;
+  if(checked&&!getAiConfig().key){
+    toast('กรุณาตั้งค่า Provider และ Key ก่อนเปิดใช้งาน');
+    document.getElementById('ai-enabled-toggle').checked=false;
+    return;
+  }
+  localStorage.setItem(AI_ENABLED_STORAGE,checked?'1':'0');
+  renderAiSettingsSummary();
+  toast(checked?'✓ เปิดใช้งาน AI Assistant แล้ว':'ปิดใช้งาน AI Assistant แล้ว');
+}
+
+function renderAiSettingsSummary(){
+  var cfg=getAiConfig();
+  var providerSel=document.getElementById('ai-provider');
+  var keyInput=document.getElementById('ai-api-key');
+  var toggle=document.getElementById('ai-enabled-toggle');
+  if(providerSel&&cfg.provider)providerSel.value=cfg.provider;
+  if(keyInput&&cfg.key)keyInput.value=cfg.key;
+  if(toggle)toggle.checked=cfg.enabled;
+  onAiProviderChange();
+  var statusEl=document.getElementById('ai-status-display');
+  var provEl=document.getElementById('ai-provider-display');
+  if(statusEl)statusEl.textContent=cfg.enabled?'🟢 เปิดใช้งาน':(cfg.key?'⚪ ตั้งค่าแล้ว แต่ยังไม่เปิด':'ยังไม่ตั้งค่า');
+  if(provEl)provEl.textContent=cfg.provider?AI_PROVIDER_CONFIG[cfg.provider].name:'—';
+}
+
+// Core function เรียก AI — ใช้ร่วมกันทุก provider ผ่าน config map ด้านบน
+async function callAiProvider(provider,key,prompt){
+  var conf=AI_PROVIDER_CONFIG[provider];
+  if(!conf)throw new Error('ไม่รู้จัก provider: '+provider);
+  var res=await fetch(conf.endpoint(key),{
+    method:'POST',
+    headers:conf.headers(key),
+    body:JSON.stringify(conf.buildBody(prompt))
+  });
+  if(!res.ok){
+    var errText='';
+    try{var errData=await res.json();errText=errData.error&&errData.error.message?errData.error.message:JSON.stringify(errData);}catch(e){errText=res.statusText;}
+    throw new Error('HTTP '+res.status+': '+errText);
+  }
+  var data=await res.json();
+  return conf.extractText(data);
+}
+// Wrapper สาธารณะ — ใช้จาก Mind Toolkit / Insights ที่ดึง config จาก localStorage เอง
+async function askAi(prompt){
+  var cfg=getAiConfig();
+  if(!isAiReady())throw new Error('AI ยังไม่ถูกตั้งค่าหรือยังไม่เปิดใช้งาน — ไปที่ Settings → AI Assistant');
+  return await callAiProvider(cfg.provider,cfg.key,prompt);
+}
+
 function openSupabaseSetupWizard(){
   document.getElementById('wiz-url').value=SUPABASE_URL||'';
   document.getElementById('wiz-key').value=SUPABASE_KEY||'';
@@ -5438,6 +6077,73 @@ function removeTag(i){settings.setupTags.splice(i,1);persistSettings();renderTag
 
 
 // ===================== SETTINGS POPUP MANAGERS =====================
+// ===================== DEPOSIT/WITHDRAW POPUP UI =====================
+var __txAcctId=null,__txType='deposit';
+function openTxPopup(acctId,type){
+  __txAcctId=acctId;__txType=type;
+  var acct=getAccounts().find(function(a){return a.id===acctId;});
+  var isDep=type==='deposit';
+  document.getElementById('tx-modal-title').textContent=(isDep?'+ ฝากเงิน — ':'− ถอนเงิน — ')+(acct?acct.name:'');
+  document.getElementById('tx-current-balance').textContent='$'+getCurrentBalance(acctId).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('tx-amount').value='';
+  document.getElementById('tx-date').value=getLocalDateKey();
+  document.getElementById('tx-note').value='';
+  var btn=document.getElementById('tx-confirm-btn');
+  btn.textContent=isDep?'+ ยืนยันฝากเงิน':'− ยืนยันถอนเงิน';
+  btn.style.background=isDep?'':'var(--rd2)';
+  btn.style.borderColor=isDep?'':'var(--rd3)';
+  btn.style.color=isDep?'':'var(--rd)';
+  document.getElementById('modal-tx').classList.add('on');
+  setTimeout(function(){document.getElementById('tx-amount').focus();},50);
+}
+function confirmTxPopup(){
+  if(!__txAcctId)return;
+  var amount=document.getElementById('tx-amount').value;
+  var date=document.getElementById('tx-date').value||getLocalDateKey();
+  var note=document.getElementById('tx-note').value;
+  var tx=addTransaction(__txAcctId,__txType,amount,note,date);
+  if(!tx)return; // addTransaction toast แจ้ง error เองแล้ว
+  closeOv('modal-tx');
+  renderAccountList();
+  renderDashboard();
+  if(typeof onCalc==='function')onCalc();
+  toast((__txType==='deposit'?'✓ ฝากเงิน $':'✓ ถอนเงิน $')+amount+' แล้ว');
+}
+function openTxHistoryPopup(acctId){
+  var acct=getAccounts().find(function(a){return a.id===acctId;});
+  var txs=getAccountTransactions(acctId).slice().reverse();
+  document.getElementById('txh-sub').textContent=(acct?acct.name:'')+' · '+txs.length+' รายการ';
+
+  var deposits=txs.filter(function(t){return t.type==='deposit';}).reduce(function(s,t){return s+t.amount;},0);
+  var withdrawals=txs.filter(function(t){return t.type==='withdraw';}).reduce(function(s,t){return s+t.amount;},0);
+  var curBal=getCurrentBalance(acctId);
+  var stats=[
+    {l:'Current Balance',v:'$'+curBal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),cls:'win'},
+    {l:'รวมฝาก',v:'+$'+deposits.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),cls:'win'},
+    {l:'รวมถอน',v:'-$'+withdrawals.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),cls:'loss'},
+    {l:'รายการ',v:txs.length},
+  ];
+  document.getElementById('txh-stat-bar').innerHTML=stats.map(function(s){
+    return '<div class="bd-stat"><div class="bd-stat-label">'+s.l+'</div><div class="bd-stat-val '+(s.cls||'')+'">'+s.v+'</div></div>';
+  }).join('');
+
+  document.getElementById('txh-list-wrap').innerHTML=txs.length?txs.map(function(t){
+    var isDep=t.type==='deposit';
+    return '<div class="bd-trade-row" style="cursor:default">'+
+      '<span class="bd-trade-date">'+(t.date||'—')+'</span>'+
+      '<span class="bd-trade-pair">'+(isDep?'+ ฝากเงิน':'− ถอนเงิน')+(t.note?' <span style="color:var(--t3);font-weight:400">· '+escHtml(t.note)+'</span>':'')+'</span>'+
+      '<span class="bd-trade-r" style="color:'+(isDep?'var(--gn)':'var(--rd)')+'">'+(isDep?'+':'-')+'$'+Number(t.amount).toFixed(2)+'</span>'+
+      '<button class="btn br" style="padding:3px 8px;font-size:10px;margin-left:6px" onclick="deleteTransaction('+t.id+')" aria-label="ลบรายการนี้">🗑</button>'+
+    '</div>';
+  }).join(''):'<div style="text-align:center;color:var(--t3);padding:14px;font-size:12px">ยังไม่มีรายการฝาก/ถอน</div>';
+
+  document.getElementById('modal-tx-history').classList.add('on');
+}
+function renderTransactionHistory(acctId){
+  var histModal=document.getElementById('modal-tx-history');
+  if(histModal&&histModal.classList.contains('on'))openTxHistoryPopup(acctId);
+}
+
 function openAccountManager(){
   renderAccountList();
   var n=document.getElementById('popup-account-name');if(n)n.value='';
@@ -5755,7 +6461,21 @@ function openKpiBreakdown(kind){
   var gridEl=document.getElementById('kpi-bd-grid');
   var cells=[];
 
-  if(kind==='trades'){
+  if(kind==='balance'){
+    titleEl.textContent='💰 Current Balance Breakdown';
+    var txs=getAccountTransactions(activeAccountId);
+    var deposits=txs.filter(function(t){return t.type==='deposit';}).reduce(function(s,t){return s+t.amount;},0);
+    var withdrawals=txs.filter(function(t){return t.type==='withdraw';}).reduce(function(s,t){return s+t.amount;},0);
+    var closedPnl=snap.curBal-snap.startBal-deposits+withdrawals;
+    cells=[
+      {l:'Starting Balance',v:'$'+snap.startBal.toLocaleString()},
+      {l:'Current Balance',v:'$'+snap.curBal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),cls:snap.balDiff>=0?'win':'loss'},
+      {l:'รวมฝาก',v:'+$'+deposits.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),cls:'win'},
+      {l:'รวมถอน',v:'-$'+withdrawals.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}),cls:'loss'},
+      {l:'กำไร/ขาดทุนจากเทรด',v:(closedPnl>=0?'+':'')+'$'+closedPnl.toFixed(2),cls:closedPnl>=0?'win':'loss'},
+      {l:'รายการฝาก/ถอน',v:txs.length},
+    ];
+  }else if(kind==='trades'){
     titleEl.textContent='📊 Trades Breakdown — '+snap.rangeLabel;
     cells=[
       {l:'ทั้งหมด',v:snap.trades.length},
@@ -5865,8 +6585,19 @@ function renderDashboard(){
   var rSub=dkr.parentNode.querySelector('.dash-kpi-sub');if(rSub)rSub.textContent='Avg '+(avgR!==null?avgR.toFixed(2):'0.00')+'R/trade';
   document.getElementById('dk-open').textContent=snapOpen.length;
   var openSub=document.getElementById('dk-open').parentNode.querySelector('.dash-kpi-sub');if(openSub)openSub.textContent='Missed '+snapMissed.length;
+  // Current Balance KPI
+  var curBal=getCurrentBalance(activeAccountId);
+  var startBal=acct&&acct.balance?parseFloat(acct.balance)||0:0;
+  var balDiff=curBal-startBal;
+  var dkBal=document.getElementById('dk-balance');
+  if(dkBal){
+    dkBal.textContent='$'+curBal.toLocaleString(undefined,{minimumFractionDigits:0,maximumFractionDigits:0});
+    dkBal.className='dash-kpi-val '+(balDiff>=0?'su':'sd');
+    var balSub=document.getElementById('dk-balance-sub');
+    if(balSub)balSub.textContent='เริ่ม $'+startBal.toLocaleString()+(balDiff!==0?' ('+(balDiff>=0?'+':'')+balDiff.toFixed(0)+')':'');
+  }
   // Sprint 5C: เก็บ snapshot ไว้ใช้ใน KPI breakdown popup
-  window.__dashKpiSnapshot={trades:snapTrades,closed:snapClosed,open:snapOpen,missed:snapMissed,wr:wr,sumR:sumR,avgR:avgR,stDash:stDash,rangeLabel:dashRange.label||dashRange.shortLabel};
+  window.__dashKpiSnapshot={trades:snapTrades,closed:snapClosed,open:snapOpen,missed:snapMissed,wr:wr,sumR:sumR,avgR:avgR,stDash:stDash,rangeLabel:dashRange.label||dashRange.shortLabel,curBal:curBal,startBal:startBal,balDiff:balDiff};
 
   renderMonthlyPnlCalendar(srcTrades);
 
@@ -6901,7 +7632,8 @@ function renderMistakeMoodInsightPro(){
       '<div class="mood-bar-label">'+m2+'</div>'+
     '</div>';
   }
-  var chartHtml='<div class="mood-bar-chart">'+barsHtml+'</div><div class="mood-bar-caption">Avg Net R ต่อ Mood ก่อนเทรด (1=แย่สุด, 10=ดีสุด)</div>';
+  var chartHtml='<div class="mood-bar-chart">'+barsHtml+'</div><div class="mood-bar-caption">Avg Net R ต่อ Mood ก่อนเทรด (1=แย่สุด, 10=ดีสุด)</div>'+
+    '<div style="text-align:center;margin-top:8px"><button class="btn" style="font-size:11px;font-weight:800;padding:6px 14px" onclick="go(\'mindkit\')">🧠 ดูวิธีจัดการอารมณ์ก่อนเทรด</button></div>';
 
   el.innerHTML=chartHtml+'<div class="insight-pro-grid" style="margin-top:12px"><div class="insight-pro-card"><b>อารมณ์ต่ำ</b><span>'+escHtml(msg1)+'</span></div><div class="insight-pro-card"><b>อารมณ์พร้อม</b><span>'+escHtml(msg2)+'</span></div><div class="insight-pro-card"><b>Pattern เสี่ยง</b><span>'+escHtml(msg3)+'<br>FOMO Loss: '+fomoLoss+' · Not Plan Loss: '+notPlanLoss+'</span></div></div>';
 }
